@@ -1,0 +1,3 @@
+pds_login_homepage:
+    path:     /connexion
+    defaults: { _controller: PDSLoginBundle:Default:index }

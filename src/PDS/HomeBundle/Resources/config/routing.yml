@@ -1,0 +1,3 @@
+pds_home_homepage:
+    path:     /
+    defaults: { _controller: PDSHomeBundle:Default:index }
