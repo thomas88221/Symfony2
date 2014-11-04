@@ -242,6 +242,16 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'PDS\\LoginBundle\\Controller\\DefaultController::indexAction',  '_route' => 'pds_login_homepage',);
         }
 
+        // pds_login_forgetpage
+        if ($pathinfo === '/mot-de-passe-oublie') {
+            return array (  '_controller' => 'PDS\\LoginBundle\\Controller\\DefaultController::forgetAction',  '_route' => 'pds_login_forgetpage',);
+        }
+
+        // pds_login_registerpage
+        if ($pathinfo === '/inscription') {
+            return array (  '_controller' => 'PDS\\LoginBundle\\Controller\\DefaultController::registerAction',  '_route' => 'pds_login_registerpage',);
+        }
+
         // pds_home_homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
