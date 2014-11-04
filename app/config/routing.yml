@@ -1,0 +1,8 @@
+pds_login:
+    resource: "@PDSLoginBundle/Resources/config/routing.yml"
+    prefix:   /
+
+pds_home:
+    resource: "@PDSHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
