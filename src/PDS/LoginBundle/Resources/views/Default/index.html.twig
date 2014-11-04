@@ -2,5 +2,206 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
-  C'est le body !
+  <div class="row">
+	  <div class="col-sm-10 col-sm-offset-1">
+	    <div class="login-container">
+	      <div class="center">
+	        <h1>
+	          <i class="ace-icon fa fa-leaf green"></i>
+	          <span class="red">Programme</span>
+	          <span class="white" id="id-text2">de sport</span>
+	        </h1>
+	        <h4 class="light-blue" id="id-company-text">&copy; Thomas Koenig</h4>
+	      </div>
+	      <div class="space-6"></div>
+	      <div class="position-relative">
+	        <div id="login-box" class="login-box visible widget-box no-border">
+	          <div class="widget-body">
+	            <div class="widget-main">
+	              {% if type is empty %}
+	                {{message}}
+	              {% endif %}
+	              <h4 class="header blue lighter bigger">
+	                <i class="ace-icon fa fa-coffee green"></i>
+	                Saisissez vos identifiants
+	              </h4>
+	              <div class="space-6"></div>
+	              <form action="{{ path('pds_login_homepage') }}" method="post">
+	                <fieldset>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input value="{{ login }}" type="text" name="login" class="form-control" placeholder="Nom d'utilisateur" />
+	                      <i class="ace-icon fa fa-user"></i>
+	                    </span>
+	                  </label>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input type="password" name="pwd" class="form-control" placeholder="Mot de passe" />
+	                      <i class="ace-icon fa fa-lock"></i>
+	                    </span>
+	                  </label>
+	                  <div class="space"></div>
+	                  <div class="clearfix">
+	                    <label class="inline">
+	                      <input type="hidden" name="rememberMe" value="0" />
+	                      <input type="checkbox" name="rememberMe" class="ace" />
+	                      <span class="lbl"> Se souvenir de moi</span>
+	                    </label>
+	                    <input type="hidden" name="submit" value="1" />
+	                    <button type="submit" class="pull-right btn btn-sm btn-primary">
+	                      <i class="ace-icon fa fa-key"></i>
+	                      <span class="bigger-110">Connexion</span>
+	                    </button>
+	                  </div>
+	                  <div class="space-4"></div>
+	                </fieldset>
+	              </form>
+	            </div><!-- /.widget-main -->
+	            <div class="toolbar clearfix">
+	              <div>
+	                <a href="#" data-target="#forgot-box" class="forgot-password-link">
+	                  <i class="ace-icon fa fa-arrow-left"></i>
+	                  Mot de passe oublié
+	                </a>
+	              </div>
+	              <div>
+	                <a href="#" data-target="#signup-box" class="user-signup-link">
+	                  Je veux m'inscrire
+	                  <i class="ace-icon fa fa-arrow-right"></i>
+	                </a>
+	              </div>
+	            </div>
+	          </div><!-- /.widget-body -->
+	        </div><!-- /.login-box -->
+	        <div id="forgot-box" class="forgot-box widget-box no-border">
+	          <div class="widget-body">
+	            <div class="widget-main">
+	              {% if type == 3 %}
+	                {{ message }}
+	              {% endif %}
+	              <h4 class="header red lighter bigger">
+	                <i class="ace-icon fa fa-key"></i>
+	                Mot de passe oublié
+	              </h4>
+	              <div class="space-6"></div>
+	              <p>
+	                Entrez votre adresse email pour recevoir les instruction pour réinitialiser votre mot de passe.
+	              </p>
+	              <form action="{{ path('pds_login_forgetpage') }}" method="post">
+	                <fieldset>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input value="{{ mail }}" name="mail" type="email" class="form-control" placeholder="Email" />
+	                      <i class="ace-icon fa fa-envelope"></i>
+	                    </span>
+	                  </label>
+	                  <div class="clearfix">
+	                    <input type="hidden" value="1" name="submit" />
+	                    <button type="submit" class="pull-right btn btn-sm btn-danger">
+	                      <i class="ace-icon fa fa-lightbulb-o"></i>
+	                      <span class="bigger-110">Envoyez-les moi !</span>
+	                    </button>
+	                  </div>
+	                </fieldset>
+	              </form>
+	            </div><!-- /.widget-main -->
+	            <div class="toolbar center">
+	              <a href="#" data-target="#login-box" class="back-to-login-link">
+	                Retour à la connexion
+	                <i class="ace-icon fa fa-arrow-right"></i>
+	              </a>
+	            </div>
+	          </div><!-- /.widget-body -->
+	        </div><!-- /.forgot-box -->
+	        <div id="signup-box" class="signup-box widget-box no-border">
+	          <div class="widget-body">
+	            <div class="widget-main">
+	              {% if type == 2 %}
+	                {{ message }}
+	              {% endif %}
+	              <h4 class="header green lighter bigger">
+	                <i class="ace-icon fa fa-users blue"></i>
+	                Inscription
+	              </h4>
+	              <div class="space-6"></div>
+	              <p> Veuillez remplir le formulaire suivant : </p>
+	              <form action="{{ path('pds_login_registerpage') }}" method="post">
+	                <fieldset>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input value="{{ mail }}" name="mail" type="email" class="form-control" placeholder="Email" />
+	                      <i class="ace-icon fa fa-envelope"></i>
+	                    </span>
+	                  </label>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input value="{{ login }}" name="login" type="text" class="form-control" placeholder="Nom d'utilisateur" />
+	                      <i class="ace-icon fa fa-user"></i>
+	                    </span>
+	                  </label>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input name="pwd" type="password" class="form-control" placeholder="Mot de passe" />
+	                      <i class="ace-icon fa fa-lock"></i>
+	                    </span>
+	                  </label>
+	                  <label class="block clearfix">
+	                    <span class="block input-icon input-icon-right">
+	                      <input name="pwd2" type="password" class="form-control" placeholder="Confirmez" />
+	                      <i class="ace-icon fa fa-retweet"></i>
+	                    </span>
+	                  </label>
+	                  <label class="block">
+	                    <input type="hidden" name="agree" value="0" />
+	                    <input name="agree" type="checkbox" class="ace" />
+	                    <span class="lbl">
+	                      J'accèpte
+	                      <a href="#">le règlement</a>
+	                    </span>
+	                  </label>
+	                  <div class="space-24"></div>
+	                  <div class="clearfix">
+	                    <button type="reset" class="pull-left btn btn-sm">
+	                      <i class="ace-icon fa fa-refresh"></i>
+	                      <span class="bigger-110">Réinitialiser</span>
+	                    </button>
+	                    <input type="hidden" value="1" name="submit" />
+	                    <button type="submit" class="pull-right btn btn-sm btn-success">
+	                      <span class="bigger-110">Enregistrer</span>
+	                      <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+	                    </button>
+	                  </div>
+	                </fieldset>
+	              </form>
+	            </div>
+	            <div class="toolbar center">
+	              <a href="#" data-target="#login-box" class="back-to-login-link">
+	                <i class="ace-icon fa fa-arrow-left"></i>
+	                Retour à la connexion
+	              </a>
+	            </div>
+	          </div><!-- /.widget-body -->
+	        </div><!-- /.signup-box -->
+	      </div><!-- /.position-relative -->
+	    </div>
+	  </div><!-- /.col -->
+	</div><!-- /.row -->
+{% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript">
+	if('ontouchstart' in document.documentElement){
+	  document.write("<script src='js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+	}
+	jQuery(function($) {
+	 $(document).on('click', '.toolbar a[data-target]', function(e) {
+	  e.preventDefault();
+	  var target = $(this).data('target');
+	  $('.widget-box.visible').removeClass('visible');
+	  $(target).addClass('visible');
+	 });
+	 var target = window.location.href.substring(window.location.href.indexOf('#'));
+	 $('.toolbar a[data-target="'+target+'"]').trigger('click');
+	});
+  </script>
 {% endblock %}

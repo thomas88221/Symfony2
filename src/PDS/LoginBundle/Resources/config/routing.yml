@@ -1,3 +1,11 @@
 pds_login_homepage:
     path:     /connexion
     defaults: { _controller: PDSLoginBundle:Default:index }
+
+pds_login_forgetpage:
+    path:     /mot-de-passe-oublie
+    defaults: { _controller: PDSLoginBundle:Default:forget }
+
+pds_login_registerpage:
+    path:     /inscription
+    defaults: { _controller: PDSLoginBundle:Default:register }

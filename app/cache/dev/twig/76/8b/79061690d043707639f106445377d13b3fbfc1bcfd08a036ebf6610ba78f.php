@@ -12,6 +12,7 @@ class __TwigTemplate_768b79061690d043707639f106445377d13b3fbfc1bcfd08a036ebf6610
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'body' => array($this, 'block_body'),
+            'javascript' => array($this, 'block_javascript'),
         );
     }
 
@@ -118,16 +119,21 @@ class __TwigTemplate_768b79061690d043707639f106445377d13b3fbfc1bcfd08a036ebf6610
         echo "\"></script>
     <![endif]-->
   </head>
-  <body>
-    ";
-        // line 24
-        $this->displayBlock('body', $context, $blocks);
+  <body class=\"login-layout blur-login\">
+    <div class=\"main-container\">
+      <div class=\"main-content\">
+        ";
         // line 26
-        echo "    ";
+        $this->displayBlock('body', $context, $blocks);
+        // line 28
+        echo "      </div>
+    </div>
+    ";
+        // line 30
         if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
             // asset "ccca1cb_0"
             $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_ccca1cb_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/ccca1cb_part_1_0_jquery.min_1.js");
-            // line 27
+            // line 31
             echo "      <script type=\"text/javascript\" src=\"";
             echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
             echo "\"></script>
@@ -195,7 +201,10 @@ class __TwigTemplate_768b79061690d043707639f106445377d13b3fbfc1bcfd08a036ebf6610
     ";
         }
         unset($context["asset_url"]);
-        // line 29
+        // line 33
+        echo "    ";
+        $this->displayBlock('javascript', $context, $blocks);
+        // line 35
         echo "  </body>
 </html>
 ";
@@ -207,10 +216,17 @@ class __TwigTemplate_768b79061690d043707639f106445377d13b3fbfc1bcfd08a036ebf6610
         echo "PDS";
     }
 
-    // line 24
+    // line 26
     public function block_body($context, array $blocks = array())
     {
-        // line 25
+        // line 27
+        echo "        ";
+    }
+
+    // line 33
+    public function block_javascript($context, array $blocks = array())
+    {
+        // line 34
         echo "    ";
     }
 
@@ -226,6 +242,6 @@ class __TwigTemplate_768b79061690d043707639f106445377d13b3fbfc1bcfd08a036ebf6610
 
     public function getDebugInfo()
     {
-        return array (  214 => 25,  211 => 24,  205 => 4,  199 => 29,  131 => 27,  126 => 26,  124 => 24,  117 => 20,  113 => 19,  109 => 18,  103 => 15,  99 => 14,  96 => 13,  40 => 11,  36 => 8,  32 => 7,  26 => 4,  21 => 1,);
+        return array (  230 => 34,  227 => 33,  223 => 27,  220 => 26,  214 => 4,  208 => 35,  205 => 33,  137 => 31,  133 => 30,  129 => 28,  127 => 26,  118 => 20,  114 => 19,  110 => 18,  104 => 15,  100 => 14,  97 => 13,  41 => 11,  37 => 8,  33 => 7,  27 => 4,  22 => 1,);
     }
 }
