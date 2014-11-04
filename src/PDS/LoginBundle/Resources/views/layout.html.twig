@@ -20,11 +20,17 @@
       <script src="{{ asset('js/excanvas.min.js') }}"></script>
     <![endif]-->
   </head>
-  <body>
-    {% block body %}
-    {% endblock %}
+  <body class="login-layout blur-login">
+    <div class="main-container">
+      <div class="main-content">
+        {% block body %}
+        {% endblock %}
+      </div>
+    </div>
     {% javascripts 'js/*' %}
       <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% block javascript %}
+    {% endblock %}
   </body>
 </html>
