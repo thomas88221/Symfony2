@@ -19,7 +19,9 @@
             <div class="widget-body">
               <div class="widget-main">
                 {% if type is empty %}
-                  {{message}}
+                  <div class="alert alert-{{messageClass}} text-center">
+                    {{message}}
+                  </div>
                 {% endif %}
                 <h4 class="header blue lighter bigger">
                   <i class="ace-icon fa fa-coffee green"></i>
@@ -77,7 +79,9 @@
             <div class="widget-body">
               <div class="widget-main">
                 {% if type == 3 %}
-                  {{ message }}
+                  <div class="alert alert-{{messageClass}} text-center">
+                    {{message}}
+                  </div>
                 {% endif %}
                 <h4 class="header red lighter bigger">
                   <i class="ace-icon fa fa-key"></i>
@@ -117,7 +121,9 @@
             <div class="widget-body">
               <div class="widget-main">
                 {% if type == 2 %}
-                  {{ message }}
+                  <div class="alert alert-{{messageClass}} text-center">
+                    {{message}}
+                  </div>
                 {% endif %}
                 <h4 class="header green lighter bigger">
                   <i class="ace-icon fa fa-users blue"></i>
