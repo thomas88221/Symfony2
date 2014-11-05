@@ -426,7 +426,7 @@ protected $method;
 protected $format;
 protected $session;
 protected $locale;
-protected $defaultLocale ='en';
+protected $defaultLocale ='fr';
 protected static $formats;
 protected static $requestFactory;
 public function __construct(array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null)

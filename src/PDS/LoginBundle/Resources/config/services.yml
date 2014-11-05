@@ -1,4 +1,3 @@
 services:
     pds_login.loginService:
         class: PDS\LoginBundle\LoginService\PDSLoginService
-#        arguments: [%request%]

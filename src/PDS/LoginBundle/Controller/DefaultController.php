@@ -3,24 +3,36 @@
 namespace PDS\LoginBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
 
 class DefaultController extends Controller
 {
-    public function indexAction(/*Request $request*/)
+  
+    private $loginService;
+  
+    public function indexAction()
     {
-        //$this->container->setParameter('request', $this->getRequest());
-        $loginService = $this->container->get('pds_login.loginService');
-        
+        $this->initService(1);
+        $formBuilder = $this->get('form.factory')->createBuilder('form', $this->loginService);
+        $formBuilder->add('mail',      'email')
+                    ->add('login',     'text')
+                    ->add('pwd',       'password')
+                    ->add('pwd2',      'password')
+                    ->add('agree',     'checkbox')
+                    ->add('submit',    'submit');
+        $form = $formBuilder->getForm();
+        var_dump($form);exit;
+      
         return $this->render(
           'PDSLoginBundle:Default:index.html.twig',
-          array(
-            'type' => '',
-            'message' => 'Test',
-            'messageClass' => 'success',
-            'login' => 'Thomas',
-            'mail' => ''
-          )
+          $this->loginService->getParams()
         );
+    }
+    
+    private function initService($type = 1)
+    {
+        $this->loginService = $this->container->get('pds_login.loginService');
+        $this->loginService->setRequest($this->getRequest());
+        $this->loginService->setType($type);
+        //$this->loginService->validate();
     }
 }
