@@ -2,23 +2,86 @@
 namespace PDS\LoginBundle\LoginService;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
+use Doctrine\ORM\Mapping as ORM;
 
 class PDSLoginService
 {
 
+    /**
+     * Request
+     * @var Request
+     */
     private $request;
+    
+    /**
+     * Type de requete
+     * @var integer
+     */
     private $type;
+    
+    /**
+     * Status success | error
+     * @var string
+     */
     private $status;
+    
+    /**
+     * FormBuilder
+     * @var Form
+     */
+    private $form;
+
+    /**
+     * @ORM\Column(name="mail", type="text")
+     */
     private $mail;
+
+    /**
+     * @ORM\Column(name="login", type="text")
+     */
     private $login;
+
+    /**
+     * @ORM\Column(name="pwd", type="password")
+     */
     private $pwd;
+
+    /**
+     * @ORM\Column(name="pwd2", type="password")
+     */
     private $pwd2;
+
+    /**
+     * @ORM\Column(name="remember_me", type="boolean")
+     */
     private $rememberMe;
+
+    /**
+     * @ORM\Column(name="submit", type="submit")
+     */
     private $submit;
+
+    /**
+     * @ORM\Column(name="agree", type="boolean")
+     */
     private $agree;
 
+    public function __construct()
+    {
+        $this->mail = '';
+        
+    }
+    
 	public function validate()
     {
+        if($this->request->getMethod() != 'POST'){
+            return;
+        }
+        $this->form->bind($this->request);
+        if($this->form->isSubmitted() === false){
+            return;
+        }
         switch($this->type)
         {
             case 1:
@@ -35,7 +98,7 @@ class PDSLoginService
     
     private function validateLogin()
     {
-      
+        var_dump($this->form);exit;
     }
     
     private function validateRegister()
@@ -172,6 +235,22 @@ class PDSLoginService
     public function setAgree($agree)
     {
         $this->agree = $agree;
+    }
+
+	/**
+     * @return the $form
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+	/**
+     * @param field_type $form
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
     }
 
 }

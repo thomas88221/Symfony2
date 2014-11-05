@@ -3,24 +3,27 @@
 namespace PDS\LoginBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
   
     private $loginService;
   
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $this->initService(1);
-        $formBuilder = $this->get('form.factory')->createBuilder('form', $this->loginService);
-        $formBuilder->add('mail',      'email')
-                    ->add('login',     'text')
-                    ->add('pwd',       'password')
-                    ->add('pwd2',      'password')
-                    ->add('agree',     'checkbox')
-                    ->add('submit',    'submit');
-        $form = $formBuilder->getForm();
-        var_dump($form);exit;
+        $this->initService(1, $request);
+        $form = $this->createFormBuilder($this->loginService)
+                     ->add('mail',   'text')
+                     ->add('login',  'text')
+                     ->add('pwd',    'password')
+                     ->add('pwd2',   'password')
+                     ->add('agree',  'checkbox')
+                     ->add('submit', 'submit')
+                     ->getForm();
+        
+        $this->loginService->setForm($form);
+        $this->loginService->validate();
       
         return $this->render(
           'PDSLoginBundle:Default:index.html.twig',
@@ -28,11 +31,10 @@ class DefaultController extends Controller
         );
     }
     
-    private function initService($type = 1)
+    private function initService($type = 1, Request $request)
     {
         $this->loginService = $this->container->get('pds_login.loginService');
-        $this->loginService->setRequest($this->getRequest());
+        $this->loginService->setRequest($request);
         $this->loginService->setType($type);
-        //$this->loginService->validate();
     }
 }
