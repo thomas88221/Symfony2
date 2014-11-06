@@ -21,14 +21,25 @@ class DefaultController extends Controller
     
     private function initService($type = 1, Request $request)
     {
+        switch($type){
+            case 1:
+                $params = array('validation_groups' => array('login'));
+                break;
+            case 2:
+                $params = array('validation_groups' => array('register'));
+                break;
+            case 3:
+                $params = array('validation_groups' => array('forget'));
+                break;
+        }
         $this->loginService = $this->container->get('pds_login.loginService');
         $this->loginService->setRequest($request);
         $this->loginService->setType($type);
-        $form = $this->createFormBuilder($this->loginService)
+        $this->loginService->setTranslator($this->get('translator'));
+        $form = $this->createFormBuilder($this->loginService, $params)
                      ->add('mail',           'text')
                      ->add('login',          'text')
                      ->add('pwd',            'password')
-                     ->add('pwd2',           'password')
                      ->add('mail_register',  'text')
                      ->add('login_register', 'text')
                      ->add('pwd_register',   'password')

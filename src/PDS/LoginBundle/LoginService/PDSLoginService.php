@@ -2,8 +2,10 @@
 namespace PDS\LoginBundle\LoginService;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Form;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Translation\IdentityTranslator;
 
 class PDSLoginService
 {
@@ -39,31 +41,46 @@ class PDSLoginService
     private $form;
 
     /**
+     * @Assert\NotBlank(groups={"forget"})
+     * @Assert\Email(
+     *   message = "'{{ value }}' n'est pas un email valide.",
+     *   groups={"forget"}
+     * )
      * @ORM\Column(name="mail", type="text")
      */
     private $mail;
 
     /**
+     * @Assert\NotBlank(groups={"login"})
+     * @Assert\Length(min = "6", groups={"login"})
      * @ORM\Column(name="login", type="text")
      */
     private $login;
 
     /**
+     * @Assert\NotBlank(groups={"login"})
+     * @Assert\Length(min = "6", groups={"login", "register"})
      * @ORM\Column(name="pwd", type="password")
      */
     private $pwd;
 
     /**
-     * @ORM\Column(name="pwd2", type="password")
-     */
-    private $pwd2;
-
-    /**
+     * @Assert\NotBlank(groups={"register"})
+     * @Assert\Email(
+     *   message = "'{{ value }}' n'est pas un email valide.",
+     *   groups={"register"}
+     * )
      * @ORM\Column(name="mail_register", type="text")
      */
     private $mail_register;
 
     /**
+     * @Assert\NotBlank(groups={"register"})
+     * @Assert\Length(
+     *   min = "6",
+     *   groups={"register"},
+     *   minMessage = "login.login.length"
+     * )
      * @ORM\Column(name="login_register", type="text")
      */
     private $login_register;
@@ -93,6 +110,18 @@ class PDSLoginService
      */
     private $agree;
     
+    /**
+     * Tableau d'erreurs;
+     * @var array
+     */
+    private $errors = array();
+    
+    /**
+     * Traductions
+     * @var IdentityTranslator
+     */
+    private $translator;
+    
 	public function validate()
     {
         if($this->request->getMethod() != 'POST'){
@@ -102,6 +131,7 @@ class PDSLoginService
         if($this->form->isSubmitted() === false){
             return;
         }
+        $this->translator->setLocale('fr');
         switch($this->type)
         {
             case 1:
@@ -123,7 +153,16 @@ class PDSLoginService
     
     private function validateRegister()
     {
-        var_dump($this->form);exit;
+        if($this->form->isValid()){
+            echo 'valid';exit;
+        }else{
+            $iterator = $this->form->getErrors(true, false);
+            $errors = $iterator->getErrorsTab();
+            foreach($errors as $error){
+                $this->errors[] = $this->translator->trans($error);
+            }
+            var_dump($this->errors);exit;
+        }
     }
     
     private function validateForget()
@@ -139,6 +178,38 @@ class PDSLoginService
             'messageClass' => $this->status,
             'form'         => $this->form->createView()
         );
+    }
+    
+    public function getAllErrors($children, $template = true) {
+        $this->getAllFormErrors($children);
+        return $this->allErrors;
+    }
+     
+    
+    private function getAllFormErrors($children, $template = true) {
+        foreach ($children as $child) {
+            if ($child->hasErrors()) {
+                $vars = $child->createView()->getVars();
+                $errors = $child->getErrors();
+                foreach ($errors as $error) {
+                    $this->allErrors[$vars["name"]][] = $this->convertFormErrorObjToString($error);
+                }
+            }
+    
+            if ($child->hasChildren()) {
+                $this->getAllErrors($child);
+            }
+        }
+    }
+    
+    
+    
+    private function convertFormErrorObjToString($error) {
+        $errorMessageTemplate = $error->getMessageTemplate();
+        foreach ($error->getMessageParameters() as $key => $value) {
+            $errorMessageTemplate = str_replace($key, $value, $errorMessageTemplate);
+        }
+        return $errorMessageTemplate;
     }
     
     public function setRequest(Request $request)
@@ -177,14 +248,6 @@ class PDSLoginService
     }
 
 	/**
-     * @return the $mdp2
-     */
-    public function getPwd2()
-    {
-        return $this->pwd2;
-    }
-
-	/**
      * @return the $rememberMe
      */
     public function getRememberMe()
@@ -214,14 +277,6 @@ class PDSLoginService
     public function setPwd($mdp)
     {
         $this->pwd = $mdp;
-    }
-
-	/**
-     * @param field_type $mdp2
-     */
-    public function setPwd2($mdp2)
-    {
-        $this->pwd2 = $mdp2;
     }
 
 	/**
@@ -334,6 +389,22 @@ class PDSLoginService
     {
         $this->pwd2_register = $pwd2_register;
     }
+	/**
+     * @return the $translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+	/**
+     * @param \PDS\LoginBundle\LoginService\IdentityTranslator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
+    }
+
 
 
 }
