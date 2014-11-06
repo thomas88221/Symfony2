@@ -21,6 +21,12 @@ class PDSLoginService
     private $type;
     
     /**
+     * Message de retour
+     * @var string
+     */
+    private $message;
+    
+    /**
      * Status success | error
      * @var string
      */
@@ -53,6 +59,26 @@ class PDSLoginService
     private $pwd2;
 
     /**
+     * @ORM\Column(name="mail_register", type="text")
+     */
+    private $mail_register;
+
+    /**
+     * @ORM\Column(name="login_register", type="text")
+     */
+    private $login_register;
+
+    /**
+     * @ORM\Column(name="pwd_register", type="password")
+     */
+    private $pwd_register;
+
+    /**
+     * @ORM\Column(name="pwd2_register", type="password")
+     */
+    private $pwd2_register;
+
+    /**
      * @ORM\Column(name="remember_me", type="boolean")
      */
     private $rememberMe;
@@ -66,12 +92,6 @@ class PDSLoginService
      * @ORM\Column(name="agree", type="boolean")
      */
     private $agree;
-
-    public function __construct()
-    {
-        $this->mail = '';
-        
-    }
     
 	public function validate()
     {
@@ -98,12 +118,12 @@ class PDSLoginService
     
     private function validateLogin()
     {
-        var_dump($this->form);exit;
+        //var_dump($this->form);exit;
     }
     
     private function validateRegister()
     {
-      
+        var_dump($this->form);exit;
     }
     
     private function validateForget()
@@ -114,11 +134,10 @@ class PDSLoginService
     public function getParams()
     {
         return array(
-            'type' => $this->type,
-            'message' => 'Test',
+            'type'         => $this->type,
+            'message'      => $this->message,
             'messageClass' => $this->status,
-            'login' => 'Thomas',
-            'mail' => ''
+            'form'         => $this->form->createView()
         );
     }
     
@@ -252,5 +271,69 @@ class PDSLoginService
     {
         $this->form = $form;
     }
+	/**
+     * @return the $mail_register
+     */
+    public function getMailRegister()
+    {
+        return $this->mail_register;
+    }
+
+	/**
+     * @return the $login_register
+     */
+    public function getLoginRegister()
+    {
+        return $this->login_register;
+    }
+
+	/**
+     * @return the $pwd_register
+     */
+    public function getPwdRegister()
+    {
+        return $this->pwd_register;
+    }
+
+	/**
+     * @return the $pwd2_register
+     */
+    public function getPwd2Register()
+    {
+        return $this->pwd2_register;
+    }
+
+	/**
+     * @param field_type $mail_register
+     */
+    public function setMailRegister($mail_register)
+    {
+        $this->mail_register = $mail_register;
+    }
+
+	/**
+     * @param field_type $login_register
+     */
+    public function setLoginRegister($login_register)
+    {
+        $this->login_register = $login_register;
+    }
+
+	/**
+     * @param field_type $pwd_register
+     */
+    public function setPwdRegister($pwd_register)
+    {
+        $this->pwd_register = $pwd_register;
+    }
+
+	/**
+     * @param field_type $pwd2_register
+     */
+    public function setPwd2Register($pwd2_register)
+    {
+        $this->pwd2_register = $pwd2_register;
+    }
+
 
 }

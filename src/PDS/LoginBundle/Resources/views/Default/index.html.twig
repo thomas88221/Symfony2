@@ -32,21 +32,21 @@
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input value="{{ login }}" type="text" name="login" class="form-control" placeholder="Nom d'utilisateur" />
+                        {{ form_widget(form.login, {'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}}) }}
                         <i class="ace-icon fa fa-user"></i>
                       </span>
                     </label>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input type="password" name="pwd" class="form-control" placeholder="Mot de passe" />
+                        {{ form_widget(form.pwd, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
                         <i class="ace-icon fa fa-lock"></i>
                       </span>
                     </label>
                     <div class="space"></div>
                     <div class="clearfix">
                       <label class="inline">
-                        <input type="hidden" name="rememberMe" value="0" />
-                        <input type="checkbox" name="rememberMe" class="ace" />
+                        <input type="hidden" name="form[rememberMe]" value="0" />
+                        {{ form_widget(form.rememberMe, {'attr': {'class': 'ace'}}) }}
                         <span class="lbl"> Se souvenir de moi</span>
                       </label>
                       <input type="hidden" name="submit" value="1" />
@@ -95,7 +95,7 @@
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input value="{{ mail }}" name="mail" type="email" class="form-control" placeholder="Email" />
+                        {{ form_widget(form.mail, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                         <i class="ace-icon fa fa-envelope"></i>
                       </span>
                     </label>
@@ -135,31 +135,31 @@
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input value="{{ mail }}" name="mail" type="email" class="form-control" placeholder="Email" />
+                        {{ form_widget(form.mail_register, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                         <i class="ace-icon fa fa-envelope"></i>
                       </span>
                     </label>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input value="{{ login }}" name="login" type="text" class="form-control" placeholder="Nom d'utilisateur" />
+                        {{ form_widget(form.login_register, {'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}}) }}
                         <i class="ace-icon fa fa-user"></i>
                       </span>
                     </label>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input name="pwd" type="password" class="form-control" placeholder="Mot de passe" />
+                        {{ form_widget(form.pwd_register, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
                         <i class="ace-icon fa fa-lock"></i>
                       </span>
                     </label>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
-                        <input name="pwd2" type="password" class="form-control" placeholder="Confirmez" />
+                        {{ form_widget(form.pwd2_register, {'attr': {'class': 'form-control', 'placeholder': 'Confirmez'}}) }}
                         <i class="ace-icon fa fa-retweet"></i>
                       </span>
                     </label>
                     <label class="block">
-                      <input type="hidden" name="agree" value="0" />
-                      <input name="agree" type="checkbox" class="ace" />
+                      <input type="hidden" name="form[agree]" value="0" />
+                      {{ form_widget(form.agree, {'attr': {'class': 'ace'}}) }}
                       <span class="lbl">
                         J'accèpte
                         <a href="#">le règlement</a>
