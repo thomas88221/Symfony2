@@ -9,3 +9,9 @@ pds_login_forgetpage:
 pds_login_registerpage:
     path:     /inscription
     defaults: { _controller: PDSLoginBundle:Default:register }
+
+login_check:
+    pattern:   /connexion/verification
+
+logout:
+    pattern:   /deconnexion
