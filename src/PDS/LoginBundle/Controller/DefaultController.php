@@ -4,6 +4,7 @@ namespace PDS\LoginBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class DefaultController extends Controller
 {
@@ -12,6 +13,20 @@ class DefaultController extends Controller
   
     public function indexAction(Request $request)
     {
+        $session = $request->getSession();
+        
+        // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+        if(!empty($error)){
+            var_dump($error);exit;
+        }
+        
+        
         $this->initService(1, $request);
         return $this->render(
           'PDSLoginBundle:Default:index.html.twig',
