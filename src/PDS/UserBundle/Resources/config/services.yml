@@ -1,0 +1,3 @@
+#services:
+#    pds_user.userService:
+#        class: PDS\UserBundle\UserService\PDSUserService

@@ -1,4 +1,4 @@
-{% extends "PDSLoginBundle::layout.html.twig" %}
+{% extends "PDSUserBundle::layout.html.twig" %}
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
@@ -28,7 +28,7 @@
                   Saisissez vos identifiants
                 </h4>
                 <div class="space-6"></div>
-                <form action="{{ path('login_check') }}" method="post">
+                <form action="{{ path('fos_user_security_check') }}" method="post">
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
@@ -91,7 +91,7 @@
                 <p>
                   Entrez votre adresse email pour recevoir les instruction pour réinitialiser votre mot de passe.
                 </p>
-                <form action="{{ path('pds_login_forgetpage') }}" method="post">
+                <form action="{{ path('fos_user_resetting_request') }}" method="post">
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
@@ -131,7 +131,7 @@
                 </h4>
                 <div class="space-6"></div>
                 <p> Veuillez remplir le formulaire suivant : </p>
-                <form id="formRegister" action="{{ path('pds_login_registerpage') }}" method="post">
+                <form id="formRegister" action="{{ path('fos_user_registration_register') }}" method="post">
                   <fieldset>
                     <label class="block clearfix">
                       <span class="block input-icon input-icon-right">
