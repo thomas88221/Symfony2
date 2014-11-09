@@ -1,0 +1,17 @@
+#pds_user_homepage:
+#    path:     /login
+#    defaults: { _controller: PDSUserBundle:Default:login }
+
+#pds_login_forgetpage:
+#    path:     /mot-de-passe-oublie
+#    defaults: { _controller: PDSUserBundle:Default:forget }
+
+#pds_login_registerpage:
+#    path:     /inscription
+#    defaults: { _controller: PDSUserBundle:Default:register }
+
+#login_check:
+#    pattern:   /connexion/verification
+
+#logout:
+#    pattern:   /deconnexion

@@ -1,6 +1,6 @@
 <?php
 
-namespace PDS\LoginBundle\Tests\Controller;
+namespace PDS\UserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

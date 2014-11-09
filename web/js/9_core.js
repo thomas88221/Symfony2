@@ -178,7 +178,7 @@ $(function(){
     });
   };
   var updateTimer = setInterval(function(){
-    document.update();
+    //document.update();
   }, 60000);
   document.update();
 });
