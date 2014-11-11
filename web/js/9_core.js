@@ -180,5 +180,5 @@ $(function(){
   var updateTimer = setInterval(function(){
     //document.update();
   }, 60000);
-  document.update();
+  //document.update();
 });

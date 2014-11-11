@@ -64,7 +64,15 @@
     {% javascripts 'js/*' %}
       <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    {% block javascript %}
-    {% endblock %}
+    <script type="text/javascript">
+      $(function() {
+          $('#reset').on('click', function(e){ console.dir('aa');
+              $('form.fos_user_registration_register input[type="text"],'+
+                ' form.fos_user_registration_register input[type="password"],'+
+                ' form.fos_user_registration_register input[type="email"]').val('');
+              e.preventDefault();
+          });
+      });
+    </script>
   </body>
 </html>

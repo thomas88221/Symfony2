@@ -37,7 +37,8 @@ security:
         main:
             pattern: ^/
             anonymous: false
-            provider: in_memory
+            security: true
+            provider: main
             form_login:
                 login_path: 'fos_user_security_login'
                 check_path: 'fos_user_security_check'
@@ -52,3 +53,4 @@ security:
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/, roles: ROLE_USER }
