@@ -1,0 +1,31 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<h4 class="header red lighter bigger">
+  <i class="ace-icon fa fa-key"></i>
+  {{ 'resetting.intro'|trans }}
+</h4>
+<div class="space-6"></div>
+<p>
+  {{ 'resetting.intro2'|trans }}
+</p>
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+  <fieldset>
+    <div>
+      {% if invalid_username is defined %}
+        <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
+      {% endif %}
+      <label class="block clearfix">
+        <span class="block input-icon input-icon-right">
+          <input type="text" id="username" name="username" class="form-control" required="required" placeholder="{{ 'resetting.request.username'|trans }}" />
+          <i class="ace-icon fa fa-envelope"></i>
+        </span>
+      </label>
+      <div class="clearfix">
+        <input type="hidden" value="1" name="submit" />
+        <button type="submit" class="pull-right btn btn-sm btn-danger">
+          <i class="ace-icon fa fa-lightbulb-o"></i>
+          <span class="bigger-110">{{ 'resetting.request.submit'|trans }}</span>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>
