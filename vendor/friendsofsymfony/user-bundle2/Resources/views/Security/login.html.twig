@@ -1,0 +1,59 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<h4 class="header blue lighter bigger">
+  <i class="ace-icon fa fa-coffee green"></i>
+  {{ 'security.login.intro'|trans }}
+</h4>
+<form action="{{ path("fos_user_security_check") }}" method="post">
+  <fieldset>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <label class="block clearfix" for="username">
+      <span class="block input-icon input-icon-right">
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="{{ 'security.login.username'|trans }}" />
+        <i class="ace-icon fa fa-user"></i>
+      </span>
+    </label>
+    <label class="block clearfix" for="password">
+      <span class="block input-icon input-icon-right">
+        <input type="password" id="password" class="form-control" name="_password" required="required" placeholder="{{ 'security.login.password'|trans }}" />
+        <i class="ace-icon fa fa-lock"></i>
+      </span>
+    </label>
+    <div class="space"></div>
+    <div class="clearfix">
+      <label class="inline">
+       <input type="checkbox" id="remember_me" name="_remember_me" value="" class="ace" />
+       <span class="lbl">&nbsp;&nbsp;{{ 'security.login.remember_me'|trans }}</span>
+     </label>
+     <button type="submit" class="pull-right btn btn-sm btn-primary">
+       <i class="ace-icon fa fa-key"></i>
+       <span class="bigger-110">{{ 'security.login.submit'|trans }}</span>
+      </button>
+    </div>
+    <div class="space-4"></div>
+  </fieldset>
+</form>
+{% endblock fos_user_content %}
+
+{% block fos_user_footer %}
+<div>
+  <a href="{{ path('fos_user_resetting_request') }}" class="forgot-password-link">
+    <i class="ace-icon fa fa-arrow-left"></i>
+    Mot de passe oublié
+  </a>
+</div>
+<div>
+  <a href="{{ path('fos_user_registration_register') }}" class="user-signup-link">
+    Je veux m'inscrire
+    <i class="ace-icon fa fa-arrow-right"></i>
+  </a>
+</div>
+{% endblock fos_user_footer %}
+
+{% block class %}login-box{% endblock class %}

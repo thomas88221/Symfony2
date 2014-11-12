@@ -1,0 +1,48 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<h4 class="header green lighter bigger">
+  <i class="ace-icon fa fa-users blue"></i>
+  {{ 'registration.intro'|trans }}
+</h4>
+<div class="space-6"></div>
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+  <fieldset>
+    <label class="block clearfix">
+      <span class="block input-icon input-icon-right">
+        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}}) }}
+        <i class="ace-icon fa fa-user"></i>
+      </span>
+    </label>
+    <label class="block clearfix">
+      <span class="block input-icon input-icon-right">
+        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+        <i class="ace-icon fa fa-envelope"></i>
+      </span>
+    </label>
+    <label class="block clearfix">
+      <span class="block input-icon input-icon-right">
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+        <i class="ace-icon fa fa-lock"></i>
+      </span>
+    </label>
+    <label class="block clearfix">
+      <span class="block input-icon input-icon-right">
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirmez'}}) }}
+        <i class="ace-icon fa fa-retweet"></i>
+      </span>
+    </label>
+    {{ form_widget(form._token) }}
+    <div class="space-24"></div>
+    <div class="clearfix">
+      <button type="button" id="reset" class="pull-left btn btn-sm">
+        <i class="ace-icon fa fa-refresh"></i>
+        <span class="bigger-110">Réinitialiser</span>
+      </button>
+      <input type="hidden" value="1" name="submit" />
+      <button type="submit" class="pull-right btn btn-sm btn-success">
+        <span class="bigger-110">{{ 'registration.submit'|trans }}</span>
+        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+      </button>
+    </div>
+  </fieldset>
+</form>

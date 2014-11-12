@@ -1,0 +1,17 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="alert alert-success">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</div>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}
+          <div class="margin-top-20 text-center">
+            <a class="btn btn-primary" href="{{ targetUrl }}">
+              {{ 'registration.back'|trans }}
+            </a>
+          </div>
+        {% endif %}
+    {% endif %}
+{% endblock fos_user_content %}
