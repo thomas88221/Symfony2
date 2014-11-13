@@ -297,6 +297,16 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'PDS\\HomeBundle\\Controller\\DefaultController::inboxAction',  '_route' => 'pds_home_inbox',);
         }
 
+        // pds_friends_homepage
+        if ($pathinfo === '/amis') {
+            return array (  '_controller' => 'PDS\\HomeBundle\\Controller\\DefaultController::inboxAction',  '_route' => 'pds_friends_homepage',);
+        }
+
+        // pds_home_changeAvatar
+        if ($pathinfo === '/changer-d-avatar') {
+            return array (  '_controller' => 'PDS\\HomeBundle\\Controller\\DefaultController::inboxAction',  '_route' => 'pds_home_changeAvatar',);
+        }
+
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {
                 // fos_user_security_login
