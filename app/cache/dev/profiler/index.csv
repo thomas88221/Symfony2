@@ -459,3 +459,7 @@ bb9db4,127.0.0.1,GET,http://symfony.dev/images/avatar5.png,1415916566,95a4fa
 0e1193,127.0.0.1,GET,http://symfony.dev/images/avatar1.png,1415916566,
 95a4fa,127.0.0.1,GET,http://symfony.dev/images/avatar5.png,1415916566,
 e0c0d8,127.0.0.1,GET,http://symfony.dev/,1415916643,
+c81636,127.0.0.1,GET,http://symfony.dev/,1415917048,
+e829b2,127.0.0.1,GET,http://symfony.dev/login,1415917048,
+9c7ecc,127.0.0.1,POST,http://symfony.dev/login_check,1415917059,
+9dd86e,127.0.0.1,GET,http://symfony.dev/,1415917059,
