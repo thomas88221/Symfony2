@@ -1,3 +1,7 @@
 pds_home_homepage:
     path:     /
     defaults: { _controller: PDSHomeBundle:Default:index }
+
+pds_home_inbox:
+    path:     /messages
+    defaults: { _controller: PDSHomeBundle:Default:inbox }

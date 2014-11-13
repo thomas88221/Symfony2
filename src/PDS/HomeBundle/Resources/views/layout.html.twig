@@ -1,22 +1,184 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <title>{% block title %}Programme de sport{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" href="images/icones/32/gymnast5.png">
+    <link rel="icon" href="{{ asset('icones/32/gymnast5.png') }}">
+    {% stylesheets 'css/*' %}
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
     <!--[if lte IE 9]>
-      <link rel="stylesheet" href="css/ace-part2.min.css" />
-      <link rel="stylesheet" href="css/ace-ie.min.css" />
+      <link rel="stylesheet" href="{{ asset('css/ace-part2.min.css') }}" />
+      <link rel="stylesheet" href="{{ asset('css/ace-ie.min.css') }}" />
     <![endif]-->
     <!--[if lte IE 8]>
-      <script src="js/html5shiv.min.js"></script>
-      <script src="js/respond.min.js"></script>
-      <script src="js/excanvas.min.js"></script>
+      <script src="{{ asset('js/html5shiv.min.js') }}"></script>
+      <script src="{{ asset('js/respond.min.js') }}"></script>
+      <script src="{{ asset('js/excanvas.min.js') }}"></script>
     <![endif]-->
+    {% block css %}
+    {% endblock css %}
   </head>
-  <body>
-    {% block body %}
-    {% endblock %}
+  <body class="no-skin">
+    <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+          <span class="sr-only">Toggle sidebar</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+          <a href="{{ path('pds_home_homepage') }}" class="navbar-brand">
+            <small>
+              <i class="fa fa-heart-o"></i>
+              {{ 'layout.title'|trans }}
+            </small>
+          </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+          <ul class="nav ace-nav">
+            <li class="purple" id="notifs-divers">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                <span class="badge badge-important hide">8</span>
+              </a>
+              <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                <li class="dropdown-header">
+                  <i class="ace-icon fa fa-exclamation-triangle"></i>
+                  <span class="notifs-divers-value">0 Notification</span>
+                </li>
+                <li class="dropdown-content ace-scroll relative">
+                  <div class="scroll-content">
+                    <ul class="dropdown-menu dropdown-navbar divers-list">
+                    </ul>
+                  </div>
+                </li>
+                <li class="dropdown-footer">
+                  <a href="#">
+                    Voir toutes les notifications
+                    <i class="ace-icon fa fa-arrow-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="green" id="notif-messages">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="ace-icon fa fa-envelope"></i>
+                <span class="badge badge-success hide">5</span>
+              </a>
+              <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                <li class="dropdown-header">
+                  <i class="ace-icon fa fa-envelope-o"></i>
+                  <span class="notifs-messages-value">0 Message</span>
+                </li>
+                <li class="dropdown-content ace-scroll relative">
+                  <div class="scroll-content">
+                    <ul class="dropdown-menu dropdown-navbar messages-list">
+                    </ul>
+                  </div>
+                </li>
+                <li class="dropdown-footer">
+                  <a href="{{ path('pds_home_inbox') }}">
+                    Voir tout les messages
+                    <i class="ace-icon fa fa-arrow-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="light-blue">
+              <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                <img class="nav-user-photo" src="{{ asset('avatars/profile-pic.jpg') }}" alt="Pseudo ici">
+                <span class="user-info">
+                  <small>Bienvenue,</small>
+                  Pseudo ici aussi
+                </span>
+                <i class="ace-icon fa fa-caret-down"></i>
+              </a>
+              <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                <li>
+                  <a href="{{ path('fos_user_security_logout') }}">
+                    <i class="ace-icon fa fa-power-off"></i>
+                    Déconnexion
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div><!-- /.navbar-container -->
+    </div>
+    <div class="main-container" id="main-container">
+      <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+        <ul class="nav nav-list" style="top: 0px;">
+          <li class="if($this->context->module == 'home') echo 'active open '; highlight">
+            <a href="{{ path('pds_home_homepage') }}">
+              <i class="menu-icon fa fa-tachometer"></i>
+              <span class="menu-text"> Tableau de bord </span>
+            </a>
+          </li>
+          <li class="if($this->context->module == 'tools') echo 'active open '; highlight">
+            <a href="<?php url('tools', 'index'); ?>">
+              <i class="menu-icon fa fa-briefcase"></i>
+              <span class="menu-text"> Outils </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-child"></i>
+              <span class="menu-briefcase"> Exercices </span>
+            </a>
+          </li>
+          <li class="if($this->context->module == 'friends') echo 'active open '; highlight">
+            <a href="<?php url('friends', 'index'); ?>">
+              <i class="menu-icon glyphicon glyphicon-user"></i>
+              <span class="menu-briefcase"> Amis </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-users"></i>
+              <span class="menu-briefcase"> Groupes </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-calendar"></i>
+              <span class="menu-text"> Calendrier </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-cutlery"></i>
+              <span class="menu-text"> Recettes </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-line-chart"></i>
+              <span class="menu-text"> Statistiques </span>
+            </a>
+          </li>
+        </ul><!-- /.nav-list -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+          <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="page-content">
+          <div class="page-content-area">
+            {% block body %}
+            {% endblock body %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% javascripts 'js/*' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    {% block js %}
+    {% endblock js %}
   </body>
 </html>
