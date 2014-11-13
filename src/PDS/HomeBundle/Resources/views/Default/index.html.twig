@@ -1,6 +1,304 @@
-{% extends "PDSHomeBundle::layout.html.twig" %}
-{% block title %}Tableau de bord{% endblock %}
+{% extends "::layout.html.twig" %}
+{% block title %}{{ 'menu.dashboard'|trans }}{% endblock %}
 
 {% block body %}
-  Accueil
+  {% for flashMessage in app.session.flashbag.get('errors') %}
+    <div class="alert alert-danger">
+        {{ flashMessage }}
+    </div>
+  {% endfor %}
+  {% for flashMessage in app.session.flashbag.get('infos') %}
+    <div class="alert alert-info">
+        {{ flashMessage }}
+    </div>
+  {% endfor %}
+  {% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+  {% endfor %}
+  <div class="user-profile row">
+    <div class="col-xs-12 col-sm-3 center">
+      <div>
+        <div class="profile-picture">
+          <img title="Changer d'avatar" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ asset('avatars/') }}{{ app.user.avatar }}" />
+          <div id="avatar-change-container" class="editable-container editable-inline hide">
+            <div>
+              <div class="editableform-loading hide">
+                <i class="ace-icon fa fa-spinner fa-spin fa-2x light-blue"></i>
+              </div>
+              <form id="form-avatar" class="form-inline editableform" action="{{ path('pds_home_changeAvatar') }}" method="POST" enctype="multipart/form-data">
+                <div class="control-group form-group">
+                  <div>
+                    <div class="editable-input editable-image">
+                      <span>
+                        <input type="hidden" name="submit" value="submit">
+                      </span>
+                      <span>
+                        <label for="avatar-input" class="ace-file-input ace-file-multiple" style="width: 150px;">
+                          <input type="file" name="avatar" id="avatar-input" accept="image/jpg,image/jpeg">
+                          <span class="ace-file-container" data-title="Changer d'image">
+                            <span class="ace-file-name" title="Pas de fichier ...">
+                              <i class=" ace-icon fa fa-picture-o transition-05"></i>
+                            </span>
+                          </span>
+                          <a class="remove" href="#">
+                            <i class=" ace-icon fa fa-times"></i>
+                         </a>
+                        </label>
+                      </span>
+                    </div>
+                    <div class="editable-buttons">
+                      <button type="submit" class="btn btn-info editable-submit">
+                        <i class="ace-icon fa fa-check"></i>
+                      </button>
+                      <button id="change-avatar-submit" type="button" class="btn editable-cancel">
+                        <i class="ace-icon fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="editable-error-block help-block hide"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="width-80 label label-success label-xlg arrowed-in arrowed-in-right">
+          <div class="inline position-relative ellipsis">
+            <span class="user-title-label dropdown-toggle" data-toggle="dropdown">
+              <span class="white">{{ app.user.username }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="space-6"></div>
+      <div class="profile-contact-info" id="social-links">
+        {{ app.user.social }}
+        <div class="profile-social-links align-center">
+          <a href="<?php echo (!empty($social) && !empty($social['fb'])) ? $social['fb'] : '#'; ?>" data-social="fb" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Facebook">
+            <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
+          </a>
+          <a href="<?php echo (!empty($social) && !empty($social['gg'])) ? $social['gg'] : '#'; ?>" data-social="gg" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Google +">
+            <i class="middle ace-icon fa fa-google-plus-square fa-2x red"></i>
+          </a>
+          <a href="<?php echo (!empty($social) && !empty($social['tw'])) ? $social['tw'] : '#'; ?>" data-social="tw" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Twitter">
+            <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
+          </a>
+          <a href="<?php echo (!empty($social) && !empty($social['pt'])) ? $social['pt'] : '#'; ?>" data-social="pt" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Pinterest">
+            <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
+          </a>
+          <a href="<?php echo (!empty($social) && !empty($social['it'])) ? $social['it'] : '#'; ?>" data-social="it" class="tooltip-perso" title="Modifiez le lien vers votre compte Instagram">
+            <i class="middle ace-icon fa fa-instagram fa-2x grey"></i>
+          </a>
+        </div>
+        <div class="hide row margin-top-20" id="updateSocial">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <input type="text" class="form-control" id="inputSocial" placeholder="Lien vers le réseau social" />
+              <input type="hidden" value="<?php if(!empty($social) && !empty($social['fb'])) echo $social['fb']; ?>" id="social-fb" />
+              <input type="hidden" value="<?php if(!empty($social) && !empty($social['gg'])) echo $social['gg']; ?>" id="social-gg" />
+              <input type="hidden" value="<?php if(!empty($social) && !empty($social['tw'])) echo $social['tw']; ?>" id="social-tw" />
+              <input type="hidden" value="<?php if(!empty($social) && !empty($social['pt'])) echo $social['pt']; ?>" id="social-pt" />
+              <input type="hidden" value="<?php if(!empty($social) && !empty($social['it'])) echo $social['it']; ?>" id="social-it" />
+              <input type="hidden" value="" id="social-type" />
+              <span class="input-group-btn">
+                <button class="btn btn-sm btn-default cancel" title="Annuler">
+                  <i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
+                </button>
+              </span>
+              <span class="input-group-btn">
+                <button class="btn btn-sm btn-primary validate" title="Valider">
+                  <i class="ace-icon glyphicon glyphicon-ok bigger-110"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="space-6"></div>
+      <div class="hr hr12 dotted"></div>
+      <div class="clearfix">
+        <div class="grid2">
+          <span class="bigger-175 blue">{{ app.user.followers }}</span>
+          <br>
+          me suivent
+        </div>
+        <div class="grid2">
+          J'en suis
+          <br />
+          <span class="bigger-175 blue">{{ app.user.following }}</span>
+        </div>
+      </div>
+      <div class="hr hr16 dotted"></div>
+    </div>
+    <div class="col-xs-12 col-sm-9">
+      <div class="center">
+        <span class="btn btn-app btn-sm btn-light">
+          <span class="line-height-1 bigger-170 blue"> 1,411 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Vues </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-pink">
+          <span class="line-height-1 bigger-170"> 4 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Programmes </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-grey">
+          <span class="line-height-1 bigger-170"> 23 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Exercices </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-success">
+          <span class="line-height-1 bigger-170"> 7 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Entrainements </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-primary">
+          <span class="line-height-1 bigger-170"> 55 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Contacts </span>
+        </span>
+      </div>
+      <div class="space-12"></div>
+      <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Nom </div>
+          <div class="profile-info-value">
+            <span id="username">{{ app.user.username }}</span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Email </div>
+          <div class="profile-info-value">
+            <span id="mail">{{ app.user.email }}</span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Adresse </div>
+          <div class="profile-info-value">
+            <i class="fa fa-map-marker light-orange bigger-110"></i>
+            <span class="editable editable-click" data-pk="1" data-type="text" id="country">
+              {% if app.user.country is empty %}
+                Modifier mon pays
+              {% else %}
+                {{ app.user.country }}
+              {% endif %}
+            </span>
+            <span class="editable editable-click" data-pk="2" data-type="text" id="town">
+              {% if app.user.town is empty %}
+                Modifier ma ville
+              {% else %}
+                {{ app.user.town }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Age </div>
+          <div class="profile-info-value">
+            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('U') }}" data-pk="3" data-type="date" id="age">
+              {{ app.user.age }}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Inscription </div>
+          <div class="profile-info-value">
+            <span id="signup">
+              {{ app.user.dateCreated|date('d/m/Y') }}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Dernière connexion </div>
+          <div class="profile-info-value">
+            <span id="login">
+              {{ app.user.lastLogin|date('d/m/Y H:i') }}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> A propos </div>
+          <div class="profile-info-value">
+            <span class="editable editable-click" data-inputclass="textarea-update-profile" data-rows="2" data-pk="4" data-type="textarea" id="about">
+              {% if app.user.various is empty %}
+                Modifier ma description
+              {% else %}
+                {{ app.user.various }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="space-20"></div>
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-small">
+          <h4 class="widget-title blue smaller">
+            <i class="ace-icon fa fa-rss orange"></i>
+            Activités récentes
+          </h4>
+          <div class="widget-toolbar action-buttons">
+            <a href="#" data-action="reload">
+              <i class="ace-icon fa fa-refresh blue"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main padding-8">
+            <div id="profile-feed-1" class="profile-feed ace-scroll scroll-active relative">
+              <div class="content">
+                <div class="profile-activity clearfix">
+                  <div>
+                    <img class="pull-left" alt="Alex Doe's avatar" src="{{ asset('avatars/') }}{{ app.user.avatar }}">
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    à changé sa photo de profile.
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a une heure
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <img class="pull-left" alt="Susan Smith's avatar" src="{{ asset('avatars/') }}profile-pic.jpg">
+                    <a class="user" href="#"> Angèle Hochstaeder </a>
+                    es maintenant amie avec Thomas Koenig.
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 2 heures
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <i class="pull-left thumbicon fa fa-check btn-success"></i>
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    a rejoint le groupe 
+                    <a href="#">exercices pectoraux</a>
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 5 heures
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <i class="pull-left thumbicon fa fa-picture-o btn-info"></i>
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    a envoyé une photo.
+                    <a href="#">Voir</a>
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 5 heures
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock body %}

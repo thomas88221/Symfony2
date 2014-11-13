@@ -1,2 +1,23 @@
 layout:
-    title: "Programme de sport"
+    title:        "Programme de sport"
+    notification: "%count% Notification|]1,+Inf]%count% Notifications"
+    allNotifs:    "Voir toutes les notifications"
+    messages:     "%count% Message|]1,+Inf]%count% Messages"
+    allMsg:       "Voir tout les messages"
+    welcome:      "Bienvenue,"
+    logout:       "Déconnexion"
+    search:       "Rechercher ..."
+    
+menu:
+    home:      "Accueil"
+    dashboard: "Tableau de bord"
+    tools:     "Outils"
+    exercice:  "Exercices"
+    friends:   "Amis"
+    group:     "Groupes"
+    calendar:  "Calendrier"
+    eat:       "Recettes"
+    stats:     "Statistiques"
+    
+dashboard:
+    description: "Résumé de votre compte"

@@ -99,7 +99,7 @@ class Users extends BaseUser
         $this->followers = 0;
         $this->following = 0;
         $this->dateCreated = new \DateTime();
-        $this->birthday = new \DateTime();
+        $this->birthday = '';
         $this->country = '';
         $this->town = '';
         $this->various = '';
@@ -257,6 +257,16 @@ class Users extends BaseUser
     }
 
     /**
+     * Retourne l'age de l'utilisateur
+     *
+     * @return integer
+     */
+    public function getAge()
+    {
+        return 23;
+    }
+
+    /**
      * Set various
      *
      * @param string $various
@@ -322,6 +332,9 @@ class Users extends BaseUser
      */
     public function getAvatar()
     {
+        if(empty($this->avatar)){
+            $this->avatar = 'profile-pic.jpg';
+        }
         return $this->avatar;
     }
 

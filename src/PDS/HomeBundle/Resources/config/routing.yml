@@ -5,3 +5,14 @@ pds_home_homepage:
 pds_home_inbox:
     path:     /messages
     defaults: { _controller: PDSHomeBundle:Default:inbox }
+    
+    
+    
+    
+pds_friends_homepage:
+    path:     /amis
+    defaults: { _controller: PDSHomeBundle:Default:inbox }
+    
+pds_home_changeAvatar:
+    path:     /changer-d-avatar
+    defaults: { _controller: PDSHomeBundle:Default:inbox }

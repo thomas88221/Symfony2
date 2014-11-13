@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="{{ asset('icones/32/gymnast5.png') }}">
+    {% stylesheets 'css/*' %}
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="{{ asset('css/ace-part2.min.css') }}" />
+      <link rel="stylesheet" href="{{ asset('css/ace-ie.min.css') }}" />
+    <![endif]-->
+    <!--[if lte IE 8]>
+      <script src="{{ asset('js/html5shiv.min.js') }}"></script>
+      <script src="{{ asset('js/respond.min.js') }}"></script>
+      <script src="{{ asset('js/excanvas.min.js') }}"></script>
+    <![endif]-->
+    {% block css %}
+    {% endblock css %}
+  </head>
+  <body class="no-skin">
+    <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+          <span class="sr-only">Toggle sidebar</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+          <a href="{{ path('pds_home_homepage') }}" class="navbar-brand">
+            <small>
+              <i class="fa fa-heart-o"></i>
+              {{ 'layout.title'|trans }}
+            </small>
+          </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+          <ul class="nav ace-nav">
+            <li class="purple" id="notifs-divers">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                <span class="badge badge-important hide">0</span>
+              </a>
+              <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                <li class="dropdown-header">
+                  <i class="ace-icon fa fa-exclamation-triangle"></i>
+                  <span class="notifs-divers-value">{{ 'layout.notification'|transchoice(0) }}</span>
+                </li>
+                <li class="dropdown-content ace-scroll relative">
+                  <div class="scroll-content">
+                    <ul class="dropdown-menu dropdown-navbar divers-list">
+                    </ul>
+                  </div>
+                </li>
+                <li class="dropdown-footer">
+                  <a href="#">
+                    {{ 'layout.allNotifs'|trans }}
+                    <i class="ace-icon fa fa-arrow-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="green" id="notif-messages">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="ace-icon fa fa-envelope"></i>
+                <span class="badge badge-success hide">0</span>
+              </a>
+              <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                <li class="dropdown-header">
+                  <i class="ace-icon fa fa-envelope-o"></i>
+                  <span class="notifs-messages-value">{{ 'layout.messages'|transchoice(0) }}</span>
+                </li>
+                <li class="dropdown-content ace-scroll relative">
+                  <div class="scroll-content">
+                    <ul class="dropdown-menu dropdown-navbar messages-list">
+                    </ul>
+                  </div>
+                </li>
+                <li class="dropdown-footer">
+                  <a href="{{ path('pds_home_inbox') }}">
+                    {{ 'layout.allMsg'|trans }}
+                    <i class="ace-icon fa fa-arrow-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="light-blue">
+              <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                <img class="nav-user-photo" src="{{ asset('avatars/profile-pic.jpg') }}" alt="{{ app.user.username }}">
+                <span class="user-info">
+                  <small>{{ 'layout.welcome'|trans }}</small>
+                  {{ app.user.username }}
+                </span>
+                <i class="ace-icon fa fa-caret-down"></i>
+              </a>
+              <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                <li>
+                  <a href="{{ path('fos_user_security_logout') }}">
+                    <i class="ace-icon fa fa-power-off"></i>
+                    {{ 'layout.logout'|trans }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div><!-- /.navbar-container -->
+    </div>
+    <div class="main-container" id="main-container">
+      <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
+        <ul class="nav nav-list" style="top: 0px;">
+          <li class="{% if bundle == 'HomeBundle' %}active open {% endif %}highlight">
+            <a href="{{ path('pds_home_homepage') }}">
+              <i class="menu-icon fa fa-tachometer"></i>
+              <span class="menu-text"> {{ 'menu.dashboard'|trans }} </span>
+            </a>
+          </li>
+          <li class="{% if bundle == 'ToolsBundle' %}active open {% endif %}highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-briefcase"></i>
+              <span class="menu-text"> {{ 'menu.tools'|trans }} </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-child"></i>
+              <span class="menu-briefcase"> {{ 'menu.exercice'|trans }} </span>
+            </a>
+          </li>
+          <li class="{% if bundle == 'FriendsBundle' %}active open {% endif %}highlight">
+            <a href="{{ path('pds_friends_homepage') }}">
+              <i class="menu-icon glyphicon glyphicon-user"></i>
+              <span class="menu-briefcase"> {{ 'menu.friends'|trans }} </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-users"></i>
+              <span class="menu-briefcase"> {{ 'menu.group'|trans }} </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-calendar"></i>
+              <span class="menu-text"> {{ 'menu.calendar'|trans }} </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-cutlery"></i>
+              <span class="menu-text"> {{ 'menu.eat'|trans }} </span>
+            </a>
+          </li>
+          <li class="highlight">
+            <a href="#">
+              <i class="menu-icon fa fa-line-chart"></i>
+              <span class="menu-text"> {{ 'menu.stats'|trans }} </span>
+            </a>
+          </li>
+        </ul><!-- /.nav-list -->
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+          <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+      </div>
+      <div class="main-content">
+        {% if breadcrumbs is defined %}
+          <div class="breadcrumbs" id="breadcrumbs">
+            <ul class="breadcrumb">
+              {% for link in breadcrumbs %}
+                {% if (link.current is defined) and (link.current == true) %}
+                  <li class="active">{{ link.title }}</li>
+                {% else %}
+                  <li>
+                    {% if link.icon is defined %}
+                      <i class="ace-icon fa fa-{{ link.icon }} home-icon"></i>
+                    {% endif %}
+                    <a href="{{ link.link }}">{{ link.title }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="{{ 'layout.search'|trans }}" class="nav-search-input" id="nav-search-input" autocomplete="off">
+                  <i class="ace-icon fa fa-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+        <div class="page-content">
+          <div class="page-content-area">
+            {% if title is defined %}
+              <div class="page-header">
+                <h1>
+                  {{ title }}
+                  <?php if(!empty($desc)){ ?>
+                  {% if description is defined %}
+                    <small>
+                      <i class="ace-icon fa fa-angle-double-right"></i>
+                      {{ description }}
+                    </small>
+                  {% endif %}
+                </h1>
+              </div>
+            {% endif %}
+            <div class="alert alert-block hide" id="display-message">
+              <div class="message pull-left">Test</div>
+              <button type="button" class="close" id="hide-message">
+                <i class="ace-icon fa fa-times"></i>
+              </button>
+              <div class="clearfix"></div>
+            </div>
+            {% block body %}
+            {% endblock body %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% javascripts 'js/*' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    {% block js %}
+    {% endblock js %}
+  </body>
+</html>
