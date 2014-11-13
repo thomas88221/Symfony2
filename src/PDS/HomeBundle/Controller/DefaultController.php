@@ -19,7 +19,7 @@ class DefaultController extends Controller
         /*$this->get('session')->getFlashBag()->add(
             'infos',
             'Vos changements ont été sauvegardés!'
-        );*/
+        );a*/
         
         return $this->render(
             'PDSHomeBundle:Default:index.html.twig',
