@@ -21,7 +21,7 @@
     <div class="col-xs-12 col-sm-3 center">
       <div>
         <div class="profile-picture">
-          <img title="Changer d'avatar" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ asset('avatars/') }}{{ app.user.avatar }}" />
+          <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ asset('avatars/') }}{{ app.user.avatar }}" />
           <div id="avatar-change-container" class="editable-container editable-inline hide">
             <div>
               <div class="editableform-loading hide">
@@ -37,8 +37,8 @@
                       <span>
                         <label for="avatar-input" class="ace-file-input ace-file-multiple" style="width: 150px;">
                           <input type="file" name="avatar" id="avatar-input" accept="image/jpg,image/jpeg">
-                          <span class="ace-file-container" data-title="Changer d'image">
-                            <span class="ace-file-name" title="Pas de fichier ...">
+                          <span class="ace-file-container" data-title="{{ 'dashboard.image.change'|trans }}">
+                            <span class="ace-file-name" title="{{ 'dashboard.image.empty'|trans }}">
                               <i class=" ace-icon fa fa-picture-o transition-05"></i>
                             </span>
                           </span>
@@ -76,19 +76,19 @@
       <div class="profile-contact-info" id="social-links">
         {{ app.user.social }}
         <div class="profile-social-links align-center">
-          <a href="<?php echo (!empty($social) && !empty($social['fb'])) ? $social['fb'] : '#'; ?>" data-social="fb" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Facebook">
+          <a href="{{ app.user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Facebook">
             <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
           </a>
-          <a href="<?php echo (!empty($social) && !empty($social['gg'])) ? $social['gg'] : '#'; ?>" data-social="gg" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Google +">
+          <a href="{{ app.user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Google +">
             <i class="middle ace-icon fa fa-google-plus-square fa-2x red"></i>
           </a>
-          <a href="<?php echo (!empty($social) && !empty($social['tw'])) ? $social['tw'] : '#'; ?>" data-social="tw" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Twitter">
+          <a href="{{ app.user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Twitter">
             <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
           </a>
-          <a href="<?php echo (!empty($social) && !empty($social['pt'])) ? $social['pt'] : '#'; ?>" data-social="pt" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Pinterest">
+          <a href="{{ app.user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Pinterest">
             <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
           </a>
-          <a href="<?php echo (!empty($social) && !empty($social['it'])) ? $social['it'] : '#'; ?>" data-social="it" class="tooltip-perso" title="Modifiez le lien vers votre compte Instagram">
+          <a href="{{ app.user.socialIt }}" data-social="it" class="tooltip-perso" title="Modifiez le lien vers votre compte Instagram">
             <i class="middle ace-icon fa fa-instagram fa-2x grey"></i>
           </a>
         </div>
@@ -96,11 +96,11 @@
           <div class="col-sm-12">
             <div class="input-group">
               <input type="text" class="form-control" id="inputSocial" placeholder="Lien vers le réseau social" />
-              <input type="hidden" value="<?php if(!empty($social) && !empty($social['fb'])) echo $social['fb']; ?>" id="social-fb" />
-              <input type="hidden" value="<?php if(!empty($social) && !empty($social['gg'])) echo $social['gg']; ?>" id="social-gg" />
-              <input type="hidden" value="<?php if(!empty($social) && !empty($social['tw'])) echo $social['tw']; ?>" id="social-tw" />
-              <input type="hidden" value="<?php if(!empty($social) && !empty($social['pt'])) echo $social['pt']; ?>" id="social-pt" />
-              <input type="hidden" value="<?php if(!empty($social) && !empty($social['it'])) echo $social['it']; ?>" id="social-it" />
+              <input type="hidden" value="{{ app.user.socialFb }}" id="social-fb" />
+              <input type="hidden" value="{{ app.user.socialGg }}" id="social-gg" />
+              <input type="hidden" value="{{ app.user.socialTw }}" id="social-tw" />
+              <input type="hidden" value="{{ app.user.socialPt }}" id="social-pt" />
+              <input type="hidden" value="{{ app.user.socialIt }}" id="social-it" />
               <input type="hidden" value="" id="social-type" />
               <span class="input-group-btn">
                 <button class="btn btn-sm btn-default cancel" title="Annuler">

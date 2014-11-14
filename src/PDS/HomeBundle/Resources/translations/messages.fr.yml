@@ -21,3 +21,6 @@ menu:
     
 dashboard:
     description: "Résumé de votre compte"
+    image:
+        change: "Changer d'avatar"
+        empty:  "Pas de fichier ..."
