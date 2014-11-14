@@ -263,7 +263,9 @@ class Users extends BaseUser
      */
     public function getAge()
     {
-        return 23;
+        $now = new \DateTime();
+        $diff = $this->birthday->diff($now);
+        return $diff->y;
     }
 
     /**
@@ -297,6 +299,9 @@ class Users extends BaseUser
      */
     public function setSocial($social)
     {
+        if(!empty($social)){
+            $social = json_decode($social);
+        }
         $this->social = $social;
 
         return $this;
@@ -310,6 +315,71 @@ class Users extends BaseUser
     public function getSocial()
     {
         return $this->social;
+    }
+    
+    /**
+     * Get Fb link
+     * 
+     * @return boolean
+     */
+    public function getSocialFb(){
+        if(!empty($this->social) && !empty($this->social->fb)){
+            return $this->social->fb;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Get Gg link
+     * 
+     * @return boolean
+     */
+    public function getSocialGg(){
+        if(!empty($this->social) && !empty($this->social->gg)){
+            return $this->social->gg;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get Tw link
+     *
+     * @return boolean
+     */
+    public function getSocialTw(){
+        if(!empty($this->social) && !empty($this->social->tw)){
+            return $this->social->tw;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Get Pt link
+     * 
+     * @return boolean
+     */
+    public function getSocialPt(){
+        if(!empty($this->social) && !empty($this->social->pt)){
+            return $this->social->pt;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Get It link
+     * 
+     * @return boolean
+     */
+    public function getSocialIt(){
+        if(!empty($this->social) && !empty($this->social->it)){
+            return $this->social->it;
+        } else {
+            return false;
+        }
     }
 
     /**
