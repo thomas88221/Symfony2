@@ -197,7 +197,7 @@
         <div class="profile-info-row">
           <div class="profile-info-name"> Age </div>
           <div class="profile-info-value">
-            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('U') }}" data-pk="3" data-type="date" id="age">
+            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
               {{ app.user.age }}
             </span>
           </div>
@@ -302,3 +302,9 @@
     </div>
   </div>
 {% endblock body %}
+
+{% block js %}
+<script type="text/javascript">
+  $(function(){ var d = new Dashboard(); });
+</script>
+{% endblock js %}

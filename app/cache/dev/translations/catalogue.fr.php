@@ -141,6 +141,7 @@ $catalogue = new MessageCatalogue('fr', array (
     'menu.stats' => 'Statistiques',
     'dashboard.description' => 'Résumé de votre compte',
     'dashboard.image.change' => 'Changer d\'avatar',
+    'dashboard.image.empty' => 'Pas de fichier ...',
     'login.login.not_blank' => 'Le login ne peut pas être vide.',
     'login.login.length' => 'Le login que vous avez choisi est trop court.',
   ),

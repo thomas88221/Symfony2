@@ -177,8 +177,124 @@ $(function(){
       }
     });
   };
+  
+  document.addScript = function(src, onload){
+    var script = document.createElement ('script');
+    script.addEventListener ("load", onload, false);
+    script.type = "text/javascript";
+    script.src = src;
+    document.getElementsByTagName ('head')[0].appendChild (script);
+  };
+  
+  document.addStyle = function(src){
+    var style = document.createElement ('link');
+    style.type = "text/css";
+    style.href = src;
+    style.media = "screen";
+    style.rel = "stylesheet";
+    document.getElementsByTagName ('head')[0].appendChild (style);
+  };
+  
   var updateTimer = setInterval(function(){
     //document.update();
   }, 60000);
   //document.update();
 });
+
+/***** PAGES *****/
+
+var Dashboard = function(params){
+  document.addStyle("/css/other/bootstrap-editable.css");
+  document.addScript("/js/other/bootstrap-editable.js", function(){
+    $.fn.editable.defaults.mode = 'inline';
+    $('.editable').editable({
+      'url': '/compte/update',
+      'error': function(res){
+        document.showAlert(res.statusText, 'danger');
+      }
+    });
+    $('.tooltip-perso').tooltip();
+  });
+  var self = this;
+  
+  this.bind = function(){
+    var self = this;
+    $('#avatar').on('click', function(){
+      $('#avatar').addClass('hide');
+      $('#avatar-change-container').removeClass('hide');
+    });
+    $('#avatar-change-container .editable-buttons .editable-cancel').on('click', function(){
+      $('#avatar').removeClass('hide');
+      $('#avatar-change-container').addClass('hide');
+    });
+    $('#avatar-input').on('change', function(e){
+      var files = this.files;
+      var parent = $(this).parent();
+      var icon = parent.find('i.fa-picture-o');
+      var title = parent.find('span.ace-file-container');
+      if(files.length > 0){
+        icon.css('color', '#2a8bcb');
+        title.attr('data-title', files[0]['name']);
+      } else {
+        icon.css('color', '#d5d5d5');
+        title.attr('data-title', "Changer d'image");
+      }
+      e.preventDefault();
+    });
+    $('.profile-contact-info a').on('click', function(e){
+      self.updateSocial(this, 'show');
+      e.preventDefault();
+    });
+    $('#updateSocial .cancel').on('click', function(e){
+      self.updateSocial(this, 'cancel');
+      e.preventDefault();
+    });
+    $('#updateSocial .validate').on('click', function(e){
+      self.updateSocial(this, 'validate');
+      e.preventDefault();
+    });
+  };
+  
+  this.updateSocial = function(obj, step){
+    var self = this;
+    if(step == null) return this;
+    switch(step){
+      case 'show':
+        var type = $(obj).data('social');
+        var input = $('#updateSocial #inputSocial');
+        var data = $('#social-'+type).val();
+        input.val(data);
+        $('#updateSocial').removeClass('hide');
+        $('#social-type').val(type);
+        break;
+      case 'validate':
+        var type = $('#social-type').val();
+        var val = $('#inputSocial').val();
+        $.ajax({
+          'url': '/compte/update',
+          'type': 'POST',
+          'dataType': 'json',
+          'data': {
+            'name': 'social',
+            'value': val,
+            'type': type
+          },
+          'success': function(res){
+            $('#updateSocial').addClass('hide');
+            $('#social-links a[data-social="'+type+'"]').attr('href', val);
+            $('#social-'+type).val(val);
+          },
+          'error': function(res){
+            document.showAlert(res.responseText, 'danger');
+          }
+        });
+        break;
+      case 'cancel':
+        $('#updateSocial').addClass('hide');
+        break;
+    }
+  };
+  
+  return this.bind();
+};
+

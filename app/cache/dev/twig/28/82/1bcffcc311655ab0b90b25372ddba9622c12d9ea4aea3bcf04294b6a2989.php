@@ -12,6 +12,7 @@ class __TwigTemplate_28821bcffcc311655ab0b90b25372ddba9622c12d9ea4aea3bcf04294b6
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'body' => array($this, 'block_body'),
+            'js' => array($this, 'block_js'),
         );
     }
 
@@ -117,8 +118,14 @@ class __TwigTemplate_28821bcffcc311655ab0b90b25372ddba9622c12d9ea4aea3bcf04294b6
                       <span>
                         <label for=\"avatar-input\" class=\"ace-file-input ace-file-multiple\" style=\"width: 150px;\">
                           <input type=\"file\" name=\"avatar\" id=\"avatar-input\" accept=\"image/jpg,image/jpeg\">
-                          <span class=\"ace-file-container\" data-title=\"Changer d'image\">
-                            <span class=\"ace-file-name\" title=\"Pas de fichier ...\">
+                          <span class=\"ace-file-container\" data-title=\"";
+        // line 40
+        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("dashboard.image.change"), "html", null, true);
+        echo "\">
+                            <span class=\"ace-file-name\" title=\"";
+        // line 41
+        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("dashboard.image.empty"), "html", null, true);
+        echo "\">
                               <i class=\" ace-icon fa fa-picture-o transition-05\"></i>
                             </span>
                           </span>
@@ -345,7 +352,7 @@ class __TwigTemplate_28821bcffcc311655ab0b90b25372ddba9622c12d9ea4aea3bcf04294b6
           <div class=\"profile-info-value\">
             <span class=\"editable editable-click\" data-format=\"dd/mm/yyyy\" data-value=\"";
         // line 200
-        echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "user", array()), "birthday", array()), "U"), "html", null, true);
+        echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "user", array()), "birthday", array()), "d/m/Y"), "html", null, true);
         echo "\" data-pk=\"3\" data-type=\"date\" id=\"age\">
               ";
         // line 201
@@ -478,6 +485,16 @@ class __TwigTemplate_28821bcffcc311655ab0b90b25372ddba9622c12d9ea4aea3bcf04294b6
 ";
     }
 
+    // line 306
+    public function block_js($context, array $blocks = array())
+    {
+        // line 307
+        echo "<script type=\"text/javascript\">
+  \$(function(){ var d = new Dashboard(); });
+</script>
+";
+    }
+
     public function getTemplateName()
     {
         return "PDSHomeBundle:Default:index.html.twig";
@@ -490,6 +507,6 @@ class __TwigTemplate_28821bcffcc311655ab0b90b25372ddba9622c12d9ea4aea3bcf04294b6
 
     public function getDebugInfo()
     {
-        return array (  437 => 264,  422 => 253,  397 => 230,  391 => 228,  387 => 226,  385 => 225,  374 => 217,  363 => 209,  352 => 201,  348 => 200,  340 => 194,  334 => 192,  330 => 190,  328 => 189,  324 => 187,  318 => 185,  314 => 183,  312 => 182,  301 => 174,  292 => 168,  251 => 130,  241 => 123,  218 => 103,  214 => 102,  210 => 101,  206 => 100,  202 => 99,  191 => 91,  185 => 88,  179 => 85,  173 => 82,  167 => 79,  162 => 77,  152 => 70,  109 => 30,  95 => 24,  89 => 20,  80 => 17,  77 => 16,  72 => 15,  63 => 12,  60 => 11,  55 => 10,  46 => 7,  43 => 6,  38 => 5,  35 => 4,  29 => 2,);
+        return array (  492 => 307,  489 => 306,  444 => 264,  429 => 253,  404 => 230,  398 => 228,  394 => 226,  392 => 225,  381 => 217,  370 => 209,  359 => 201,  355 => 200,  347 => 194,  341 => 192,  337 => 190,  335 => 189,  331 => 187,  325 => 185,  321 => 183,  319 => 182,  308 => 174,  299 => 168,  258 => 130,  248 => 123,  225 => 103,  221 => 102,  217 => 101,  213 => 100,  209 => 99,  198 => 91,  192 => 88,  186 => 85,  180 => 82,  174 => 79,  169 => 77,  159 => 70,  127 => 41,  123 => 40,  110 => 30,  96 => 24,  90 => 20,  81 => 17,  78 => 16,  73 => 15,  64 => 12,  61 => 11,  56 => 10,  47 => 7,  44 => 6,  39 => 5,  36 => 4,  30 => 2,);
     }
 }
