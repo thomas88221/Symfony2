@@ -21,6 +21,20 @@ menu:
     
 dashboard:
     description: "Résumé de votre compte"
+    followers: "%span%%count%%endspan%me suivent"
+    followings: "J'en suis%span%%count%%endspan%"
     image:
         change: "Changer d'avatar"
         empty:  "Pas de fichier ..."
+    social:
+        fb: "Modifiez le lien vers votre compte Facebook"
+        gg: "Modifiez le lien vers votre compte Google +"
+        tw: "Modifiez le lien vers votre compte Twitter"
+        pt: "Modifiez le lien vers votre compte Pinterest"
+        it: "Modifiez le lien vers votre compte Instagram"
+        link: "Lien vers le réseau social"
+        cancel: "Annuler"
+        valid: "Valider"
+    form:
+        name: "Nom"
+        

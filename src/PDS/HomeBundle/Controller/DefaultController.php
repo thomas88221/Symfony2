@@ -45,7 +45,7 @@ class DefaultController extends Controller
             );
             return $response;
         } else {
-            return new Response();
+            throw $this->createNotFoundException("Bad Request");
         }
     }
 }

@@ -76,26 +76,26 @@
       <div class="profile-contact-info" id="social-links">
         {{ app.user.social }}
         <div class="profile-social-links align-center">
-          <a href="{{ app.user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Facebook">
+          <a href="{{ app.user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.fb'|trans }}">
             <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
           </a>
-          <a href="{{ app.user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Google +">
+          <a href="{{ app.user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.gg'|trans }}">
             <i class="middle ace-icon fa fa-google-plus-square fa-2x red"></i>
           </a>
-          <a href="{{ app.user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Twitter">
+          <a href="{{ app.user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.tw'|trans }}">
             <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
           </a>
-          <a href="{{ app.user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="Modifiez le lien vers votre compte Pinterest">
+          <a href="{{ app.user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.pt'|trans }}">
             <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
           </a>
-          <a href="{{ app.user.socialIt }}" data-social="it" class="tooltip-perso" title="Modifiez le lien vers votre compte Instagram">
+          <a href="{{ app.user.socialIt }}" data-social="it" class="tooltip-perso" title="{{ 'dashboard.social.it'|trans }}">
             <i class="middle ace-icon fa fa-instagram fa-2x grey"></i>
           </a>
         </div>
         <div class="hide row margin-top-20" id="updateSocial">
           <div class="col-sm-12">
             <div class="input-group">
-              <input type="text" class="form-control" id="inputSocial" placeholder="Lien vers le réseau social" />
+              <input type="text" class="form-control" id="inputSocial" placeholder="{{ 'dashboard.social.link'|trans }}" />
               <input type="hidden" value="{{ app.user.socialFb }}" id="social-fb" />
               <input type="hidden" value="{{ app.user.socialGg }}" id="social-gg" />
               <input type="hidden" value="{{ app.user.socialTw }}" id="social-tw" />
@@ -103,12 +103,12 @@
               <input type="hidden" value="{{ app.user.socialIt }}" id="social-it" />
               <input type="hidden" value="" id="social-type" />
               <span class="input-group-btn">
-                <button class="btn btn-sm btn-default cancel" title="Annuler">
+                <button class="btn btn-sm btn-default cancel" title="{{ 'dashboard.social.cancel'|trans }}">
                   <i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
                 </button>
               </span>
               <span class="input-group-btn">
-                <button class="btn btn-sm btn-primary validate" title="Valider">
+                <button class="btn btn-sm btn-primary validate" title="{{ 'dashboard.social.valid'|trans }}">
                   <i class="ace-icon glyphicon glyphicon-ok bigger-110"></i>
                 </button>
               </span>
@@ -120,14 +120,10 @@
       <div class="hr hr12 dotted"></div>
       <div class="clearfix">
         <div class="grid2">
-          <span class="bigger-175 blue">{{ app.user.followers }}</span>
-          <br>
-          me suivent
+          {{ 'dashboard.followers'|trans({'%span%': '<span class="bigger-175 blue">', '%count%': app.user.followers, '%endspan%': '</span><br />'})|raw }}
         </div>
         <div class="grid2">
-          J'en suis
-          <br />
-          <span class="bigger-175 blue">{{ app.user.following }}</span>
+          {{ 'dashboard.followings'|trans({'%span%': '<br /><span class="bigger-175 blue">', '%count%': app.user.following, '%endspan%': '</span>'})|raw }}
         </div>
       </div>
       <div class="hr hr16 dotted"></div>
@@ -163,7 +159,7 @@
       <div class="space-12"></div>
       <div class="profile-user-info profile-user-info-striped">
         <div class="profile-info-row">
-          <div class="profile-info-name"> Nom </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.name'|trans }} </div>
           <div class="profile-info-value">
             <span id="username">{{ app.user.username }}</span>
           </div>
@@ -197,7 +193,7 @@
         <div class="profile-info-row">
           <div class="profile-info-name"> Age </div>
           <div class="profile-info-value">
-            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
+            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('U') }}" data-pk="3" data-type="date" id="age">
               {{ app.user.age }}
             </span>
           </div>
@@ -302,9 +298,3 @@
     </div>
   </div>
 {% endblock body %}
-
-{% block js %}
-<script type="text/javascript">
-  $(function(){ var d = new Dashboard(); });
-</script>
-{% endblock js %}
