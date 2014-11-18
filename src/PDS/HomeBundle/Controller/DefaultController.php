@@ -3,6 +3,8 @@
 namespace PDS\HomeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
@@ -30,5 +32,20 @@ class DefaultController extends Controller
                 'breadcrumbs' => $br->get($controler)
             )
         );
+    }
+    
+    public function updateAction()
+    {
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $response = new JsonResponse(
+                array(
+                    'status' => 200,
+                    'message' => 'Test de focntion ajax avec symfony'
+                )
+            );
+            return $response;
+        } else {
+            return new Response();
+        }
     }
 }

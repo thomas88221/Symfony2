@@ -104,12 +104,12 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 }
 
                 // _assetic_ccca1cb_3
-                if ($pathinfo === '/js/ccca1cb_part_1_3_jquery-ui.custom.min_4.js') {
+                if ($pathinfo === '/js/ccca1cb_part_1_3_ace.min_4.js') {
                     return array (  '_controller' => 'assetic.controller:render',  'name' => 'ccca1cb',  'pos' => 3,  '_format' => 'js',  '_route' => '_assetic_ccca1cb_3',);
                 }
 
                 // _assetic_ccca1cb_4
-                if ($pathinfo === '/js/ccca1cb_part_1_4_jquery.ui.touch-punch.min_5.js') {
+                if ($pathinfo === '/js/ccca1cb_part_1_4_ace-elements.min_5.js') {
                     return array (  '_controller' => 'assetic.controller:render',  'name' => 'ccca1cb',  'pos' => 4,  '_format' => 'js',  '_route' => '_assetic_ccca1cb_4',);
                 }
 
@@ -124,12 +124,12 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 }
 
                 // _assetic_ccca1cb_7
-                if ($pathinfo === '/js/ccca1cb_part_1_7_ace-elements.min_8.js') {
+                if ($pathinfo === '/js/ccca1cb_part_1_7_jquery-ui.custom.min_8.js') {
                     return array (  '_controller' => 'assetic.controller:render',  'name' => 'ccca1cb',  'pos' => 7,  '_format' => 'js',  '_route' => '_assetic_ccca1cb_7',);
                 }
 
                 // _assetic_ccca1cb_8
-                if ($pathinfo === '/js/ccca1cb_part_1_8_ace.min_9.js') {
+                if ($pathinfo === '/js/ccca1cb_part_1_8_jquery.ui.touch-punch.min_9.js') {
                     return array (  '_controller' => 'assetic.controller:render',  'name' => 'ccca1cb',  'pos' => 8,  '_format' => 'js',  '_route' => '_assetic_ccca1cb_8',);
                 }
 
@@ -290,6 +290,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
 
             return array (  '_controller' => 'PDS\\HomeBundle\\Controller\\DefaultController::indexAction',  '_route' => 'pds_home_homepage',);
+        }
+
+        // pds_account_update
+        if ($pathinfo === '/compte/update') {
+            return array (  '_controller' => 'PDS\\HomeBundle\\Controller\\DefaultController::updateAction',  '_route' => 'pds_account_update',);
         }
 
         // pds_home_inbox

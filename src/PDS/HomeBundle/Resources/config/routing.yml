@@ -1,6 +1,10 @@
 pds_home_homepage:
     path:     /
     defaults: { _controller: PDSHomeBundle:Default:index }
+    
+pds_account_update:
+    path:     /compte/update
+    defaults: { _controller: PDSHomeBundle:Default:update }
 
 pds_home_inbox:
     path:     /messages
