@@ -19,6 +19,7 @@
       <parameter key="PDSHomeBundle">PDS\HomeBundle\PDSHomeBundle</parameter>
       <parameter key="PDSUserBundle">PDS\UserBundle\PDSUserBundle</parameter>
       <parameter key="FOSUserBundle">FOS\UserBundle\FOSUserBundle</parameter>
+      <parameter key="PDSAjaxBundle">PDS\AjaxBundle\PDSAjaxBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -111,6 +112,7 @@
     <parameter key="session.handler.write_check.class">Symfony\Component\HttpFoundation\Session\Storage\Handler\WriteCheckSessionHandler</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="session.storage.options" type="collection">
+      <parameter key="cookie_lifetime">31536000</parameter>
       <parameter key="gc_probability">1</parameter>
     </parameter>
     <parameter key="session.save_path">/home/thomas/Documents/personnel/datas/git/Symfony2/app/cache/dev/sessions</parameter>
@@ -2326,6 +2328,7 @@
     </service>
     <service id="session.storage.native" class="Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage">
       <argument type="collection">
+        <argument key="cookie_lifetime">31536000</argument>
         <argument key="gc_probability">1</argument>
       </argument>
       <argument>null</argument>
@@ -2927,15 +2930,8 @@
           </service>
         </argument>
         <argument type="service">
-          <service class="Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider" public="false">
-            <argument type="service" id="security.user_checker"/>
-            <argument>62d1c1f9a80161348f1b22793cf87a58</argument>
-            <argument>secured_area</argument>
-          </service>
-        </argument>
-        <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5465f4e6b982e</argument>
+            <argument>546c8b99179c9</argument>
           </service>
         </argument>
       </argument>
@@ -3188,28 +3184,6 @@
                 <service class="Symfony\Component\Security\Http\Logout\SessionLogoutHandler" public="false"/>
               </argument>
             </call>
-            <call method="addHandler">
-              <argument type="service">
-                <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
-                  <argument type="collection">
-                    <argument type="service" id="fos_user.user_provider.username"/>
-                  </argument>
-                  <argument>62d1c1f9a80161348f1b22793cf87a58</argument>
-                  <argument>secured_area</argument>
-                  <argument type="collection">
-                    <argument key="name">REMEMBERME</argument>
-                    <argument key="lifetime">31536000</argument>
-                    <argument key="path">/</argument>
-                    <argument key="domain">null</argument>
-                    <argument key="secure">false</argument>
-                    <argument key="httponly">true</argument>
-                    <argument key="always_remember_me">false</argument>
-                    <argument key="remember_me_parameter">_remember_me</argument>
-                  </argument>
-                  <argument type="service" id="monolog.logger.security" on-invalid="null"/>
-                </service>
-              </argument>
-            </call>
           </service>
         </argument>
         <argument type="service">
@@ -3276,62 +3250,12 @@
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
             <argument>null</argument>
-            <call method="setRememberMeServices">
-              <argument type="service">
-                <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
-                  <argument type="collection">
-                    <argument type="service" id="fos_user.user_provider.username"/>
-                  </argument>
-                  <argument>62d1c1f9a80161348f1b22793cf87a58</argument>
-                  <argument>secured_area</argument>
-                  <argument type="collection">
-                    <argument key="name">REMEMBERME</argument>
-                    <argument key="lifetime">31536000</argument>
-                    <argument key="path">/</argument>
-                    <argument key="domain">null</argument>
-                    <argument key="secure">false</argument>
-                    <argument key="httponly">true</argument>
-                    <argument key="always_remember_me">false</argument>
-                    <argument key="remember_me_parameter">_remember_me</argument>
-                  </argument>
-                  <argument type="service" id="monolog.logger.security" on-invalid="null"/>
-                </service>
-              </argument>
-            </call>
-          </service>
-        </argument>
-        <argument type="service">
-          <service class="Symfony\Component\Security\Http\Firewall\RememberMeListener" public="false">
-            <argument type="service" id="security.context"/>
-            <argument type="service">
-              <service class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false">
-                <argument type="collection">
-                  <argument type="service" id="fos_user.user_provider.username"/>
-                </argument>
-                <argument>62d1c1f9a80161348f1b22793cf87a58</argument>
-                <argument>secured_area</argument>
-                <argument type="collection">
-                  <argument key="name">REMEMBERME</argument>
-                  <argument key="lifetime">31536000</argument>
-                  <argument key="path">/</argument>
-                  <argument key="domain">null</argument>
-                  <argument key="secure">false</argument>
-                  <argument key="httponly">true</argument>
-                  <argument key="always_remember_me">false</argument>
-                  <argument key="remember_me_parameter">_remember_me</argument>
-                </argument>
-                <argument type="service" id="monolog.logger.security" on-invalid="null"/>
-              </service>
-            </argument>
-            <argument type="service" id="security.authentication.manager"/>
-            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
-            <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
           </service>
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5465f4e6b982e</argument>
+            <argument>546c8b99179c9</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
           </service>
         </argument>
@@ -4042,6 +3966,7 @@
       <argument type="service" id="security.user_checker"/>
       <argument type="service" id="security.authentication.session_strategy"/>
       <argument type="service" id="service_container"/>
+      <argument type="collection"/>
     </service>
     <service id="fos_user.user_provider.username" class="FOS\UserBundle\Security\UserProvider" public="false">
       <argument type="service" id="fos_user.user_manager"/>
@@ -4480,6 +4405,10 @@
       <call method="addPath">
         <argument>/home/thomas/Documents/personnel/datas/git/Symfony2/vendor/friendsofsymfony/user-bundle/Resources/views</argument>
         <argument>FOSUser</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/thomas/Documents/personnel/datas/git/Symfony2/src/PDS/AjaxBundle/Resources/views</argument>
+        <argument>PDSAjax</argument>
       </call>
       <call method="addPath">
         <argument>/home/thomas/Documents/personnel/datas/git/Symfony2/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>

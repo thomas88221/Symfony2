@@ -1,3 +1,7 @@
+pds_ajax:
+    resource: "@PDSAjaxBundle/Resources/config/routing.yml"
+    prefix:   /
+
 pds_login:
     resource: "@PDSUserBundle/Resources/config/routing.yml"
     prefix:   /
