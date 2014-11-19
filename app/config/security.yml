@@ -40,8 +40,6 @@ security:
                 use_referer:                    false
             logout:
                 path: 'fos_user_security_logout'
-            remember_me:
-                key: "%secret%"
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods

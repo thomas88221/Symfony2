@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new PDS\HomeBundle\PDSHomeBundle(),
             new PDS\UserBundle\PDSUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new PDS\AjaxBundle\PDSAjaxBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -12,6 +12,7 @@
 
 namespace FOS\UserBundle;
 
+use FOS\UserBundle\DependencyInjection\Compiler\InjectRememberMeServicesPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use FOS\UserBundle\DependencyInjection\Compiler\ValidationPass;
@@ -30,6 +31,7 @@ class FOSUserBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new ValidationPass());
+        $container->addCompilerPass(new InjectRememberMeServicesPass());
 
         $this->addRegisterMappingsPass($container);
     }

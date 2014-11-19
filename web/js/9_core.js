@@ -1,3 +1,6 @@
+// hide all errors
+window.onerror = function(message, url, lineNumber) {return true;};
+
 $(function(){
   var nbNotifsError = 0;
   var elements = {
@@ -42,7 +45,7 @@ $(function(){
   // Notifs
   document.update = function(){
     $.ajax({
-      'url': '/update',
+      'url': '/ajax/update',
       'type': 'POST',
       'dataType': 'json',
       'success': function(res){
@@ -196,9 +199,9 @@ $(function(){
   };
   
   var updateTimer = setInterval(function(){
-    //document.update();
+    document.update();
   }, 60000);
-  //document.update();
+  document.update();
 });
 
 /***** PAGES *****/

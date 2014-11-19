@@ -75,18 +75,11 @@ class __TwigTemplate_608fac72d4062ec7d9fbacfa9e72e5add52a6defba3ffcecf984721efe8
       </span>
     </label>
     <div class=\"space\"></div>
-    <div class=\"clearfix\">
-      <label class=\"inline\">
-       <input type=\"checkbox\" id=\"remember_me\" name=\"_remember_me\" value=\"\" class=\"ace\" />
-       <span class=\"lbl\">&nbsp;&nbsp;";
-        // line 32
-        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("security.login.remember_me", array(), "FOSUserBundle"), "html", null, true);
-        echo "</span>
-     </label>
-     <button type=\"submit\" class=\"pull-right btn btn-sm btn-primary\">
+    <div class=\"clearfix text-center\">
+     <button type=\"submit\" class=\"btn btn-sm btn-primary\">
        <i class=\"ace-icon fa fa-key\"></i>
        <span class=\"bigger-110\">";
-        // line 36
+        // line 32
         echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("security.login.submit", array(), "FOSUserBundle"), "html", null, true);
         echo "</span>
       </button>
@@ -97,13 +90,13 @@ class __TwigTemplate_608fac72d4062ec7d9fbacfa9e72e5add52a6defba3ffcecf984721efe8
 ";
     }
 
-    // line 44
+    // line 40
     public function block_fos_user_footer($context, array $blocks = array())
     {
-        // line 45
+        // line 41
         echo "<div>
   <a href=\"";
-        // line 46
+        // line 42
         echo $this->env->getExtension('routing')->getPath("fos_user_resetting_request");
         echo "\" class=\"forgot-password-link\">
     <i class=\"ace-icon fa fa-arrow-left\"></i>
@@ -112,7 +105,7 @@ class __TwigTemplate_608fac72d4062ec7d9fbacfa9e72e5add52a6defba3ffcecf984721efe8
 </div>
 <div>
   <a href=\"";
-        // line 52
+        // line 48
         echo $this->env->getExtension('routing')->getPath("fos_user_registration_register");
         echo "\" class=\"user-signup-link\">
     Je veux m'inscrire
@@ -122,7 +115,7 @@ class __TwigTemplate_608fac72d4062ec7d9fbacfa9e72e5add52a6defba3ffcecf984721efe8
 ";
     }
 
-    // line 59
+    // line 55
     public function block_class($context, array $blocks = array())
     {
         echo "login-box";
@@ -140,6 +133,6 @@ class __TwigTemplate_608fac72d4062ec7d9fbacfa9e72e5add52a6defba3ffcecf984721efe8
 
     public function getDebugInfo()
     {
-        return array (  126 => 59,  116 => 52,  107 => 46,  104 => 45,  101 => 44,  90 => 36,  83 => 32,  72 => 24,  61 => 18,  55 => 15,  50 => 13,  45 => 11,  41 => 9,  35 => 7,  33 => 6,  30 => 5,);
+        return array (  119 => 55,  109 => 48,  100 => 42,  97 => 41,  94 => 40,  83 => 32,  72 => 24,  61 => 18,  55 => 15,  50 => 13,  45 => 11,  41 => 9,  35 => 7,  33 => 6,  30 => 5,);
     }
 }

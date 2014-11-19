@@ -283,6 +283,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // pds_ajax_homepage
+        if ($pathinfo === '/ajax/update') {
+            return array (  '_controller' => 'PDS\\AjaxBundle\\Controller\\DefaultController::notificationsAction',  '_route' => 'pds_ajax_homepage',);
+        }
+
         // pds_home_homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

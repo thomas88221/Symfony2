@@ -1,0 +1,3 @@
+pds_ajax_homepage:
+    path:     /ajax/update
+    defaults: { _controller: PDSAjaxBundle:Default:notifications }

@@ -12,10 +12,6 @@ Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: R
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.listener.form" (parent: security.authentication.listener.abstract).
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.listener.form.secured_area" (parent: security.authentication.listener.form).
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.form_entry_point.secured_area" (parent: security.authentication.form_entry_point).
-Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.provider.rememberme.secured_area" (parent: security.authentication.provider.rememberme).
-Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.rememberme.services.simplehash" (parent: security.authentication.rememberme.services.abstract).
-Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.rememberme.services.simplehash.secured_area" (parent: security.authentication.rememberme.services.simplehash).
-Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.listener.rememberme.secured_area" (parent: security.authentication.listener.rememberme).
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.listener.anonymous.secured_area" (parent: security.authentication.listener.anonymous).
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.authentication.provider.anonymous.secured_area" (parent: security.authentication.provider.anonymous).
 Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass: Resolving inheritance for "security.exception_listener.secured_area" (parent: security.exception_listener).
@@ -189,7 +185,6 @@ Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inl
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "sensio_framework_extra.routing.loader.annot_file" to "routing.resolver".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "routing.resolver" to "routing.loader".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.provider.dao.secured_area" to "security.authentication.manager".
-Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.provider.rememberme.secured_area" to "security.authentication.manager".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.provider.anonymous.secured_area" to "security.authentication.manager".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.access.role_hierarchy_voter" to "security.access.decision_manager".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.access.expression_voter" to "security.access.decision_manager".
@@ -216,7 +211,6 @@ Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inl
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.context_listener.0" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.logout_listener.secured_area" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.listener.form.secured_area" to "security.firewall.map.context.secured_area".
-Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.listener.rememberme.secured_area" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.listener.anonymous.secured_area" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.access_listener" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.exception_listener.secured_area" to "security.firewall.map.context.secured_area".
@@ -335,8 +329,6 @@ Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Remo
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.failure_handler.secured_area.form_login"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.listener.form.secured_area"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.form_entry_point.secured_area"; reason: unused
-Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.provider.rememberme.secured_area"; reason: unused
-Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.listener.rememberme.secured_area"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.listener.anonymous.secured_area"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.provider.anonymous.secured_area"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.exception_listener.secured_area"; reason: unused
@@ -422,12 +414,9 @@ Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inl
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.user.provider.concrete.in_memory" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
-Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.rememberme.services.simplehash.secured_area" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
-Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.rememberme.services.simplehash.secured_area" to "security.firewall.map.context.secured_area".
-Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.authentication.rememberme.services.simplehash.secured_area" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.access_map" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
 Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass: Inlined service "security.http_utils" to "security.firewall.map.context.secured_area".
@@ -437,5 +426,4 @@ Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Remo
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.http_utils"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.access_map"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.user.provider.concrete.in_memory"; reason: unused
-Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "security.authentication.rememberme.services.simplehash.secured_area"; reason: unused
 Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass: Removed service "sensio_framework_extra.routing.loader.annot_class"; reason: unused
