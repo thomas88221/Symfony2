@@ -37,6 +37,15 @@ dashboard:
         valid: "Valider"
     form:
         name: "Nom"
+        email: "Email"
+        adress: "Adresse"
+        country: "Modifier mon pays"
+        city: "Modifier ma ville"
+        age: "Age"
+        register: "Inscription"
+        last_conn: "Dernière connexion"
+        related: "A propos"
+        desc: "Modifier ma description"
     
 errors:
     update:
@@ -44,3 +53,4 @@ errors:
         date: "Date invalide"
         unauthorized: "Accès non autorisé"
         save: "Erreur pendant la sauvegarde"
+        avatar_empty: "Aucune image de profil sélectionnée"
