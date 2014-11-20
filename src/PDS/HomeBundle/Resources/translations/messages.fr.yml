@@ -24,3 +24,11 @@ dashboard:
     image:
         change: "Changer d'avatar"
         empty:  "Pas de fichier ..."
+        
+errors:
+    update:
+        params: "Erreur de paramètres"
+        date: "Date invalide"
+        unauthorized: "Accès non autorisé"
+        save: "Erreur pendant la sauvegarde"
+        

@@ -1,5 +1,22 @@
 // hide all errors
-window.onerror = function(message, url, lineNumber) {return true;};
+document.allErrors = [];
+window.onerror = function(message, url, lineNumber) {
+  document.allErrors.push({
+    'message': message,
+    'url': url,
+    'lineNumber': lineNumber
+  });
+  return true;
+};
+document.getAllErrors = function () {
+  if (document.allErrors.length == 0) {
+    console.dir("Aucune erreur détectée");
+  } else {
+    for (i in document.allErrors) {
+      console.dir(document.allErrors[i]);
+    }
+  }
+};
 
 $(function(){
   var nbNotifsError = 0;

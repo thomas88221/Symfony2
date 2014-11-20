@@ -74,7 +74,6 @@
       </div>
       <div class="space-6"></div>
       <div class="profile-contact-info" id="social-links">
-        {{ app.user.social }}
         <div class="profile-social-links align-center">
           <a href="{{ app.user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="Modifiez le lien vers votre compte Facebook">
             <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
@@ -221,13 +220,9 @@
         <div class="profile-info-row">
           <div class="profile-info-name"> A propos </div>
           <div class="profile-info-value">
-            <span class="editable editable-click" data-inputclass="textarea-update-profile" data-rows="2" data-pk="4" data-type="textarea" id="about">
-              {% if app.user.various is empty %}
-                Modifier ma description
-              {% else %}
-                {{ app.user.various }}
-              {% endif %}
-            </span>
+            <span class="editable editable-click" data-inputclass="textarea-update-profile" data-rows="2" data-pk="4" data-type="textarea" id="about"
+            >{% if app.user.various is empty %}Modifier ma description
+              {% else %}{{ app.user.various }}{% endif %}</span>
           </div>
         </div>
       </div>

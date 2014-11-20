@@ -299,12 +299,24 @@ class Users extends BaseUser
      */
     public function setSocial($social)
     {
-        if(!empty($social)){
-            $social = json_decode($social);
-        }
         $this->social = $social;
 
         return $this;
+    }
+    
+    /**
+     * Set value for social website
+     * 
+     * @param string $type
+     * @param string $value
+     */
+    public function setSocialType($type, $value)
+    {
+        if(!empty($this->social)){
+            $c = json_decode($this->social, true);
+        }
+        $c[$type] = $value;
+        $this->social = json_encode($c);
     }
 
     /**
@@ -312,7 +324,7 @@ class Users extends BaseUser
      *
      * @return string 
      */
-    public function getSocial()
+    public function getSocial($decode = false)
     {
         return $this->social;
     }
@@ -323,8 +335,11 @@ class Users extends BaseUser
      * @return boolean
      */
     public function getSocialFb(){
-        if(!empty($this->social) && !empty($this->social->fb)){
-            return $this->social->fb;
+        if(!empty($this->social)){
+            $social = json_decode($this->social);
+        }
+        if(!empty($social) && !empty($social->fb)){
+            return $social->fb;
         } else {
             return false;
         }
@@ -336,8 +351,11 @@ class Users extends BaseUser
      * @return boolean
      */
     public function getSocialGg(){
-        if(!empty($this->social) && !empty($this->social->gg)){
-            return $this->social->gg;
+        if(!empty($this->social)){
+            $social = json_decode($this->social);
+        }
+        if(!empty($social) && !empty($social->gg)){
+            return $social->gg;
         } else {
             return false;
         }
@@ -349,8 +367,11 @@ class Users extends BaseUser
      * @return boolean
      */
     public function getSocialTw(){
-        if(!empty($this->social) && !empty($this->social->tw)){
-            return $this->social->tw;
+        if(!empty($this->social)){
+            $social = json_decode($this->social);
+        }
+        if(!empty($social) && !empty($social->tw)){
+            return $social->tw;
         } else {
             return false;
         }
@@ -362,8 +383,11 @@ class Users extends BaseUser
      * @return boolean
      */
     public function getSocialPt(){
-        if(!empty($this->social) && !empty($this->social->pt)){
-            return $this->social->pt;
+        if(!empty($this->social)){
+            $social = json_decode($this->social);
+        }
+        if(!empty($social) && !empty($social->pt)){
+            return $social->pt;
         } else {
             return false;
         }
@@ -375,8 +399,11 @@ class Users extends BaseUser
      * @return boolean
      */
     public function getSocialIt(){
-        if(!empty($this->social) && !empty($this->social->it)){
-            return $this->social->it;
+        if(!empty($this->social)){
+            $social = json_decode($this->social);
+        }
+        if(!empty($social) && !empty($social->it)){
+            return $social->it;
         } else {
             return false;
         }

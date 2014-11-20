@@ -36,16 +36,66 @@ class DefaultController extends Controller
     
     public function updateAction()
     {
-        if($this->getRequest()->isXmlHttpRequest()) {
-            $response = new JsonResponse(
-                array(
-                    'status' => 200,
-                    'message' => 'Test de focntion ajax avec symfony'
-                )
-            );
-            return $response;
+        $request = $this->getRequest();
+        if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
+            $em = $this->getDoctrine()->getEntityManager();
+            $datas = $request->request;
+            $translator = $this->get('translator');
+            $user = $this->getUser();
+            $em->persist($user);
+            $name = $datas->get('name');
+            $value = strip_tags($datas->get('value'));
+            if(empty($name) || empty($value)){
+                return new JsonResponse(
+                    $translator->trans('errors.update.params'),
+                    400
+                );
+            }
+            switch($name){
+                case 'country': $user->setCountry($value); break;
+                case 'town': $user->setTown($value); break;
+                case 'about': $user->setVarious($value); break;
+                case 'age':
+                    /*$tab = explode('/', $value);
+                    if(empty($tab[0]) || empty($tab[1]) || empty($tab[2])){
+                        return new JsonResponse(
+                            $translator->trans('errors.update.date'),
+                            400
+                        );
+                    }
+                    $date = new Dates();
+                    $date->setDate($tab[0], $tab[1], $tab[2]);
+                    if((time() - $date->getTimestamp()) < 3600*24*365*16){
+                        return new JsonResponse(
+                            $translator->trans('errors.update.date'),
+                            400
+                        );
+                    }
+                    $user->setBirthday("{$tab[2]}-{$tab[1]}-{$tab[0]} 00:00:00");*/
+                    $date = new \DateTime($value);
+                    var_dump($date);exit;
+                    break;
+                case 'social':
+                    $type = $datas->get('type');
+                    $user->setSocialType($type, $value);
+                    break;
+            }
+            try{
+                $em->flush();
+                return new JsonResponse(
+                    array(
+                        'status' => 1,
+                        'msg' => 'OK'
+                    )
+                );
+            }catch(\Exception $e){
+                return new JsonResponse(
+                    $translator->trans('errors.update.save').$e->getMessage(),
+                    500
+                );
+            }
         } else {
-            return new Response();
+            throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
         }
     }
 }
