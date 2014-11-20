@@ -1,5 +1,5 @@
 // hide all errors
-document.allErrors = [];
+/*document.allErrors = [];
 window.onerror = function(message, url, lineNumber) {
   document.allErrors.push({
     'message': message,
@@ -16,7 +16,7 @@ document.getAllErrors = function () {
       console.dir(document.allErrors[i]);
     }
   }
-};
+};*/
 
 $(function(){
   var nbNotifsError = 0;
@@ -224,6 +224,7 @@ $(function(){
 /***** PAGES *****/
 
 var Dashboard = function(params){
+	  console.dir('a');
   document.addStyle("/css/other/bootstrap-editable.css");
   document.addScript("/js/other/bootstrap-editable.js", function(){
     $.fn.editable.defaults.mode = 'inline';

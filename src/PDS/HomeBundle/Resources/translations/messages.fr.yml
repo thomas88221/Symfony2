@@ -26,16 +26,6 @@ dashboard:
     image:
         change: "Changer d'avatar"
         empty:  "Pas de fichier ..."
-<<<<<<< HEAD
-        
-errors:
-    update:
-        params: "Erreur de paramètres"
-        date: "Date invalide"
-        unauthorized: "Accès non autorisé"
-        save: "Erreur pendant la sauvegarde"
-        
-=======
     social:
         fb: "Modifiez le lien vers votre compte Facebook"
         gg: "Modifiez le lien vers votre compte Google +"
@@ -47,5 +37,10 @@ errors:
         valid: "Valider"
     form:
         name: "Nom"
-        
->>>>>>> master
+    
+errors:
+    update:
+        params: "Erreur de paramètres"
+        date: "Date invalide"
+        unauthorized: "Accès non autorisé"
+        save: "Erreur pendant la sauvegarde"

@@ -72,8 +72,19 @@ class DefaultController extends Controller
                         );
                     }
                     $user->setBirthday("{$tab[2]}-{$tab[1]}-{$tab[0]} 00:00:00");*/
-                    $date = new \DateTime($value);
-                    var_dump($date);exit;
+                    $tab = explode('/', $value);
+                    $string = $tab[2].'-'.$tab[1].'-'.$tab[0];
+                    $date = new \DateTime($string);
+                    $now = new \DateTime();
+                    $diff = $now->diff($date);
+                    if($diff->y < 16){
+                        return new JsonResponse(
+                            $translator->trans('errors.update.date'),
+                            400
+                        );
+                    }else{
+                        $user->setBirthday($date);
+                    }
                     break;
                 case 'social':
                     $type = $datas->get('type');
