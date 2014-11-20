@@ -56,22 +56,6 @@ class DefaultController extends Controller
                 case 'town': $user->setTown($value); break;
                 case 'about': $user->setVarious($value); break;
                 case 'age':
-                    /*$tab = explode('/', $value);
-                    if(empty($tab[0]) || empty($tab[1]) || empty($tab[2])){
-                        return new JsonResponse(
-                            $translator->trans('errors.update.date'),
-                            400
-                        );
-                    }
-                    $date = new Dates();
-                    $date->setDate($tab[0], $tab[1], $tab[2]);
-                    if((time() - $date->getTimestamp()) < 3600*24*365*16){
-                        return new JsonResponse(
-                            $translator->trans('errors.update.date'),
-                            400
-                        );
-                    }
-                    $user->setBirthday("{$tab[2]}-{$tab[1]}-{$tab[0]} 00:00:00");*/
                     $tab = explode('/', $value);
                     $string = $tab[2].'-'.$tab[1].'-'.$tab[0];
                     $date = new \DateTime($string);
@@ -108,5 +92,31 @@ class DefaultController extends Controller
         } else {
             throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
         }
+    }
+    
+    public function changeAvatarAction(){
+        $request = $this->getRequest();
+        $translator = $this->get('translator');
+        if($request->getMethod() !== 'POST'){
+            throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
+        } else {
+            $file = $request->files->get('avatar');
+            if(empty($file)){
+                $this->get('session')->getFlashBag()->add(
+                    'errors',
+                    $translator->trans('errors.update.avatar_empty')
+                );
+                return $this->redirect($this->generateUrl('pds_home_homepage'));
+            }else{
+                $user = $this->getUser();
+                $name = $user->getId().'.'.$file->guessExtension();
+                $file->move(WEB_PATH.'/avatars', $name);
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $user->setAvatar($name);
+                $em->flush();
+            }
+        }
+        return $this->redirect($this->generateUrl('pds_home_homepage'));
     }
 }

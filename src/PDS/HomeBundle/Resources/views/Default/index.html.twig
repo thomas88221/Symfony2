@@ -2,21 +2,6 @@
 {% block title %}{{ 'menu.dashboard'|trans }}{% endblock %}
 
 {% block body %}
-  {% for flashMessage in app.session.flashbag.get('errors') %}
-    <div class="alert alert-danger">
-        {{ flashMessage }}
-    </div>
-  {% endfor %}
-  {% for flashMessage in app.session.flashbag.get('infos') %}
-    <div class="alert alert-info">
-        {{ flashMessage }}
-    </div>
-  {% endfor %}
-  {% for flashMessage in app.session.flashbag.get('success') %}
-    <div class="alert alert-success">
-        {{ flashMessage }}
-    </div>
-  {% endfor %}
   <div class="user-profile row">
     <div class="col-xs-12 col-sm-3 center">
       <div>
@@ -164,25 +149,25 @@
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> Email </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.email'|trans }} </div>
           <div class="profile-info-value">
             <span id="mail">{{ app.user.email }}</span>
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> Adresse </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.adress'|trans }} </div>
           <div class="profile-info-value">
             <i class="fa fa-map-marker light-orange bigger-110"></i>
             <span class="editable editable-click" data-pk="1" data-type="text" id="country">
               {% if app.user.country is empty %}
-                Modifier mon pays
+                {{ 'dashboard.form.country'|trans }}
               {% else %}
                 {{ app.user.country }}
               {% endif %}
             </span>
             <span class="editable editable-click" data-pk="2" data-type="text" id="town">
               {% if app.user.town is empty %}
-                Modifier ma ville
+                {{ 'dashboard.form.city'|trans }}
               {% else %}
                 {{ app.user.town }}
               {% endif %}
@@ -190,7 +175,7 @@
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> Age </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.age'|trans }} </div>
           <div class="profile-info-value">
             <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
               {{ app.user.age }}
@@ -198,7 +183,7 @@
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> Inscription </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.register'|trans }} </div>
           <div class="profile-info-value">
             <span id="signup">
               {{ app.user.dateCreated|date('d/m/Y') }}
@@ -206,7 +191,7 @@
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> Dernière connexion </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.last_conn'|trans }} </div>
           <div class="profile-info-value">
             <span id="login">
               {{ app.user.lastLogin|date('d/m/Y H:i') }}
@@ -214,10 +199,10 @@
           </div>
         </div>
         <div class="profile-info-row">
-          <div class="profile-info-name"> A propos </div>
+          <div class="profile-info-name"> {{ 'dashboard.form.related'|trans }} </div>
           <div class="profile-info-value">
             <span class="editable editable-click" data-inputclass="textarea-update-profile" data-rows="2" data-pk="4" data-type="textarea" id="about"
-            >{% if app.user.various is empty %}Modifier ma description
+            >{% if app.user.various is empty %}{{ 'dashboard.form.desc'|trans }}
               {% else %}{{ app.user.various }}{% endif %}</span>
           </div>
         </div>
