@@ -5,6 +5,7 @@ namespace PDS\HomeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\Image;
 
 class DefaultController extends Controller
 {
@@ -108,6 +109,7 @@ class DefaultController extends Controller
                 );
                 return $this->redirect($this->generateUrl('pds_home_homepage'));
             }else{
+                var_dump(get_class_methods($file));exit;
                 $user = $this->getUser();
                 $name = $user->getId().'.'.$file->guessExtension();
                 $file->move(WEB_PATH.'/avatars', $name);

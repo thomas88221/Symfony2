@@ -436,6 +436,16 @@ class Users extends BaseUser
     }
 
     /**
+     * Get avatar with her path
+     *
+     * @return string 
+     */
+    public function getAvatarWithPath()
+    {
+        return '/avatars/'.$this->getAvatar();
+    }
+
+    /**
      * Set isActivated
      *
      * @param boolean $isActivated
