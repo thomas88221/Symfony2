@@ -89,7 +89,7 @@
             </li>
             <li class="light-blue">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                <img class="nav-user-photo" src="{{ asset('avatars/profile-pic.jpg') }}" alt="{{ app.user.username }}">
+                <img class="nav-user-photo" src="{{ app.user.avatarWithPath | apply_filter('thumb_profile_navbar') }}" alt="{{ app.user.username }}">
                 <span class="user-info">
                   <small>{{ 'layout.welcome'|trans }}</small>
                   {{ app.user.username }}
@@ -215,6 +215,24 @@
               </button>
               <div class="clearfix"></div>
             </div>
+              {% for flashMessage in app.session.flashbag.get('errors') %}
+                <div class="alert alert-danger">
+                  {{ flashMessage }}
+                  <span class="close" data-dismiss="alert">x</span>
+                </div>
+              {% endfor %}
+              {% for flashMessage in app.session.flashbag.get('infos') %}
+                <div class="alert alert-info">
+                  {{ flashMessage }}
+                  <span class="close" data-dismiss="alert">x</span>
+                </div>
+              {% endfor %}
+              {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                  {{ flashMessage }}
+                  <span class="close" data-dismiss="alert">x</span>
+                </div>
+              {% endfor %}
             {% block body %}
             {% endblock body %}
           </div>

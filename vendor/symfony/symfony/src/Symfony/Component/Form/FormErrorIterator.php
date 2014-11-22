@@ -74,8 +74,6 @@ class FormErrorIterator implements \RecursiveIterator, \SeekableIterator, \Array
         $this->errors = $errors;
     }
 
-    private $errorsReturn = array();
-    
     /**
      * Returns all iterated error messages as string.
      *
@@ -96,18 +94,6 @@ class FormErrorIterator implements \RecursiveIterator, \SeekableIterator, \Array
         }
 
         return $string;
-    }
-    
-    public function getErrorsTab(){
-        foreach ($this->errors as $error) {
-            if ($error instanceof FormError) {
-                return $error->getMessage();
-            } else {
-                $this->errorsReturn[] = $error->getErrorsTab();
-            }
-        }
-
-        return $this->errorsReturn;
     }
 
     /**

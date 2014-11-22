@@ -11,26 +11,20 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $request = $this->getRequest();
-        $controler = $request->attributes->get('_controller');
-        $tab = explode('\\', $controler);
         $userManager = $this->get('fos_user.user_manager');
         $translator = $this->get('translator');
+        $menu = $this->get('menu');
         $br = $this->get('breadcrumbs');
-        $br->init($request, $translator, $this);
-        
-        /*$this->get('session')->getFlashBag()->add(
-            'infos',
-            'Vos changements ont été sauvegardés!'
-        );a*/
+        $br->init($this->getRequest(), $translator, $this);
+        $menu->init($this->getRequest(), $translator, $this);
         
         return $this->render(
             'PDSHomeBundle:Default:index.html.twig',
             array(
-                'bundle' => $tab[1],
+                'bundle' => $menu->get('bundle'),
                 'title' => $translator->trans('menu.dashboard'),
                 'description' => $translator->trans('dashboard.description'),
-                'breadcrumbs' => $br->get($controler)
+                'breadcrumbs' => $br->get($menu->get('controller'))
             )
         );
     }
@@ -109,7 +103,6 @@ class DefaultController extends Controller
                 );
                 return $this->redirect($this->generateUrl('pds_home_homepage'));
             }else{
-                var_dump(get_class_methods($file));exit;
                 $user = $this->getUser();
                 $name = $user->getId().'.'.$file->guessExtension();
                 $file->move(WEB_PATH.'/avatars', $name);

@@ -1,0 +1,3 @@
+pds_friends_homepage:
+    path:     /amis
+    defaults: { _controller: PDSFriendsBundle:Default:index }

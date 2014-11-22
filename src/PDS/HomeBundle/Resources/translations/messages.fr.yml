@@ -46,7 +46,10 @@ dashboard:
         last_conn: "Dernière connexion"
         related: "A propos"
         desc: "Modifier ma description"
-    
+
+friends:
+    description: "Vos amis"
+
 errors:
     update:
         params: "Erreur de paramètres"
