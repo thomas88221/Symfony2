@@ -47,6 +47,7 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
         if (!$providers) {
             throw new \InvalidArgumentException('You must at least add one authentication provider.');
         }
+
         $this->providers = $providers;
         $this->eraseCredentials = (bool) $eraseCredentials;
     }

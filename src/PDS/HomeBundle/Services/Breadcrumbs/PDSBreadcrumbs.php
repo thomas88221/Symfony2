@@ -36,6 +36,12 @@ class PDSBreadcrumbs
                     'title' => $this->translator->trans('menu.dashboard')
                 );
                 break;
+            case 'PDS\FriendsBundle\Controller\DefaultController::indexAction':
+                $this->datas[] = array(
+                    'current' => true,
+                    'title' => $this->translator->trans('menu.friends')
+                );
+                break;
         }
         return $this->datas;
     }

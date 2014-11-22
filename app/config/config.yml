@@ -77,6 +77,17 @@ fos_user:
     firewall_name: main
     user_class:    PDS\UserBundle\Entity\Users
 
+avalanche_imagine:
+    filters:
+        thumb_profile_navbar:
+            type:    relative_resize
+            options: { widen: 40 }
+        thumb_profile_dashboard:
+            type:    relative_resize
+            options: { widen: 400 }
+
 services:
     breadcrumbs:
         class: PDS\HomeBundle\Services\Breadcrumbs\PDSBreadcrumbs
+    menu:
+        class: PDS\HomeBundle\Services\Menu\PDSMenu

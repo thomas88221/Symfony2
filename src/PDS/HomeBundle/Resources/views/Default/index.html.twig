@@ -6,7 +6,7 @@
     <div class="col-xs-12 col-sm-3 center">
       <div>
         <div class="profile-picture">
-          <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ asset('avatars/') }}{{ app.user.avatar }}" />
+          <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ app.user.avatarWithPath | apply_filter('thumb_profile_dashboard') }}" />
           <div id="avatar-change-container" class="editable-container editable-inline hide">
             <div>
               <div class="editableform-loading hide">
