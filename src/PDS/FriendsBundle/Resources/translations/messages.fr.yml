@@ -2,4 +2,19 @@ menu:
     friends: "Amis"
 
 friends:
-    description: "Mes amis"
+    description: "Gestion des amis"
+    placeholder: "Rechercher"
+    go: "Go"
+    myfriends: "Mes amis"
+    nofriends: "Vous n'avez pas encore de relations"
+    searchnew: "Recherchez dès à présents des utilisateurs"
+    see: "Voir le profil"
+    name: "Nom"
+    profil: "Profil"
+    next: "Suivants"
+    title:
+        block1: "Recherche"
+        
+errors:
+    search:
+        empty: "Recherche vide"

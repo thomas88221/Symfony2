@@ -1,3 +1,7 @@
 pds_friends_homepage:
     path:     /amis
     defaults: { _controller: PDSFriendsBundle:Default:index }
+    
+pds_friends_search:
+    path:     /friends/search
+    defaults: { _controller: PDSFriendsBundle:Default:search }

@@ -224,7 +224,6 @@ $(function(){
 /***** PAGES *****/
 
 var Dashboard = function(params){
-	  console.dir('a');
   document.addStyle("/css/other/bootstrap-editable.css");
   document.addScript("/js/other/bootstrap-editable.js", function(){
     $.fn.editable.defaults.mode = 'inline';
@@ -319,3 +318,104 @@ var Dashboard = function(params){
   return this.bind();
 };
 
+var Friends = function(params){ 
+  var self = this; 
+  this.spinnerSearch = $('#spinner-search'); 
+  this.buttonSearch = $('#button-search'); 
+  this.inputSearch = $('#input-search'); 
+  this.resultsSearch = $('#results-search'); 
+  this.offset = 0; 
+  this.limit = 10; 
+  this.urls = { 
+    'search': '/friends/search' 
+  }; 
+  this.search = function(obj, next){ 
+    var self = this; 
+    var val = this.inputSearch.val(); 
+    console.dir(this.inputSearch);
+    if(val.length == 0) return; 
+    $(obj).attr('disabled', 'disabled'); 
+    if(next != true){ 
+      self.spinnerSearch.removeClass('hide'); 
+    } else { 
+      $(obj).find('i').removeClass('fa-share').addClass('fa-refresh fa-spin'); 
+    } 
+    $.ajax({ 
+      'url': self.urls['search'], 
+      'type': 'POST', 
+      'dataType': 'json', 
+      'data': { 
+        'val': val, 
+        'limit': self.limit, 
+        'offset': self.offset 
+      }, 
+      'success': function(res){
+        self.spinnerSearch.addClass('hide'); 
+        if(res.length == 0 && next != true){ 
+          self.resultsSearch.find('tfoot').addClass('hide'); 
+          self.resultsSearch.removeClass('hide').find('tbody').html('<tr><td><h5 class="text-center">Il n\'y a pas de résultat</h5></td></tr>'); 
+        } else {
+          var html = ''; 
+          var i = 0; 
+          $.each(res, function(name, datas){ 
+            html += '<tr>'+ 
+              '<td class="img">'+ 
+                '<img src="/images/profils/'+datas['th']+'" />'+ 
+              '</td>'+ 
+              '<td>'+ 
+                name+ 
+              '</td>'+ 
+              '<td class="btn-case text-center">'+ 
+                '<a href="/utilisateur/'+datas['id']+'/profil" class="btn btn-primary">'+ 
+                  '<i class="fa fa-user margin-right-20"></i>'+ 
+                  'Profil'+ 
+                '</a>'+ 
+              '</td>'+ 
+            '</tr>'; 
+            i++; 
+          }); 
+          if(i == self.limit){ 
+            self.resultsSearch.find('tfoot').removeClass('hide'); 
+          }else{ 
+            self.resultsSearch.find('tfoot').addClass('hide'); 
+          } 
+          self.resultsSearch.removeClass('hide').find('tbody').append(html); 
+        } 
+        $(obj).removeAttr('disabled', 'disabled'); 
+        if(next == true){ 
+          $(obj).find('i').addClass('fa-share').removeClass('fa-refresh fa-spin'); 
+        } 
+      }, 
+      'error': function(res){ 
+        self.spinnerSearch.addClass('hide'); 
+        document.showAlert(res.responseText, 'danger'); 
+        $(obj).removeAttr('disabled', 'disabled'); 
+      } 
+    }); 
+  };
+  
+  this.bind = function(){ 
+    var self = this; 
+    this.buttonSearch.on('click', function(e){ 
+      self.resultsSearch.removeClass('hide').find('tbody').empty(); 
+      self.offset = 0; 
+      self.search(this); 
+      e.preventDefault(); 
+    }); 
+    this.resultsSearch.find('tfoot .next').on('click', function(e){ 
+      self.offset += self.limit; 
+      self.search(this, true); 
+      e.preventDefault(); 
+    }); 
+    this.inputSearch.on('keyup', function(e){ 
+      if(e.keyCode == 13){ 
+        self.buttonSearch.trigger('click'); 
+        e.preventDefault(); 
+      } 
+    }); 
+    
+    return self; 
+   };
+ 
+  return this.bind(); 
+}; 
