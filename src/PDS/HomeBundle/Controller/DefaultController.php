@@ -32,17 +32,17 @@ class DefaultController extends Controller
     public function updateAction()
     {
         $request = $this->getRequest();
+        $translator = $this->get('translator');
         if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
             $em = $this->getDoctrine()->getEntityManager();
             $datas = $request->request;
-            $translator = $this->get('translator');
             $user = $this->getUser();
             $em->persist($user);
             $name = $datas->get('name');
             $value = strip_tags($datas->get('value'));
             if(empty($name) || empty($value)){
                 return new JsonResponse(
-                    $translator->trans('errors.update.params'),
+                    $translator->trans('errors.search.params'),
                     400
                 );
             }
