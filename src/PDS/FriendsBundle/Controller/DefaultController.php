@@ -4,6 +4,7 @@ namespace PDS\FriendsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Common\Collections\Criteria;
 
 class DefaultController extends Controller
 {

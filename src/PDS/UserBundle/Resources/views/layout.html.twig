@@ -21,11 +21,6 @@
     <![endif]-->
   </head>
   <body class="login-layout blur-login">
-    <div style="margin: 40px 20px; text-align: center;background-color: white;">
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-      {% endif %}
-    </div>
     <div class="main-container">
       <div class="main-content">
         <div class="row">

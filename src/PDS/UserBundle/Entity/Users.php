@@ -99,7 +99,7 @@ class Users extends BaseUser
         $this->followers = 0;
         $this->following = 0;
         $this->dateCreated = new \DateTime();
-        $this->birthday = '';
+        $this->birthday = new \DateTime();
         $this->country = '';
         $this->town = '';
         $this->various = '';
@@ -253,7 +253,13 @@ class Users extends BaseUser
      */
     public function getBirthday()
     {
-        return $this->birthday;
+        $d2 = new \DateTime();
+        $dateDiff = $d2->diff($this->birthday, true);
+        if($dateDiff->y < 16){
+            return null;
+        } else {
+            return $this->birthday;
+        }
     }
 
     /**
@@ -433,6 +439,42 @@ class Users extends BaseUser
             $this->avatar = 'profile-pic.jpg';
         }
         return $this->avatar;
+    }
+    
+    /**
+     * Retourne les informations de l'avatar
+     * 
+     * @return NULL|array:
+     */
+    public function getAvatarSize()
+    {
+        if (empty($this->avatar)) {
+            return null;
+        } else {
+            return getimagesize(WEB_PATH.'/avatars/'.$this->avatar);
+        }
+    }
+    
+    /**
+     * Retourne la largeur de l'avatar
+     * 
+     * @return integer
+     */
+    public function getAvatarWidth()
+    {
+        $tab = $this->getAvatarSize();
+        return (integer) $tab[0];
+    }
+    
+    /**
+    /* Retourne la hauteur de l'avatar
+     * 
+     * @return integer
+     */
+    public function getAvatarHeight()
+    {
+        $tab = $this->getAvatarSize();
+        return (integer) $tab[1];
     }
 
     /**

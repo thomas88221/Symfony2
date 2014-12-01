@@ -6,7 +6,11 @@
     <div class="col-xs-12 col-sm-3 center">
       <div>
         <div class="profile-picture">
-          <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ app.user.avatarWithPath | apply_filter('thumb_profile_dashboard') }}" />
+          {% if app.user.avatarWidth > 400 or app.user.avatarHeight > 400 %}
+            <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ app.user.avatarWithPath | apply_filter('thumb_profile_dashboard') }}" />
+          {% else %}
+            <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ app.user.username }}" src="{{ app.user.avatarWithPath }}" />
+          {% endif %}
           <div id="avatar-change-container" class="editable-container editable-inline hide">
             <div>
               <div class="editableform-loading hide">
@@ -177,9 +181,15 @@
         <div class="profile-info-row">
           <div class="profile-info-name"> {{ 'dashboard.form.age'|trans }} </div>
           <div class="profile-info-value">
-            <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
-              {{ app.user.age }}
-            </span>
+            {% if app.user.birthday is empty %}
+              <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date_modify("-16 years")|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
+                {{ 'dashboard.form.ageEmpty'|trans }}
+              </span>
+            {% else %}
+              <span class="editable editable-click" data-format="dd/mm/yyyy" data-value="{{ app.user.birthday|date('d/m/Y') }}" data-pk="3" data-type="date" id="age">
+                {{ app.user.age }}
+              </span>
+            {% endif %}
           </div>
         </div>
         <div class="profile-info-row">
