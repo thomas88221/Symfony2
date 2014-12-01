@@ -58,7 +58,7 @@ class DefaultController extends Controller
                     $diff = $now->diff($date);
                     if($diff->y < 16){
                         return new JsonResponse(
-                            $translator->trans('errors.update.date'),
+                            $translator->trans('errors.update.dateToYoung'),
                             400
                         );
                     }else{

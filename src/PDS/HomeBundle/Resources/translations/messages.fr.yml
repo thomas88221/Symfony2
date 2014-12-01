@@ -42,6 +42,7 @@ dashboard:
         country: "Modifier mon pays"
         city: "Modifier ma ville"
         age: "Age"
+        ageEmpty: "Modifier mon âge"
         register: "Inscription"
         last_conn: "Dernière connexion"
         related: "A propos"
@@ -54,6 +55,7 @@ errors:
     update:
         params: "Erreur de paramètres"
         date: "Date invalide"
+        dateToYoung: "Date invalide, vous devez avoir plus de 16 ans pour utiliser ce service."
         unauthorized: "Accès non autorisé"
         save: "Erreur pendant la sauvegarde"
         avatar_empty: "Aucune image de profil sélectionnée"

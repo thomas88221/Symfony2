@@ -230,7 +230,7 @@ var Dashboard = function(params){
     $('.editable').editable({
       'url': '/compte/update',
       'error': function(res){
-        document.showAlert(res.statusText, 'danger');
+        document.showAlert(res.responseText.substring(1, res.responseText.length-1), 'danger');
       }
     });
     $('.tooltip-perso').tooltip();
