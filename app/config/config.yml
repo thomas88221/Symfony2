@@ -91,3 +91,7 @@ services:
         class: PDS\HomeBundle\Services\Breadcrumbs\PDSBreadcrumbs
     menu:
         class: PDS\HomeBundle\Services\Menu\PDSMenu
+    fileTools:
+        class: PDS\HomeBundle\Services\Tools\PDSFileTools
+    imageToole:
+        class: PDS\HomeBundle\Services\Tools\PDSImageTools

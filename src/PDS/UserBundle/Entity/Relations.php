@@ -25,7 +25,7 @@ class Relations
      * @var integer
      *
      * @ORM\Column(name="user1_id", type="integer")
-     * @ORM\OneToOne(targetEntity="PDS\UserBundle\Entity\Users", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PDS\UserBundle\Entity\Users", cascade={"persist"}, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user1Id;
@@ -34,7 +34,7 @@ class Relations
      * @var integer
      *
      * @ORM\Column(name="user2_id", type="integer")
-     * @ORM\OneToOne(targetEntity="PDS\UserBundle\Entity\Users", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PDS\UserBundle\Entity\Users", cascade={"persist"}, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user2Id;

@@ -92,6 +92,12 @@ class Users extends BaseUser
      */
     protected $dateCreated;
     
+    /**
+    * @ORM\OneToMany(targetEntity="PDS\UserBundle\Entity\Relations", mappedBy="user1_id")
+    */
+    private $relations;
+    
+    
     
     public function __construct(){
         $this->isActivated = false;
