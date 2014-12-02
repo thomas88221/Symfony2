@@ -3,6 +3,7 @@
 namespace PDS\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * UsersRepository
@@ -12,4 +13,44 @@ use Doctrine\ORM\EntityRepository;
  */
 class UsersRepository extends EntityRepository
 {
+    /**
+     * Récupère tout les amis d'un utilisateur
+     * 
+     * @param integer $idUser ID de l'utilisateur
+     */
+    public function getAllFriends($con, $idUser)
+    {
+        $query = $con->query(
+            sprintf("
+                    SELECT *
+                    FROM Relations r
+                    INNER JOIN Users u ON u.id = r.user2_id
+                    WHERE r.are_friends = true
+                    AND r.user1_id = %d
+                ",
+                (integer) $idUser
+            )
+        );
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function searchContacts($con, $search, $idUser, $limit = 10, $offset = 0)
+    {
+        $query = $con->query(
+            sprintf("
+                    SELECT *
+                    FROM Users u
+                    WHERE u.username LIKE '%s%%'
+                    AND u.id <> %d
+                    LIMIT %d
+                    OFFSET %d
+                ",
+                $search,
+                (integer) $idUser,
+                $limit,
+                $offset
+            )
+        );
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

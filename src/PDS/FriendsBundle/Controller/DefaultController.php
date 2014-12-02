@@ -34,8 +34,8 @@ class DefaultController extends Controller
         if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
             $datas = $request->request;
             $query = $datas->get('val');
-            $limit = $datas->get('limit');
-            $offset = $datas->get('offset');
+            $limit = (integer) $datas->get('limit');
+            $offset = (integer) $datas->get('offset');
             if (empty($query)) {
                 return new JsonResponse(
                     $translator->trans('errors.search.empty'),
@@ -43,13 +43,25 @@ class DefaultController extends Controller
                 );
             }
             $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
-            
-            $user = $repository->find(1);
-            var_dump($user);exit;
-            
-            return new JsonResponse(
-                array()
+            $req = $repository->searchContacts(
+                $this->get('database_connection'),
+                $query,
+                $this->getUser()->getId(),
+                $limit,
+                $offset
             );
+            $users = array();
+            if (!empty($req)) {
+                foreach ($req as $res) {
+                    $users[$res['id']] = array(
+                        'id' => $res['id'],
+                        'img' => '/avatars/'.$res['avatar'],
+                        'th' => '/avatars/'.substr($res['avatar'], 0, -strlen(strrchr($res['avatar'], '.'))).'_th.'.pathinfo($res['avatar'], PATHINFO_EXTENSION)
+                    );
+                }
+            }
+            
+            return new JsonResponse($users);
         } else {
             throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
         }

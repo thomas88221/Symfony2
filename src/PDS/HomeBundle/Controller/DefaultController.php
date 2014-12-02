@@ -104,8 +104,16 @@ class DefaultController extends Controller
                 return $this->redirect($this->generateUrl('pds_home_homepage'));
             }else{
                 $user = $this->getUser();
-                $name = $user->getId().'.'.$file->guessExtension();
+                $ext = $file->guessExtension();
+                $name = $user->getId().'.'.$ext;
                 $file->move(WEB_PATH.'/avatars', $name);
+                $fileTh = $this->get('imageToole');
+                $fileTh->setFile(WEB_PATH.'/avatars/'.$name);
+                if ($fileTh->get('error') == 0) {
+                    $fileTh->resize(40);
+                    $fileTh->rename($user->getId().'_th');
+                    $fileTh->save();
+                }
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
                 $user->setAvatar($name);

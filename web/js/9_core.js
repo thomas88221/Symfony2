@@ -360,7 +360,7 @@ var Friends = function(params){
           $.each(res, function(name, datas){ 
             html += '<tr>'+ 
               '<td class="img">'+ 
-                '<img src="/images/profils/'+datas['th']+'" />'+ 
+                '<img src="'+datas['th']+'" />'+ 
               '</td>'+ 
               '<td>'+ 
                 name+ 
