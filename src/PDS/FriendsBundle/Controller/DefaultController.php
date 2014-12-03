@@ -54,9 +54,12 @@ class DefaultController extends Controller
             if (!empty($req)) {
                 foreach ($req as $res) {
                     $users[$res['id']] = array(
-                        'id' => $res['id'],
-                        'img' => '/avatars/'.$res['avatar'],
-                        'th' => '/avatars/'.substr($res['avatar'], 0, -strlen(strrchr($res['avatar'], '.'))).'_th.'.pathinfo($res['avatar'], PATHINFO_EXTENSION)
+                        'id'       => $res['id'],
+                        'username' => $res['username'],
+                        'img'      => '/avatars/'.$res['avatar'],
+                        'th'       => '/avatars/'.substr($res['avatar'], 0, -strlen(strrchr($res['avatar'], '.'))).'_th.'.pathinfo($res['avatar'], PATHINFO_EXTENSION),
+                        'url'      => $this->generateUrl('pds_friends_profil', array('id' => $res['id'], 'name' => $res['username'])),
+                        'text'     => $translator->trans('search.profil')
                     );
                 }
             }
@@ -65,5 +68,32 @@ class DefaultController extends Controller
         } else {
             throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
         }
+    }
+    
+    public function profilAction($id, $name)
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
+        $user = $repository->find($id);
+        // Test url correct
+        $urlOk = $this->generateUrl('pds_friends_profil', array('id' => $user->getId(), 'name' => $user->getUsername()));
+        $urlCurrent = $this->generateUrl('pds_friends_profil', array('id' => $id, 'name' => $name));
+        if ($urlCurrent != $urlOk) {
+            return $this->redirect($urlOk);
+        }
+        
+        $translator = $this->get('translator');
+        $menu = $this->get('menu');
+        $menu->init($this->getRequest(), $translator, $this);
+        $br = $this->get('breadcrumbs');
+        $br->init($this->getRequest(), $translator, $this);
+        return $this->render(
+            'PDSFriendsBundle:Default:profil.html.twig',
+            array(
+                'bundle' => $menu->get('bundle'),
+                'title' => $translator->trans('menu.profil', array('%name%' => $user->getUsername())),
+                'breadcrumbs' => $br->get($menu->get('controller')),
+                'user' => $user
+            )
+        );
     }
 }

@@ -1,0 +1,234 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ 'menu.profil'|trans({'%name%': user.username}) }}{% endblock %}
+
+{% block body %}
+  <div class="user-profile row">
+    <div class="col-xs-12 col-sm-3 center">
+      <div>
+        <div class="profile-picture">
+          {% if user.avatarWidth > 400 or user.avatarHeight > 400 %}
+            <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ user.username }}" src="{{ user.avatarWithPath | apply_filter('thumb_profile_dashboard') }}" />
+          {% else %}
+            <img title="{{ 'dashboard.image.change'|trans }}" id="avatar" class="img-responsive editable-empty" alt="{{ user.username }}" src="{{ user.avatarWithPath }}" />
+          {% endif %}
+        </div>
+        <div class="space-4"></div>
+        <div class="width-80 label label-success label-xlg arrowed-in arrowed-in-right">
+          <div class="inline position-relative ellipsis">
+            <span class="user-title-label dropdown-toggle" data-toggle="dropdown">
+              <span class="white">{{ user.username }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="space-6"></div>
+      <div class="profile-contact-info" id="social-links">
+        <div class="profile-social-links align-center">
+          <a href="{{ user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.fb'|trans }}">
+            <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
+          </a>
+          <a href="{{ user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.gg'|trans }}">
+            <i class="middle ace-icon fa fa-google-plus-square fa-2x red"></i>
+          </a>
+          <a href="{{ user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.tw'|trans }}">
+            <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
+          </a>
+          <a href="{{ user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.pt'|trans }}">
+            <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
+          </a>
+          <a href="{{ user.socialIt }}" data-social="it" class="tooltip-perso" title="{{ 'dashboard.social.it'|trans }}">
+            <i class="middle ace-icon fa fa-instagram fa-2x grey"></i>
+          </a>
+        </div>
+      </div>
+      <div class="space-6"></div>
+      <div class="hr hr12 dotted"></div>
+      <div class="clearfix">
+        <div class="grid2">
+          {{ 'dashboard.followers'|trans({'%span%': '<span class="bigger-175 blue">', '%count%': user.followers, '%endspan%': '</span><br />'})|raw }}
+        </div>
+        <div class="grid2">
+          {{ 'dashboard.followings'|trans({'%span%': '<br /><span class="bigger-175 blue">', '%count%': user.following, '%endspan%': '</span>'})|raw }}
+        </div>
+      </div>
+      <div class="hr hr16 dotted"></div>
+    </div>
+    <div class="col-xs-12 col-sm-9">
+      <div class="center">
+        <span class="btn btn-app btn-sm btn-light">
+          <span class="line-height-1 bigger-170 blue"> 1,411 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Vues </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-pink">
+          <span class="line-height-1 bigger-170"> 4 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Programmes </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-grey">
+          <span class="line-height-1 bigger-170"> 23 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Exercices </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-success">
+          <span class="line-height-1 bigger-170"> 7 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Entrainements </span>
+        </span>
+        <span class="btn btn-app btn-sm btn-primary">
+          <span class="line-height-1 bigger-170"> 55 </span>
+          <br>
+          <span class="line-height-1 smaller-90"> Contacts </span>
+        </span>
+      </div>
+      <div class="space-12"></div>
+      <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.name'|trans }} </div>
+          <div class="profile-info-value">
+            <span id="username">{{ user.username }}</span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.email'|trans }} </div>
+          <div class="profile-info-value">
+            <span id="mail">{{ user.email }}</span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.adress'|trans }} </div>
+          <div class="profile-info-value">
+            <i class="fa fa-map-marker light-orange bigger-110"></i>
+            <span>
+              {% if user.country is empty %}
+                {{ 'errors.undefined'|trans }}
+              {% else %}
+                {{ user.country }}
+              {% endif %}
+            </span>
+            <span>
+              {% if user.town is empty %}
+                {{ 'errors.undefined'|trans }}
+              {% else %}
+                {{ user.town }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.age'|trans }} </div>
+          <div class="profile-info-value">
+            {% if user.birthday is empty %}
+              <span>
+                {{ 'errors.undefined'|trans }}
+              </span>
+            {% else %}
+              <span>
+                {{ user.age }}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.register'|trans }} </div>
+          <div class="profile-info-value">
+            <span id="signup">
+              {{ user.dateCreated|date('d/m/Y') }}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.last_conn'|trans }} </div>
+          <div class="profile-info-value">
+            <span id="login">
+              {{ user.lastLogin|date('d/m/Y H:i') }}
+            </span>
+          </div>
+        </div>
+        <div class="profile-info-row">
+          <div class="profile-info-name"> {{ 'dashboard.form.related'|trans }} </div>
+          <div class="profile-info-value">
+            <span>{% if user.various is empty %}{{ 'errors.undefined'|trans }}
+              {% else %}{{ user.various }}{% endif %}</span>
+          </div>
+        </div>
+      </div>
+      <div class="space-20"></div>
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-small">
+          <h4 class="widget-title blue smaller">
+            <i class="ace-icon fa fa-rss orange"></i>
+            Activités récentes
+          </h4>
+          <div class="widget-toolbar action-buttons">
+            <a href="#" data-action="reload">
+              <i class="ace-icon fa fa-refresh blue"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div class="widget-main padding-8">
+            <div id="profile-feed-1" class="profile-feed ace-scroll scroll-active relative">
+              <div class="content">
+                <div class="profile-activity clearfix">
+                  <div>
+                    <img class="pull-left" alt="Alex Doe's avatar" src="{{ asset('avatars/') }}{{ user.avatar }}">
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    à changé sa photo de profile.
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a une heure
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <img class="pull-left" alt="Susan Smith's avatar" src="{{ asset('avatars/') }}profile-pic.jpg">
+                    <a class="user" href="#"> Angèle Hochstaeder </a>
+                    es maintenant amie avec Thomas Koenig.
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 2 heures
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <i class="pull-left thumbicon fa fa-check btn-success"></i>
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    a rejoint le groupe 
+                    <a href="#">exercices pectoraux</a>
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 5 heures
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-activity clearfix">
+                  <div>
+                    <i class="pull-left thumbicon fa fa-picture-o btn-info"></i>
+                    <a class="user" href="#"> Thomas Koenig </a>
+                    a envoyé une photo.
+                    <a href="#">Voir</a>
+                    <div class="time">
+                      <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                      Il y a 5 heures
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+
+{% block js %}
+<script type="text/javascript">
+$(function(){
+  new Friends();
+});
+</script>
+{% endblock js %}

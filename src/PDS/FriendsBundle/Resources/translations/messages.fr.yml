@@ -1,5 +1,6 @@
 menu:
     friends: "Amis"
+    profil: "Profil de %name%"
 
 friends:
     description: "Gestion des amis"
@@ -18,3 +19,7 @@ friends:
 errors:
     search:
         empty: "Recherche vide"
+    undefined: "Indefini"
+        
+search:
+    profil: "Profil"
