@@ -42,6 +42,16 @@ class PDSBreadcrumbs
                     'title' => $this->translator->trans('menu.friends')
                 );
                 break;
+            case 'PDS\FriendsBundle\Controller\DefaultController::profilAction':
+                $this->datas[] = array(
+                    'link' => $this->controller->generateUrl('pds_friends_homepage'),
+                    'title' => $this->translator->trans('menu.friends')
+                );
+                $this->datas[] = array(
+                    'current' => true,
+                    'title' => $this->translator->trans('friends.profil')
+                );
+                break;
         }
         return $this->datas;
     }

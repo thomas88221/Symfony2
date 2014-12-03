@@ -359,16 +359,16 @@ var Friends = function(params){
           var i = 0; 
           $.each(res, function(name, datas){ 
             html += '<tr>'+ 
-              '<td class="img">'+ 
+              '<td class="img width-50p text-center align-middle">'+ 
                 '<img src="'+datas['th']+'" />'+ 
               '</td>'+ 
-              '<td>'+ 
-                name+ 
+              '<td class="align-middle">'+ 
+                datas['username']+ 
               '</td>'+ 
-              '<td class="btn-case text-center">'+ 
-                '<a href="/utilisateur/'+datas['id']+'/profil" class="btn btn-primary">'+ 
+              '<td class="btn-case text-center width-50p">'+ 
+                '<a href="'+datas['url']+'" class="btn btn-primary">'+ 
                   '<i class="fa fa-user margin-right-20"></i>'+ 
-                  'Profil'+ 
+                  datas['text']+ 
                 '</a>'+ 
               '</td>'+ 
             '</tr>'; 
