@@ -5,6 +5,9 @@ namespace PDS\FriendsBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Common\Collections\Criteria;
+use PDS\UserBundle\Entity\Relations;
+use Assetic\Exception\Exception;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -15,6 +18,10 @@ class DefaultController extends Controller
         $menu->init($this->getRequest(), $translator, $this);
         $br = $this->get('breadcrumbs');
         $br->init($this->getRequest(), $translator, $this);
+        
+        $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
+        $friends = $repository->getAllFriends($this->get('database_connection'), $this->getUser()->getId());
+        
         return $this->render(
             'PDSFriendsBundle:Default:index.html.twig',
             array(
@@ -22,7 +29,7 @@ class DefaultController extends Controller
                 'title' => $translator->trans('menu.friends'),
                 'description' => $translator->trans('friends.description'),
                 'breadcrumbs' => $br->get($menu->get('controller')),
-                'friends' => array()
+                'friends' => $friends
             )
         );
     }
@@ -74,6 +81,7 @@ class DefaultController extends Controller
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
         $user = $repository->find($id);
+        $userCurrent = $this->getUser();
         // Test url correct
         $urlOk = $this->generateUrl('pds_friends_profil', array('id' => $user->getId(), 'name' => $user->getUsername()));
         $urlCurrent = $this->generateUrl('pds_friends_profil', array('id' => $id, 'name' => $name));
@@ -86,14 +94,60 @@ class DefaultController extends Controller
         $menu->init($this->getRequest(), $translator, $this);
         $br = $this->get('breadcrumbs');
         $br->init($this->getRequest(), $translator, $this);
+        
+        $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
+        $relation = $repository->findOneBy(
+            array(
+                'user1Id' => $userCurrent->getId(),
+                'user2Id' => $id
+            )
+        );
+        
         return $this->render(
             'PDSFriendsBundle:Default:profil.html.twig',
             array(
                 'bundle' => $menu->get('bundle'),
                 'title' => $translator->trans('menu.profil', array('%name%' => $user->getUsername())),
                 'breadcrumbs' => $br->get($menu->get('controller')),
-                'user' => $user
+                'user' => $user,
+                'relation' => $relation
             )
         );
+    }
+    
+    public function sendRequestAction($id)
+    {
+        $user = $this->getUser();
+        $translator = $this->get('translator');
+        $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
+        $relation = $repository->findOneBy(
+            array(
+                'user1Id' => $user->getId(),
+                'user2Id' => $id
+            )
+        );
+        if (empty($relation)) {
+            try{
+                $relation = new Relations();
+                $relation->setUser1Id($user->getId());
+                $relation->setUser2Id($id);
+                $relation->setAreFriends(false);
+                $relation->setRequestSended(true);
+                $relation->setSendedBy($user->getId());
+                $relation2 = clone($relation);
+                $relation2->setUser1Id($id);
+                $relation2->setUser2Id($user->getId());
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($relation);
+                $em->persist($relation2);
+                $em->flush();
+            } catch(Exception $e) {
+                $this->get('session')->getFlashBag()->add(
+                    'errors',
+                    $translator->trans('errors.addFriends')
+                );
+            }
+        }
+        return $this->redirect($this->generateUrl('pds_friends_profil', array('id' => $id, 'name' => 'user')));
     }
 }

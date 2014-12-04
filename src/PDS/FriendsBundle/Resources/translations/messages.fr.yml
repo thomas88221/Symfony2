@@ -1,3 +1,5 @@
+common:
+    sendMsg: "Envoyer un message"
 menu:
     friends: "Amis"
     profil: "Profil de %name%"
@@ -13,6 +15,8 @@ friends:
     name: "Nom"
     profil: "Profil"
     next: "Suivants"
+    add: "Ajouter en tant qu'amis"
+    requestSended: "Demande envoyée"
     title:
         block1: "Recherche"
         
@@ -20,6 +24,7 @@ errors:
     search:
         empty: "Recherche vide"
     undefined: "Indefini"
+    addFriends: "Une erreur est survenue pendant la demande d'amis"
         
 search:
     profil: "Profil"

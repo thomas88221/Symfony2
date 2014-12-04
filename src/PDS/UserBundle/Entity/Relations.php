@@ -90,7 +90,7 @@ class Relations
      * @param integer $user1Id
      * @return Relations
      */
-    public function setUser1Id(Users $user1Id)
+    public function setUser1Id($user1Id)
     {
         $this->user1Id = $user1Id;
 
@@ -113,7 +113,7 @@ class Relations
      * @param integer $user2Id
      * @return Relations
      */
-    public function setUser2Id(Users $user2Id)
+    public function setUser2Id($user2Id)
     {
         $this->user2Id = $user2Id;
 

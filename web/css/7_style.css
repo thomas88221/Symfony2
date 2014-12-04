@@ -132,11 +132,15 @@
   width: 100%;
   text-overflow: ellipsis;
 }
-#avatar{
+#avatar.editable-empty{
   cursor: pointer;
 }
-#avatar:hover{
+#avatar.editable-empty:hover{
   opacity: 0.75;
+}
+#friends .img img{
+  width: 48px;
+  height: 48px;
 }
 .ace-file-multiple .ace-file-container:before {
   overflow: hidden;

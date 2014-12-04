@@ -11,3 +11,9 @@ pds_friends_profil:
     defaults: { _controller: PDSFriendsBundle:Default:profil }
     requirements:
         id:   \d
+    
+pds_friends_sendRequest:
+    path:     /ajouter-{id}
+    defaults: { _controller: PDSFriendsBundle:Default:sendRequest }
+    requirements:
+        id:   \d
