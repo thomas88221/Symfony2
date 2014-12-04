@@ -81,22 +81,22 @@
               {% else %}
                 <thead class="thin-border-bottom">
                   <tr>
-                    <th></th>
+                    <th class="width-50p"></th>
                     <th>{{ 'friends.name'|trans }}</th>
-                    <th class="text-center">{{ 'friends.profil'|trans }}</th>
+                    <th class="text-center width-50p">{{ 'friends.profil'|trans }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for friend in friends %}
                   <tr>
                     <td class="img">
-                        <img src="" />
+                        <img src="/avatars/{{ friend.avatar }}" />
                     </td>
-                    <td>
-                      { friend.username }
+                    <td class="align-middle">
+                      {{ friend.username }}
                     </td>
-                    <td class="btn-case">
-                      <a href="" class="btn btn-success btn-sm" title="{{ 'friends.see'|trans }}">
+                    <td class="btn-case align-middle">
+                      <a href="{{ path('pds_friends_profil',{'id': friend.id, 'name': friend.username}) }}" class="btn btn-success btn-sm" title="{{ 'friends.see'|trans }}">
                         {{ 'friends.see'|trans }}
                       </a>
                       </td>
