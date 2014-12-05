@@ -1,5 +1,8 @@
 common:
     sendMsg: "Envoyer un message"
+    cancel: "Annuler"
+    send: "Envoyer"
+
 menu:
     friends: "Amis"
     profil: "Profil de %name%"
@@ -16,6 +19,7 @@ friends:
     profil: "Profil"
     next: "Suivants"
     add: "Ajouter en tant qu'amis"
+    message_placeholer: "Votre message"
     requestSended: "Demande envoyée"
     title:
         block1: "Recherche"
@@ -25,6 +29,11 @@ errors:
         empty: "Recherche vide"
     undefined: "Indefini"
     addFriends: "Une erreur est survenue pendant la demande d'amis"
-        
+    sendMessage: "Destinataire inconnu ou messsage vide"
+    sendMessageBdd: "Erreur pendant l'envoi de votre message"
+
+messages:
+    addFriends: "Votre demande à été envoyée"
+
 search:
     profil: "Profil"

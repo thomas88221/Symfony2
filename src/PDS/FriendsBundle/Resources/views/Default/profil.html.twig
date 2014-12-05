@@ -47,29 +47,29 @@
             {{ 'common.sendMsg'|trans }}
           </a>
         </div>
-        <div class="profile-social-links align-center">
+        <div class="profile-social-links align-center margin-top-20">
           {% if user.socialFb is not empty %}
-            <a href="{{ user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.fb'|trans }}">
+            <a href="{{ user.socialFb }}" data-social="fb" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.visitfb'|trans }}">
               <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
             </a>
           {% endif %}
           {% if user.socialFb is not empty %}
-            <a href="{{ user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.gg'|trans }}">
+            <a href="{{ user.socialGg }}" data-social="gg" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.visitgg'|trans }}">
               <i class="middle ace-icon fa fa-google-plus-square fa-2x red"></i>
             </a>
           {% endif %}
           {% if user.socialFb is not empty %}
-            <a href="{{ user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.tw'|trans }}">
+            <a href="{{ user.socialTw }}" data-social="tw" class="tooltip-info tooltip-perso" title="{{ 'dashboard.social.visittw'|trans }}">
               <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
             </a>
           {% endif %}
           {% if user.socialFb is not empty %}
-            <a href="{{ user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.pt'|trans }}">
+            <a href="{{ user.socialPt }}" data-social="pt" class="tooltip-error tooltip-perso" title="{{ 'dashboard.social.visitpt'|trans }}">
               <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
             </a>
           {% endif %}
           {% if user.socialFb is not empty %}
-            <a href="{{ user.socialIt }}" data-social="it" class="tooltip-perso" title="{{ 'dashboard.social.it'|trans }}">
+            <a href="{{ user.socialIt }}" data-social="it" class="tooltip-perso" title="{{ 'dashboard.social.visitit'|trans }}">
               <i class="middle ace-icon fa fa-instagram fa-2x grey"></i>
             </a>
           {% endif %}
@@ -257,12 +257,35 @@
       </div>
     </div>
   </div>
+  <div id="send-message" class="bootbox modal fade bootbox-prompt" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Envoyer un message à {{ user.username }}</h4>
+       </div>
+        <div class="modal-body">
+          <div class="bootbox-body">
+            <form class="bootbox-form">
+              <textarea id="send-message-text" class="bootbox-input bootbox-input-text form-control" style="max-width: 100%;" placeholder="{{ 'friends.message_placeholer'|trans }}"></textarea>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" type="button" class="btn btn-default">{{ 'common.cancel'|trans }}</button>
+          <button id="send-message-confirm" type="button" class="btn btn-primary">{{ 'common.send'|trans }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<input type="hidden" id="id" value="{{ user.id }}" />
+<input type="hidden" id="urlMsg" value="{{ path('pds_friends_sendMessage') }}" />
 {% endblock body %}
 
 {% block js %}
 <script type="text/javascript">
 $(function(){
-  new Friends();
+  new Profil();
 });
 </script>
 {% endblock js %}

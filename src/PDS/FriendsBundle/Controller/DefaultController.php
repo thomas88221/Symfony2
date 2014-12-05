@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 use PDS\UserBundle\Entity\Relations;
 use Assetic\Exception\Exception;
 use Symfony\Component\Validator\Constraints\DateTime;
+use PDS\UserBundle\Entity\Messages;
 
 class DefaultController extends Controller
 {
@@ -141,6 +142,10 @@ class DefaultController extends Controller
                 $em->persist($relation);
                 $em->persist($relation2);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $translator->trans('messages.addFriends')
+                );
             } catch(Exception $e) {
                 $this->get('session')->getFlashBag()->add(
                     'errors',
@@ -149,5 +154,35 @@ class DefaultController extends Controller
             }
         }
         return $this->redirect($this->generateUrl('pds_friends_profil', array('id' => $id, 'name' => 'user')));
+    }
+    
+    public function sendMessageAction()
+    {
+        $request = $this->getRequest();
+        $translator = $this->get('translator');
+        if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
+            $datas = $request->request;
+            $em = $this->getDoctrine()->getEntityManager();
+            $id = (int) $datas->get('id');
+            $msg = $datas->get('msg');
+            if (empty($id) || empty($msg)) {
+                return new JsonResponse(array('status' => 0, 'msg' => $translator->trans('errors.sendMessage')));
+            } else {
+                try{
+                    $message = new Messages();
+                    $message->setFromUser($this->getUser()->getId());
+                    $message->setToUser($id);
+                    $message->setIsRead(false);
+                    $em->persist($message);
+                    $em->flush();
+                    
+                    return new JsonResponse(array('status' => 1, 'msg' => 'ok'));
+                } catch(Exception $e) {
+                    return new JsonResponse(array('status' => 0, 'msg' => $translator->trans('errors.sendMessageBdd')));
+                }
+            }
+        } else {
+            throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
+        }
     }
 }
