@@ -419,3 +419,48 @@ var Friends = function(params){
  
   return this.bind(); 
 }; 
+var Profil = function(params){
+  var self = this;
+  self.sendMessageBtn = $('#send-message-btn');
+  self.sendMessage = $('#send-message');
+  self.sendMessageConfirm = $('#send-message-confirm');
+  self.sendMessageText = $('#send-message-text');
+  self.id = $('#id').val();
+  self.urlMsg = $('#urlMsg').val();
+  $('.tooltip-perso').tooltip();
+  
+  self.bind = function(){
+    self.sendMessageBtn.on('click', function(e){
+      self.sendMessage.modal('show');
+      e.preventDefault();
+    });
+    self.sendMessageConfirm.on('click', function(e){
+      $.ajax({
+        'url': self.urlMsg,
+        'type': 'POST',
+        'dataType': 'json',
+        'data': {
+          'id': self.id,
+          'msg': self.sendMessageText.val()
+        },
+        'success': function(res){
+          if (res.status == 1) {
+            document.showAlert('Message envoyé', 'success');
+          } else {
+            document.showAlert(res.msg, 'danger');
+          }
+          self.sendMessage.modal('hide');
+        },
+        'error': function(res){
+          document.showAlert(res.responseText, 'danger');
+          self.sendMessage.modal('hide');
+        }
+      });
+      e.preventDefault();
+    });
+    
+    return self;
+  };
+  
+  return self.bind();
+};
