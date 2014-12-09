@@ -64,3 +64,7 @@ errors:
         unauthorized: "Accès non autorisé"
         save: "Erreur pendant la sauvegarde"
         avatar_empty: "Aucune image de profil sélectionnée"
+
+sentences:
+    messages:
+        empty: "Aucun nouveau message"

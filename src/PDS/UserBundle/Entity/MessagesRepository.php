@@ -12,4 +12,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessagesRepository extends EntityRepository
 {
+    private $message = array();
+    
+    public function getMessagesReceivedJoinUsers($con, $idUser, $limit = 10, $offset = 0, $orderBy = 'date', $ordering = 'desc')
+    {
+        if(empty($this->messages['receivedWithUser'])){
+            $query = $con->query(
+                sprintf("
+                        SELECT *, m.date as date_message
+                        FROM Messages m
+                        INNER JOIN Users u ON u.id = m.from_user
+                        WHERE m.is_read = false
+                        AND m.to_user = %d
+                        ORDER BY %s %s
+                        %s %s
+                    ",
+                    (integer) $idUser,
+                    $orderBy,
+                    $ordering,
+                    empty($limit) ? '' : 'LIMIT '.$limit,
+                    empty($offset) ? '' : 'OFFSET '.$offset
+                )
+            );
+            $this->messages['receivedWithUser'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        return $this->messages['receivedWithUser'];
+    }
+    
+    public function getMessagesReveivedNotReadCount($con, $idUser)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->select('COUNT(m)')
+           ->where('m.toUser = :id')
+           ->setParameter('id', $idUser);
+        
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
