@@ -98,7 +98,7 @@ class Messages
      */
     public function setToUser($toUser)
     {
-        $this->toName = $toUser;
+        $this->toUser = $toUser;
 
         return $this;
     }

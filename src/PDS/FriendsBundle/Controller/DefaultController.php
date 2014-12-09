@@ -170,10 +170,12 @@ class DefaultController extends Controller
             } else {
                 try{
                     $message = new Messages();
+                    $em->persist($message);
                     $message->setFromUser($this->getUser()->getId());
                     $message->setToUser($id);
+                    $message->setMessage($msg);
                     $message->setIsRead(false);
-                    $em->persist($message);
+                    $message->setDate(new \DateTime());
                     $em->flush();
                     
                     return new JsonResponse(array('status' => 1, 'msg' => 'ok'));

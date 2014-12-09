@@ -44,10 +44,11 @@
                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
                 <span class="badge badge-important hide">0</span>
               </a>
-              <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+              <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close width-350">
                 <li class="dropdown-header">
                   <i class="ace-icon fa fa-exclamation-triangle"></i>
-                  <span class="notifs-divers-value">{{ 'layout.notification'|transchoice(0) }}</span>
+                  <span class="notifs-divers-value singular">{{ 'layout.notification'|transchoice(0) }}</span>
+                  <span class="notifs-divers-value plural hide">{{ 'layout.notification'|transchoice(10) }}</span>
                 </li>
                 <li class="dropdown-content ace-scroll relative">
                   <div class="scroll-content">
@@ -68,14 +69,16 @@
                 <i class="ace-icon fa fa-envelope"></i>
                 <span class="badge badge-success hide">0</span>
               </a>
-              <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+              <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close width-350">
                 <li class="dropdown-header">
                   <i class="ace-icon fa fa-envelope-o"></i>
-                  <span class="notifs-messages-value">{{ 'layout.messages'|transchoice(0) }}</span>
+                  <span class="notifs-messages-value singular">{{ 'layout.messages'|transchoice(0) }}</span>
+                  <span class="notifs-messages-value plural hide">{{ 'layout.messages'|transchoice(10) }}</span>
                 </li>
                 <li class="dropdown-content ace-scroll relative">
                   <div class="scroll-content">
                     <ul class="dropdown-menu dropdown-navbar messages-list">
+                        
                     </ul>
                   </div>
                 </li>
@@ -245,5 +248,10 @@
     
     {% block js %}
     {% endblock js %}
+    <div id="sentences" class="hide hidden">
+      <div data-name="sentences.messages.empty">{{ 'sentences.messages.empty'|trans }}</div>
+      {% block sentences %}
+      {% endblock sentences %}
+    </div>
   </body>
 </html>
