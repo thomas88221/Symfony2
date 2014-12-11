@@ -14,27 +14,42 @@ class DefaultController extends Controller
             $user = $this->getUser();
             $con = $this->get('database_connection');
             $translator = $this->get('translator');
-            $repo = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Messages');
+            $repoMsg = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Messages');
+            $repoUser = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
+            $repoRelations = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
             $datas = $request->request;
             $type = $datas->get('type');
             $return = array();
             switch($type){
                 case 'count':
                     $return = array(
-                        'messages' => $repo->getMessagesReveivedNotReadCount($con, $user->getId())
+                        'messages' => $repoMsg->getMessagesReveivedNotReadCount($con, $user->getId()),
+                        'divers' => $repoRelations->getUntreatedRelationsCount($con, $user->getId())
                     );
                     break;
                 case 'getLastMessages':
-                    $messages = $repo->getMessagesReceivedJoinUsers($con, $user->getId(), 5);
+                    $messages = $repoMsg->getMessagesReceivedJoinUsers($con, $user->getId(), 5);
                     if (!empty($messages)) {
                         foreach ($messages as $message) {
-                            $t = strtotime($message['date_message']);
                             $return[] = array(
                                 'profil' => $this->generateUrl('pds_friends_profil', array('id' => $message['from_user'], 'name' => $message['username'])),
                                 'avatar' => '/avatars/'.$message['avatar'],
                                 'username' => $message['username'],
                                 'message' => strlen($message['message']) > 80 ? substr($message['message'], 0, 75).' ...' : $message['message'],
-                                'date' => date('d/m/y H:i', $t)
+                                'date' => date('d/m/y H:i', strtotime($message['date_message']))
+                            );
+                        }
+                    }
+                    break;
+                case 'getLastNotifs':
+                    $notifs = $repoRelations->getUntreatedRelationsJoinUsers($con, $user->getId(), 'r.date, r.user2_id, u.username, u.avatar');
+                    if (!empty($notifs)) {
+                        foreach ($notifs as $notif) {
+                            $return[] = array(
+                                'profil' => $this->generateUrl('pds_friends_profil', array('id' => $notif['user2_id'], 'name' => $notif['username'])),
+                                'avatar' => '/avatars/'.$notif['avatar'],
+                                'username' => $notif['username'],
+                                'date' => date('d/m/y H:i', strtotime($notif['date']))
                             );
                         }
                     }

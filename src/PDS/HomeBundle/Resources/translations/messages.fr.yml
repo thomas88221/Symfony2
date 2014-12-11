@@ -68,3 +68,5 @@ errors:
 sentences:
     messages:
         empty: "Aucun nouveau message"
+    divers:
+        empty: "Aucune nouvelle notification"
