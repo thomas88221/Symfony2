@@ -140,9 +140,10 @@
 #avatar.editable-empty:hover{
   opacity: 0.75;
 }
-#friends .img img{
+#friends .img img,
+#friendsWaiting .img img{
   width: 48px;
-  height: 48px;
+  max-height: 48px;
 }
 .ace-file-multiple .ace-file-container:before {
   overflow: hidden;
@@ -150,3 +151,25 @@
   text-overflow: ellipsis;
 }
 /** End Override **/
+
+/** Thumbs **/
+.thumb-40{
+  width: 40px;
+  min-height: 10px;
+}
+/** End thumbs **/
+
+/** Header **/
+#notifs-divers .divers-list span.username{
+  display: inline-block;
+  width: 275px;
+  text-align: center;
+  font-weight: bold;
+}
+#notifs-divers .divers-list .separator{
+  height: 0px;
+  width: 100%;
+  border-bottom: dashed 1px #ccc;
+  margin: 10px 0px;
+}
+/** End header **/

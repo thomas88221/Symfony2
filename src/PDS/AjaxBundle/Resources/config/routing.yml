@@ -1,3 +1,7 @@
 pds_ajax_homepage:
     path:     /ajax/update
     defaults: { _controller: PDSAjaxBundle:Default:notifications }
+
+pds_ajax_friends_update:
+    path:     /ajax/f/update
+    defaults: { _controller: PDSAjaxBundle:Default:friendsUpdate }

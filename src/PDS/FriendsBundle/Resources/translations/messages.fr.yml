@@ -13,6 +13,7 @@ friends:
     go: "Go"
     myfriends: "Mes amis"
     nofriends: "Vous n'avez pas encore de relations"
+    nofriendsPending: "Vous n'avez pas de demandes en attente"
     searchnew: "Recherchez dès à présents des utilisateurs"
     see: "Voir le profil"
     name: "Nom"
@@ -23,6 +24,7 @@ friends:
     requestSended: "Demande envoyée"
     title:
         block1: "Recherche"
+        waiting: "Demandes en attentes"
         
 errors:
     search:

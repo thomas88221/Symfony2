@@ -27,8 +27,8 @@ $(function(){
   };
   var checksums = {};
   var datasPhp =  {
-    'module': $('#data-php-module').val(),
-    'action': $('#data-php-action').val(),
+    'module': $('#data-php-module').val(), // a déterminer
+    'action': $('#data-php-action').val(), // a déterminer
   };
   document.sentences = {};
 
@@ -93,6 +93,7 @@ $(function(){
                   '</li>'
         });
         elements.messages.find('.messages-list').html(html);
+        elements.messages.find('li.dropdown-footer.hide').removeClass('hide');
       } else {
         elements.messages.find('.messages-list').html(
           '<li>'+
@@ -101,6 +102,7 @@ $(function(){
             '</div>'+
           '</li>'
         );
+        elements.messages.find('li.dropdown-footer').addClass('hide');
       }
     });
   });
@@ -117,11 +119,72 @@ $(function(){
       if(res.length > 0){
         $.each(res, function(index, row){
           html += '<li>'+
-                    'prout'+
-                  '</li>'
+            '<a href="'+row['profil']+'" class="padding-bottom-0">'+
+              '<div class="clearfix">'+
+                '<span>'+
+                  '<img src="'+row['avatar']+'" class="thumb-40 margin-right-10" />'+
+                  '<span class="username">'+
+                    row['username']+
+                  '</span>'+
+                '</span>'+
+                '<div class="separator"></div>'+
+              '</div>'+
+            '</a>'+
+            '<div class="row">'+
+              '<div class="col-xs-6">'+
+                '<button class="btn btn-danger btn-xs relation-refuse" data-id="'+row['id']+'" >'+
+                  '<i class="fa fa-times-circle margin-right-10"></i>'+
+                  document.sentences['sentences.common.refused']+
+                '</button>'+
+              '</div>'+
+              '<div class="col-xs-6 text-right">'+
+                '<button class="btn btn-success btn-xs relation-accept" data-id="'+row['id']+'" >'+
+                  '<i class="fa fa-check-circle margin-right-10"></i>'+
+                  document.sentences['sentences.common.accept']+
+                '</button>'+
+              '</div>'+
+            '</div>'+
+          '</li>'
         });
         elements.divers.find('.divers-list').html(html);
         elements.divers.find('.dropdown-footer.hide').removeClass('hide');
+        elements.divers.find('.relation-accept, .relation-refuse').off('click').on('click', function(e){
+          var self = $(this);
+          var btns = self.parents('.row:first').find('.btn').attr('disabled', 'disabled');
+          var id = self.data('id');
+          var type = 1;
+          if (self.hasClass('relation-refuse')) type = 2;
+          $.ajax({
+            'url': '/ajax/f/update',
+            'type': 'POST',
+            'dataType': 'json',
+            'data': {
+              'type': type,
+              'id': id
+            },
+            'success': function(res){
+              if(res.status == 1) {
+                document.showSuccess(res.msg);
+              }else{
+                document.showError(res.msg);
+              }
+              if(datasPhp.module == 'friends' && datasPhp.action == 'index') {
+                document.location.reload();
+              } else {
+                btns.removeAttr('disabled');
+                document.update({'type': 'count'}, function(res){
+                  setNotifCount('divers', res);
+                  elements.divers.trigger('click');
+                });
+              }
+            },
+            'error': function(res){
+              document.showError(res.responseText);
+            }
+          });
+          e.preventDefault();
+          return false;
+        });
       } else {
         elements.divers.find('.divers-list').html(
           '<li>'+
@@ -149,7 +212,7 @@ $(function(){
       },
       'error': function(res){
         if(nbNotifsError == 0){
-          document.showError('Une erreur est survenue pendant la récupération des notifications');
+          document.showError(res.reponseText);
           nbNotifsError = 1;
         }
       }
@@ -173,6 +236,7 @@ $(function(){
       }
       spanHide.addClass('hide');
       var html = spanShow.get(0).innerHTML;
+      console.dir(spanShow);
       spanShow.html(
         datas[type] + ' ' +
         html.substring(html.indexOf(' '))

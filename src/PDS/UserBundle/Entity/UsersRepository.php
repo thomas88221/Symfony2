@@ -26,12 +26,31 @@ class UsersRepository extends EntityRepository
                     FROM Relations r
                     INNER JOIN Users u ON u.id = r.user2_id
                     WHERE r.are_friends = true
+                    AND r.request_sended = true
+                    AND r.is_pending = false
                     AND r.user1_id = %d
                 ",
                 (integer) $idUser
             )
         );
         return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function getAllFriendsWaiting($con, $idUser)
+    {
+        return $con->query(
+            sprintf("
+                    SELECT *
+                    FROM Relations r
+                    INNER JOIN Users u ON u.id = r.user2_id
+                    WHERE r.are_friends = false
+                    AND r.is_pending = true
+                    AND r.request_sended = true
+                    AND r.user1_id = %d
+                ",
+                (integer) $idUser
+            )
+        )->fetchAll(\PDO::FETCH_ASSOC);
     }
     
     public function searchContacts($con, $search, $idUser, $limit = 10, $offset = 0)
