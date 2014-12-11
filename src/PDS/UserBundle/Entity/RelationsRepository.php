@@ -52,7 +52,7 @@ class RelationsRepository extends EntityRepository
                     AND r.user1_id = %d
                     AND r.sended_by = r.user2_id
                     AND r.request_sended = true
-                    /*AND r.is_pending = false*/
+                    AND r.is_pending = true
                 ",
                 $select,
                 (integer) $idUser

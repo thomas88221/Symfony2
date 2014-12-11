@@ -65,7 +65,16 @@ errors:
         save: "Erreur pendant la sauvegarde"
         avatar_empty: "Aucune image de profil sélectionnée"
 
+success:
+    friends:
+        addError: "Une erreur est survenue pendant votre opération, veuillez réessayer"
+        addOk: "Vous êtes à présent amis"
+        addRm: "Requête refusée"
+
 sentences:
+    common:
+        accept: "Accepter"
+        refused: "Refuser"
     messages:
         empty: "Aucun nouveau message"
     divers:

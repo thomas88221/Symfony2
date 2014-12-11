@@ -31,6 +31,7 @@ class DefaultController extends Controller
                     $messages = $repoMsg->getMessagesReceivedJoinUsers($con, $user->getId(), 5);
                     if (!empty($messages)) {
                         foreach ($messages as $message) {
+                            $message['message'] = htmlentities($message['message']);
                             $return[] = array(
                                 'profil' => $this->generateUrl('pds_friends_profil', array('id' => $message['from_user'], 'name' => $message['username'])),
                                 'avatar' => '/avatars/'.$message['avatar'],
@@ -49,43 +50,91 @@ class DefaultController extends Controller
                                 'profil' => $this->generateUrl('pds_friends_profil', array('id' => $notif['user2_id'], 'name' => $notif['username'])),
                                 'avatar' => '/avatars/'.$notif['avatar'],
                                 'username' => $notif['username'],
+                                'id' => $notif['user2_id'],
                                 'date' => date('d/m/y H:i', strtotime($notif['date']))
                             );
                         }
                     }
                     break;
             }
-        
-        /*$results = $repo->getMessagesReceivedJoinUsers($this->get('database_connection'), $user->getId(), 5);
-        $messages = array();
-        if (!empty($results)) {
-            foreach ($results as $result) {
-                $t = strtotime($result['date_message']);
-                $messages[] = array(
-                    'profil' => $this->generateUrl('pds_friends_profil', array('id' => $result['from_user'], 'name' => $result['username'])),
-                    'avatar' => '/avatars/'.$result['avatar'],
-                    'username' => $result['username'],
-                    'message' => strlen($result['message']) > 80 ? substr($result['message'], 0, 75).' ...' : $result['message'],
-                    'date' => date('d/m/y H:i', $t)
-                );
-            }
-        }
-        return new JsonResponse(
-            array(
-                'messages' => array(
-                    'datas' => $messages,
-                    'length' => $countMsg,
-                    'checksum' => md5(serialize($messages))
-                ),
-                'divers' => array(
-                    'length' => 0,
-                    'checksum' => md5('tab2')
-                )
-            )
-        );*/
-        return new JsonResponse($return);
+            return new JsonResponse($return);
         } else {
             throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
         }
+    }
+    
+    public function friendsUpdateAction()
+    {
+        $request = $this->getRequest();
+        if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
+            $user = $this->getUser();
+            $translator = $this->get('translator');
+            $repo = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
+            $em = $this->getDoctrine()->getEntityManager();
+            $datas = $request->request;
+            $type = $datas->get('type');
+            $id = $datas->get('id');
+            $return = array();
+            $relation1 = $repo->findOneBy(
+                array(
+                    'user1Id' => $this->getUser()->getId(),
+                    'user2Id' => $id,
+                    'areFriends' => false,
+                    'requestSended' => true,
+                    'isPending' => true
+                ),
+                array(),
+                1,
+                0
+            );
+            $relation2 = $repo->findOneBy(
+                array(
+                    'user2Id' => $this->getUser()->getId(),
+                    'user1Id' => $id,
+                    'areFriends' => false,
+                    'requestSended' => true,
+                    'isPending' => true
+                ),
+                array(),
+                1,
+                0
+            );
+            $em->persist($relation1);
+            $em->persist($relation2);
+            switch($type){
+                case 1:
+                    $relation1->setAreFriends(true);
+                    $relation2->setAreFriends(true);
+                    $relation1->setIsPending(false);
+                    $relation2->setIsPending(false);
+                    $return = array(
+                        'status' => 1,
+                        'msg' => $translator->trans('success.friends.addOk')
+                    );
+                    break;
+                case 2:
+                    $relation1->setAreFriends(false);
+                    $relation2->setAreFriends(false);
+                    $relation1->setIsPending(false);
+                    $relation2->setIsPending(false);
+                    $return = array(
+                        'status' => 2,
+                        'msg' => $translator->trans('success.friends.addRm')
+                    );
+                    break;
+            }
+            try {
+                $em->flush();
+            } catch (Exception $e) {
+                $return = array(
+                    'status' => 0,
+                    'msg' => $translator->trans('errors.friends.addError')
+                );
+            }
+            return new JsonResponse($return);
+        } else {
+            throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
+        }
+        return new JsonResponse(array('status' => 1, 'msg' => 'Vous êtes amis'));
     }
 }

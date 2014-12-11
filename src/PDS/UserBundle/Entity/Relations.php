@@ -56,6 +56,13 @@ class Relations
     /**
      * @var boolean
      *
+     * @ORM\Column(name="is_pending", type="boolean")
+     */
+    private $isPending;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="request_sended", type="boolean")
      */
     private $requestSended;
@@ -72,6 +79,7 @@ class Relations
         $this->date = new \DateTime();
         $this->areFriends = false;
         $this->requestSended = true;
+        $this->isPending = true;
     }
 
     /**
@@ -221,4 +229,20 @@ class Relations
     {
         return $this->date;
     }
+	/**
+     * @return the $isPending
+     */
+    public function getIsPending()
+    {
+        return $this->isPending;
+    }
+
+	/**
+     * @param boolean $isPending
+     */
+    public function setIsPending($isPending)
+    {
+        $this->isPending = $isPending;
+    }
+
 }

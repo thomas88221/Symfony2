@@ -19,9 +19,11 @@ class DefaultController extends Controller
         $menu->init($this->getRequest(), $translator, $this);
         $br = $this->get('breadcrumbs');
         $br->init($this->getRequest(), $translator, $this);
+        $con = $this->get('database_connection');
         
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
-        $friends = $repository->getAllFriends($this->get('database_connection'), $this->getUser()->getId());
+        $friends = $repository->getAllFriends($con, $this->getUser()->getId());
+        $friendsWaiting = $repository->getAllFriendsWaiting($con, $this->getUser()->getId());
         
         return $this->render(
             'PDSFriendsBundle:Default:index.html.twig',
@@ -30,7 +32,8 @@ class DefaultController extends Controller
                 'title' => $translator->trans('menu.friends'),
                 'description' => $translator->trans('friends.description'),
                 'breadcrumbs' => $br->get($menu->get('controller')),
-                'friends' => $friends
+                'friends' => $friends,
+                'friendsWaiting' => $friendsWaiting
             )
         );
     }
@@ -135,6 +138,7 @@ class DefaultController extends Controller
                 $relation->setAreFriends(false);
                 $relation->setRequestSended(true);
                 $relation->setSendedBy($user->getId());
+                $relation->setIsPending(true);
                 $relation2 = clone($relation);
                 $relation2->setUser1Id($id);
                 $relation2->setUser2Id($user->getId());
