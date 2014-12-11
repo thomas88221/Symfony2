@@ -56,7 +56,7 @@
                     </ul>
                   </div>
                 </li>
-                <li class="dropdown-footer">
+                <li class="dropdown-footer hide">
                   <a href="#">
                     {{ 'layout.allNotifs'|trans }}
                     <i class="ace-icon fa fa-arrow-right"></i>
@@ -250,6 +250,7 @@
     {% endblock js %}
     <div id="sentences" class="hide hidden">
       <div data-name="sentences.messages.empty">{{ 'sentences.messages.empty'|trans }}</div>
+      <div data-name="sentences.divers.empty">{{ 'sentences.divers.empty'|trans }}</div>
       {% block sentences %}
       {% endblock sentences %}
     </div>

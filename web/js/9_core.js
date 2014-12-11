@@ -104,6 +104,36 @@ $(function(){
       }
     });
   });
+  elements.divers.on('click', function(e){
+    elements.divers.find('.divers-list').html(
+      '<li>'+
+        '<div class="text-center">'+
+          '<img src="/images/loading.gif" />'+
+        '</div>'+
+      '</li>'
+    );
+    document.update({'type': 'getLastNotifs'}, function(res){
+      var html = '';
+      if(res.length > 0){
+        $.each(res, function(index, row){
+          html += '<li>'+
+                    'prout'+
+                  '</li>'
+        });
+        elements.divers.find('.divers-list').html(html);
+        elements.divers.find('.dropdown-footer.hide').removeClass('hide');
+      } else {
+        elements.divers.find('.divers-list').html(
+          '<li>'+
+            '<div class="text-center">'+
+              document.sentences['sentences.divers.empty']+
+            '</div>'+
+          '</li>'
+        );
+        elements.divers.find('.dropdown-footer').addClass('hide');
+      }
+    });
+  });
   
   // Notifs
   document.update = function(datas, callback){
@@ -170,12 +200,12 @@ $(function(){
   var updateTimer = setInterval(function(){
     document.update({'type': 'count'}, function(res){
       setNotifCount('messages', res);
-      //setNotifCount('divers', res);
+      setNotifCount('divers', res);
     });
   }, 60000);
   document.update({'type': 'count'}, function(res){
     setNotifCount('messages', res);
-    //setNotifCount('divers', res);
+    setNotifCount('divers', res);
   });
 });
 
