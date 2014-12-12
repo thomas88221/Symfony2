@@ -23,7 +23,8 @@ $(function(){
   var elements = {
     'messages': $('#notif-messages'),
     'divers': $('#notifs-divers'),
-    'sentences': $('#sentences')
+    'sentences': $('#sentences'),
+    'datasPhp': $('#datasPhp')
   };
   var checksums = {};
   var datasPhp =  {
@@ -31,6 +32,7 @@ $(function(){
     'action': $('#data-php-action').val(), // a déterminer
   };
   document.sentences = {};
+  document.datasPhp = {};
 
   // Functions globales
   document.showAlert = function(msg, cls){
@@ -55,6 +57,9 @@ $(function(){
   };
   $.each(elements.sentences.find('div'), function(index, row){
     document.sentences[$(row).data('name')] = row.innerHTML;
+  });
+  $.each(elements.datasPhp.find('div'), function(index, row){
+    document.datasPhp[$(row).data('name')] = row.innerHTML;
   });
   $('#hide-message').on('click', function(e){
     document.hideAlert();
@@ -168,7 +173,7 @@ $(function(){
               }else{
                 document.showError(res.msg);
               }
-              if(datasPhp.module == 'friends' && datasPhp.action == 'index') {
+              if(document.datasPhp['bundle'] == 'friends' && document.datasPhp['action'] == 'index') {
                 document.location.reload();
               } else {
                 btns.removeAttr('disabled');
@@ -211,7 +216,7 @@ $(function(){
         }
       },
       'error': function(res){
-        if(nbNotifsError == 0){
+        if(nbNotifsError == 0 && res.reponseText != null){
           document.showError(res.reponseText);
           nbNotifsError = 1;
         }
@@ -236,7 +241,6 @@ $(function(){
       }
       spanHide.addClass('hide');
       var html = spanShow.get(0).innerHTML;
-      console.dir(spanShow);
       spanShow.html(
         datas[type] + ' ' +
         html.substring(html.indexOf(' '))
@@ -384,7 +388,6 @@ var Friends = function(params){
   this.search = function(obj, next){ 
     var self = this; 
     var val = this.inputSearch.val(); 
-    console.dir(this.inputSearch);
     if(val.length == 0) return; 
     $(obj).attr('disabled', 'disabled'); 
     if(next != true){ 

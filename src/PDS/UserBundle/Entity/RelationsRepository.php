@@ -29,6 +29,7 @@ class RelationsRepository extends EntityRepository
              ->setParameter('id', $idUser)
            ->andWhere('r.areFriends = false')
            ->andWhere('r.requestSended = true')
+           ->andWhere('r.isPending = true')
            ->andWhere('r.sendedBy = r.user2Id');
         
         return $qb->getQuery()->getSingleScalarResult();
