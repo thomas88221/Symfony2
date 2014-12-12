@@ -212,7 +212,7 @@
               </div>
             {% endif %}
             <div class="alert alert-block hide" id="display-message">
-              <div class="message pull-left">Test</div>
+              <div class="message pull-left">Error</div>
               <button type="button" class="close" id="hide-message">
                 <i class="ace-icon fa fa-times"></i>
               </button>
@@ -255,6 +255,12 @@
       <div data-name="sentences.common.refused">{{ 'sentences.common.refused'|trans }}</div>
       {% block sentences %}
       {% endblock sentences %}
+    </div>
+    <div id="datasPhp" class="hide hidden">
+      <div data-name="bundle">{{ getBundleName() }}</div>
+      <div data-name="action">{{ getActionName() }}</div>
+      {% block datasPhp %}
+      {% endblock datasPhp %}
     </div>
   </body>
 </html>

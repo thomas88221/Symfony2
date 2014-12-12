@@ -95,3 +95,9 @@ services:
         class: PDS\HomeBundle\Services\Tools\PDSFileTools
     imageToole:
         class: PDS\HomeBundle\Services\Tools\PDSImageTools
+    template:
+        class: PDS\HomeBundle\Services\Template\PDSTemplate
+        calls:
+            - [setRequest, ["@?request="]]
+        tags:
+            - { name: twig.extension }
