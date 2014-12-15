@@ -76,6 +76,21 @@
 .align-middle{vertical-align: middle;}
 .align-top{vertical-align: top;}
 .align-bottom{vertical-align: bottom;}
+.btn-span{
+  border: none!important;
+  background: 0 0!important;
+  color: #333!important;
+  text-shadow: none!important;
+  padding: 4px 12px!important;
+  line-height: 20px!important;
+  text-decoration: none;
+}
+.btn-span:hover{
+  text-decoration: none;
+  background: none!important;
+  text-shadow: none!important;
+  cursor: default;
+}
 .transition-025{
   -webkit-transition: all 0.25s !important;
   -moz-transition: all 0.25s !important;

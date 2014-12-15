@@ -20,10 +20,11 @@ class DefaultController extends Controller
         $br = $this->get('breadcrumbs');
         $br->init($this->getRequest(), $translator, $this);
         $con = $this->get('database_connection');
-        
+
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
+        $repoRelations = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
         $friends = $repository->getAllFriends($con, $this->getUser()->getId());
-        $friendsWaiting = $repository->getAllFriendsWaiting($con, $this->getUser()->getId());
+        $friendsWaiting = $repoRelations->getAllPendingRelationsJoinUsers($con, $this->getUser()->getId());
         
         return $this->render(
             'PDSFriendsBundle:Default:index.html.twig',

@@ -60,4 +60,54 @@ class RelationsRepository extends EntityRepository
             )
         )->fetchAll(\PDO::FETCH_ASSOC);
     }
+    
+    public function getAllPendingRelationsJoinUsers($con, $idUser)
+    {
+        return $con->query(
+            sprintf(
+                "SELECT * FROM (
+                    SELECT 
+                      u.*,
+                      r.id as r_id,
+                      r.user1_id,
+                      r.user2_id,
+                      r.sended_by,
+                      r.are_friends,
+                      r.request_sended,
+                      r.date as date_relation,
+                      r.is_pending
+                    FROM Relations r
+                    INNER JOIN Users u ON u.id = r.user2_id
+                    WHERE r.are_friends = false
+                    AND r.user1_id = %d
+                    AND r.sended_by = r.user2_id
+                    AND r.request_sended = TRUE 
+                    AND r.is_pending = TRUE
+                    
+                    UNION
+                    
+                    SELECT 
+                      u.*,
+                      r.id as r_id,
+                      r.user1_id,
+                      r.user2_id,
+                      r.sended_by,
+                      r.are_friends,
+                      r.request_sended,
+                      r.date as date_relation,
+                      r.is_pending
+                    FROM Relations r
+                    INNER JOIN Users u ON u.id = r.user2_id
+                    WHERE r.are_friends = false
+                    AND r.user1_id = %d
+                    AND r.sended_by = r.user1_id
+                    AND r.request_sended = TRUE 
+                    AND r.is_pending = TRUE
+                ) req
+                ORDER BY req.date_relation DESC",
+                $idUser,
+                $idUser
+            )
+        )->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

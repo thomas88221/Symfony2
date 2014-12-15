@@ -31,15 +31,15 @@
                 {{ 'friends.add'|trans }}
               </a>
             {% elseif relation.areFriends == true and relation.requestSended == true %}
-              <span class="btn btn-link">
+              <span class="btn btn-span">
                 <i class="ace-icon fa fa-check-circle bigger-120 green"></i>
                 {{ 'menu.friends'|trans }}
               </span>
             {% elseif relation.areFriends == false and relation.requestSended == true %}
-              <span class="btn btn-link">
+              <a href="{{ path('pds_friends_homepage') }}" class="btn btn-link">
                 <i class="ace-icon fa fa-mail-forward bigger-120 red"></i>
                 {{ 'friends.requestSended'|trans }}
-              </span>
+              </a>
             {% endif %}
           {% endif %}
           <a href="#" class="btn btn-link" id="send-message-btn">

@@ -379,13 +379,14 @@ var Friends = function(params){
   this.spinnerSearch = $('#spinner-search'); 
   this.buttonSearch = $('#button-search'); 
   this.inputSearch = $('#input-search'); 
-  this.resultsSearch = $('#results-search'); 
+  this.resultsSearch = $('#results-search');
+  this.btnActions = $('#friendsWaiting').find('.relation-action');
   this.offset = 0; 
   this.limit = 10; 
   this.urls = { 
     'search': '/friends/search' 
   }; 
-  this.search = function(obj, next){ 
+  this.search = function(obj, next){
     var self = this; 
     var val = this.inputSearch.val(); 
     if(val.length == 0) return; 
@@ -448,6 +449,36 @@ var Friends = function(params){
       } 
     }); 
   };
+  
+  this.btnActions.on('click', function(e){
+    var self = $(this);
+    var type = self.data('type');
+    var id = self.data('id');
+    var btns = self.parents('tr:first').find('.relation-action').attr('disabled', 'disabled');
+    
+    $.ajax({
+      'url': '/ajax/f/update',
+      'type': 'POST',
+      'dataType': 'json',
+      'data': {
+        'type': type,
+        'id': id
+      },
+      'success': function(res){
+        if(res.status == 1) {
+          document.showSuccess(res.msg);
+        }else{
+          document.showError(res.msg);
+        }
+        document.location.reload();
+      },
+      'error': function(res){
+        document.showError(res.responseText);
+      }
+    });
+    
+    e.preventDefault();
+  });
   
   this.bind = function(){ 
     var self = this; 
