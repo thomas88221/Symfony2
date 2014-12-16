@@ -14,13 +14,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $translator = $this->get('translator');
-        $menu = $this->get('menu');
-        $menu->init($this->getRequest(), $translator, $this);
-        $br = $this->get('breadcrumbs');
-        $br->init($this->getRequest(), $translator, $this);
         $con = $this->get('database_connection');
-
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
         $repoRelations = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
         $friends = $repository->getAllFriends($con, $this->getUser()->getId());
@@ -29,10 +23,6 @@ class DefaultController extends Controller
         return $this->render(
             'PDSFriendsBundle:Default:index.html.twig',
             array(
-                'bundle' => $menu->get('bundle'),
-                'title' => $translator->trans('menu.friends'),
-                'description' => $translator->trans('friends.description'),
-                'breadcrumbs' => $br->get($menu->get('controller')),
                 'friends' => $friends,
                 'friendsWaiting' => $friendsWaiting
             )
@@ -94,12 +84,6 @@ class DefaultController extends Controller
             return $this->redirect($urlOk);
         }
         
-        $translator = $this->get('translator');
-        $menu = $this->get('menu');
-        $menu->init($this->getRequest(), $translator, $this);
-        $br = $this->get('breadcrumbs');
-        $br->init($this->getRequest(), $translator, $this);
-        
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Relations');
         $relation = $repository->findOneBy(
             array(
@@ -111,9 +95,6 @@ class DefaultController extends Controller
         return $this->render(
             'PDSFriendsBundle:Default:profil.html.twig',
             array(
-                'bundle' => $menu->get('bundle'),
-                'title' => $translator->trans('menu.profil', array('%name%' => $user->getUsername())),
-                'breadcrumbs' => $br->get($menu->get('controller')),
                 'user' => $user,
                 'relation' => $relation
             )

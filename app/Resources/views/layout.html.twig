@@ -21,6 +21,7 @@
     {% endblock css %}
   </head>
   <body class="no-skin">
+    {{ setUserToTpl(app.user) }}
     <div id="navbar" class="navbar navbar-default navbar-fixed-top">
       <div class="navbar-container" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
@@ -110,54 +111,54 @@
             </li>
           </ul>
         </div>
-      </div><!-- /.navbar-container -->
+      </div>
     </div>
     <div class="main-container" id="main-container">
       <div id="sidebar" class="sidebar responsive sidebar-fixed sidebar-scroll">
         <ul class="nav nav-list" style="top: 0px;">
-          <li class="{% if bundle == 'HomeBundle' %}active open {% endif %}highlight">
+          <li class="{{ getMenuClass('Home') }}highlight">
             <a href="{{ path('pds_home_homepage') }}">
               <i class="menu-icon fa fa-tachometer"></i>
               <span class="menu-text"> {{ 'menu.dashboard'|trans }} </span>
             </a>
           </li>
-          <li class="{% if bundle == 'ToolsBundle' %}active open {% endif %}highlight">
+          <li class="{{ getMenuClass('Tools') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-briefcase"></i>
               <span class="menu-text"> {{ 'menu.tools'|trans }} </span>
             </a>
           </li>
-          <li class="highlight">
+          <li class="{{ getMenuClass('Exercices') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-child"></i>
               <span class="menu-briefcase"> {{ 'menu.exercice'|trans }} </span>
             </a>
           </li>
-          <li class="{% if bundle == 'FriendsBundle' %}active open {% endif %}highlight">
+          <li class="{{ getMenuClass('Friends') }}highlight">
             <a href="{{ path('pds_friends_homepage') }}">
               <i class="menu-icon glyphicon glyphicon-user"></i>
               <span class="menu-briefcase"> {{ 'menu.friends'|trans }} </span>
             </a>
           </li>
-          <li class="highlight">
+          <li class="{{ getMenuClass('Groups') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-users"></i>
               <span class="menu-briefcase"> {{ 'menu.group'|trans }} </span>
             </a>
           </li>
-          <li class="highlight">
+          <li class="{{ getMenuClass('Calandar') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-calendar"></i>
               <span class="menu-text"> {{ 'menu.calendar'|trans }} </span>
             </a>
           </li>
-          <li class="highlight">
+          <li class="{{ getMenuClass('Eat') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-cutlery"></i>
               <span class="menu-text"> {{ 'menu.eat'|trans }} </span>
             </a>
           </li>
-          <li class="highlight">
+          <li class="{{ getMenuClass('Stats') }}highlight">
             <a href="#">
               <i class="menu-icon fa fa-line-chart"></i>
               <span class="menu-text"> {{ 'menu.stats'|trans }} </span>
@@ -169,48 +170,26 @@
         </div>
       </div>
       <div class="main-content">
-        {% if breadcrumbs is defined %}
-          <div class="breadcrumbs" id="breadcrumbs">
-            <ul class="breadcrumb">
-              {% for link in breadcrumbs %}
-                {% if (link.current is defined) and (link.current == true) %}
-                  <li class="active">{{ link.title }}</li>
-                {% else %}
-                  <li>
-                    {% if link.icon is defined %}
-                      <i class="ace-icon fa fa-{{ link.icon }} home-icon"></i>
-                    {% endif %}
-                    <a href="{{ link.link }}">{{ link.title }}</a>
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-            <div class="nav-search" id="nav-search">
-              <form class="form-search">
-                <span class="input-icon">
-                  <input type="text" placeholder="{{ 'layout.search'|trans }}" class="nav-search-input" id="nav-search-input" autocomplete="off">
-                  <i class="ace-icon fa fa-search nav-search-icon"></i>
-                </span>
-              </form>
-            </div>
-          </div>
-        {% endif %}
+        {% autoescape false %}
+            {{ getBreadcrumbs() }}
+        {% endautoescape %}
         <div class="page-content">
           <div class="page-content-area">
-            {% if title is defined %}
-              <div class="page-header">
-                <h1>
-                  {{ title }}
-                  <?php if(!empty($desc)){ ?>
-                  {% if description is defined %}
-                    <small>
-                      <i class="ace-icon fa fa-angle-double-right"></i>
-                      {{ description }}
-                    </small>
-                  {% endif %}
-                </h1>
-              </div>
-            {% endif %}
+            {% block titleAndDesc %}
+              {% if hasTitle() == true %}
+                <div class="page-header">
+                  <h1>
+                    {{ getTitle() }}
+                    {% if hasDescription() == true %}
+                      <small>
+                        <i class="ace-icon fa fa-angle-double-right"></i>
+                        {{ getDescription() }}
+                      </small>
+                    {% endif %}
+                  </h1>
+                </div>
+              {% endif %}
+            {% endblock titleAndDesc %}
             <div class="alert alert-block hide" id="display-message">
               <div class="message pull-left">Error</div>
               <button type="button" class="close" id="hide-message">

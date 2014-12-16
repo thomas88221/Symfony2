@@ -1,6 +1,22 @@
 {% extends "::layout.html.twig" %}
 {% block title %}{{ 'menu.profil'|trans({'%name%': user.username}) }}{% endblock %}
 
+{% block titleAndDesc %}
+    {% if hasTitle() == true %}
+      <div class="page-header">
+        <h1>
+          {{ getTitle({'username': user.username}) }}
+          {% if hasDescription() == true %}
+            <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            {{ getDescription() }}
+          </small>
+        {% endif %}
+      </h1>
+    </div>
+  {% endif %}
+{% endblock titleAndDesc %}
+
 {% block body %}
   <div class="user-profile row">
     <div class="col-xs-12 col-sm-3 center">

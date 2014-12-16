@@ -87,17 +87,14 @@ avalanche_imagine:
             options: { widen: 400 }
 
 services:
-    breadcrumbs:
-        class: PDS\HomeBundle\Services\Breadcrumbs\PDSBreadcrumbs
-    menu:
-        class: PDS\HomeBundle\Services\Menu\PDSMenu
     fileTools:
         class: PDS\HomeBundle\Services\Tools\PDSFileTools
-    imageToole:
+    imageTools:
         class: PDS\HomeBundle\Services\Tools\PDSImageTools
     template:
         class: PDS\HomeBundle\Services\Template\PDSTemplate
         calls:
             - [setRequest, ["@?request="]]
+        arguments: [ @router, @translator ]
         tags:
             - { name: twig.extension }
