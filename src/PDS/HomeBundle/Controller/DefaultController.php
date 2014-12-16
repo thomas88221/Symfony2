@@ -11,22 +11,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $userManager = $this->get('fos_user.user_manager');
-        $translator = $this->get('translator');
-        $menu = $this->get('menu');
-        $br = $this->get('breadcrumbs');
-        $br->init($this->getRequest(), $translator, $this);
-        $menu->init($this->getRequest(), $translator, $this);
-        
-        return $this->render(
-            'PDSHomeBundle:Default:index.html.twig',
-            array(
-                'bundle' => $menu->get('bundle'),
-                'title' => $translator->trans('menu.dashboard'),
-                'description' => $translator->trans('dashboard.description'),
-                'breadcrumbs' => $br->get($menu->get('controller'))
-            )
-        );
+        return $this->render('PDSHomeBundle:Default:index.html.twig');
     }
     
     public function updateAction()
@@ -107,7 +92,7 @@ class DefaultController extends Controller
                 $ext = $file->guessExtension();
                 $name = $user->getId().'.'.$ext;
                 $file->move(WEB_PATH.'/avatars', $name);
-                $fileTh = $this->get('imageToole');
+                $fileTh = $this->get('imageTools');
                 $fileTh->setFile(WEB_PATH.'/avatars/'.$name);
                 if ($fileTh->get('error') == 0) {
                     $fileTh->resize(40);
