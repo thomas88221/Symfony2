@@ -70,11 +70,14 @@ success:
         addError: "Une erreur est survenue pendant votre opération, veuillez réessayer"
         addOk: "Vous êtes à présent amis"
         addRm: "Requête refusée"
+    messages:
+        markAsRead: "Le message est marqué comme lu"
 
 sentences:
     common:
         accept: "Accepter"
         refused: "Refuser"
+        markAsRead: "Marquer comme lu"
     messages:
         empty: "Aucun nouveau message"
     divers:
