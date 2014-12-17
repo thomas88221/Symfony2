@@ -5,3 +5,7 @@ pds_ajax_homepage:
 pds_ajax_friends_update:
     path:     /ajax/f/update
     defaults: { _controller: PDSAjaxBundle:Default:friendsUpdate }
+
+pds_ajax_messages_update:
+    path:     /ajax/m/update
+    defaults: { _controller: PDSAjaxBundle:Default:messagesUpdate }

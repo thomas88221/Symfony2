@@ -82,22 +82,56 @@ $(function(){
       if(res.length > 0){
         $.each(res, function(index, row){
           html += '<li>'+
-                    '<a href="'+row['profil']+'">'+
-                      '<img src="'+row['avatar']+'" class="msg-photo" alt="'+row['username']+'">'+
-                      '<span class="msg-body max-width-280">'+
-                        '<span class="msg-title">'+
-                          '<span class="blue">'+row['username']+':&nbsp;</span>'+
+                    '<img src="'+row['avatar']+'" class="msg-photo" alt="'+row['username']+'">'+
+                    '<span class="msg-body max-width-280">'+
+                      '<span class="msg-title">'+
+                        '<span class="blue">'+
+                          '<a href="'+row['profil']+'">'+
+                            row['username']+
+                          '</a>'+
+                        ':&nbsp;</span>'+
+                          '<span class="text">'+
                             row['message']+
                           '</span>'+
-                        '<span class="msg-time">'+
-                          '<i class="ace-icon fa fa-clock-o"></i>'+
-                          '<span class="margin-left-10">'+row['date']+'</span>'+
                         '</span>'+
+                      '<span class="msg-time">'+
+                        '<i class="ace-icon fa fa-clock-o"></i>'+
+                        '<span class="margin-left-10">'+row['date']+'</span>'+
+                        '<button data-id="'+row['message_id']+'" class="btn btn-white btn-inverse btn-sm margin-left-20 btn-round mark-as-read" style="padding: 1px 4px;" title="'+
+                          document.sentences['sentences.common.markAsRead']+'">'+
+                          '<i class="fa fa-eye green pointer"></i>'+
+                        '</button>'+
                       '</span>'+
-                    '</a>'+
-                  '</li>'
+                    '</span>'+
+                '</li>'
         });
-        elements.messages.find('.messages-list').html(html);
+        elements.messages.find('.messages-list').html(html).find('.mark-as-read').on('click', function(e){
+          var id = $(this).data('id');
+          var self = $(this).attr('disabled', 'disabled');
+          $.ajax({
+            'url': '/ajax/m/update',
+            'type': 'POST',
+            'dataType': 'json',
+            'data': {
+              'type': 'markAsRead',
+              'id': id
+            },
+            'success': function(res){
+              if(res.status == 1) {
+                document.showSuccess(res.msg);
+                self.remove();
+              }else{
+                document.showError(res.msg);
+                self.removeAttr('disabled');
+              }
+            },
+            'error': function(res){
+              document.showError(res.responseText);
+            }
+          });
+          e.preventDefault();
+          return false;
+        });
         elements.messages.find('li.dropdown-footer.hide').removeClass('hide');
       } else {
         elements.messages.find('.messages-list').html(

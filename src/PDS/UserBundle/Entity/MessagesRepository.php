@@ -19,7 +19,7 @@ class MessagesRepository extends EntityRepository
         if(empty($this->messages['receivedWithUser'])){
             $query = $con->query(
                 sprintf("
-                        SELECT *, m.date as date_message
+                        SELECT *, m.date as date_message, m.id as message_id
                         FROM Messages m
                         INNER JOIN Users u ON u.id = m.from_user
                         WHERE m.is_read = false
@@ -44,6 +44,7 @@ class MessagesRepository extends EntityRepository
         $qb = $this->createQueryBuilder('m');
         $qb->select('COUNT(m)')
            ->where('m.toUser = :id')
+           ->andWhere('m.isRead = false')
            ->setParameter('id', $idUser);
         
         return $qb->getQuery()->getSingleScalarResult();

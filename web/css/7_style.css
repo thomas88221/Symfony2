@@ -165,6 +165,18 @@
   width: 90%;
   text-overflow: ellipsis;
 }
+.dropdown-navbar .msg-title .text{
+  color: #333;
+  font-size: 12px;
+}
+.messages-list li{
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-top: solid 1px #e4ecf3;
+}
+.messages-list li:first-child{
+  border-top: none;
+}
 /** End Override **/
 
 /** Thumbs **/
