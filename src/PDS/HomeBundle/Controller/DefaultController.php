@@ -107,4 +107,25 @@ class DefaultController extends Controller
         }
         return $this->redirect($this->generateUrl('pds_home_homepage'));
     }
+    
+    public function inboxAction($page = 1){
+        $request = $this->getRequest();
+        $translator = $this->get('translator');
+        $user = $this->getUser();
+        $con = $this->get('database_connection');
+        if ($page < 1) $page = 1;
+        $repo = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Messages');
+        $messages = $repo->getAllMessagesJoinUsers($con, $user->getId(), 25, ($page - 1) * 25);
+        $nbMessages = $repo->getAllMessagesCount($con, $user->getId());
+        $nbMessagesNotRead = $repo->getMessagesReveivedNotReadCount($con, $user->getId());
+        
+        return $this->render(
+            'PDSHomeBundle:Default:inbox.html.twig',
+            array(
+                'messages' => $messages,
+                'nbMessages' => $nbMessages,
+                'nbMessagesNotRead' => $nbMessagesNotRead
+            )
+        );
+    }
 }

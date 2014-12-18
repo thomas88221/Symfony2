@@ -177,6 +177,9 @@
 .messages-list li:first-child{
   border-top: none;
 }
+.message-content{
+  border-top: solid 1px #eee;
+}
 /** End Override **/
 
 /** Thumbs **/

@@ -1,3 +1,8 @@
+common:
+    sendMsg: "Envoyer un message"
+    cancel: "Annuler"
+    send: "Envoyer"
+
 layout:
     title:        "Programme de sport"
     notification: "%count% Notification|]1,+Inf]%count% Notifications"
@@ -18,6 +23,7 @@ menu:
     calendar:  "Calendrier"
     eat:       "Recettes"
     stats:     "Statistiques"
+    profil: "Profil de %name%"
     
 dashboard:
     description: "Résumé de votre compte"
@@ -52,9 +58,52 @@ dashboard:
         last_conn: "Dernière connexion"
         related: "A propos"
         desc: "Modifier ma description"
+        
+login:
+    login:
+        not_blank: Le login ne peut pas être vide.
+        length: Le login que vous avez choisi est trop court.
+
+inbox:
+    title: "Boîte de réception (%count%)"
+    new: "Nouveau message|]1,+Inf]Nouveaux messages"
+    all: "Tous"
+    none: "Aucun"
+    notRead: "Non-lus"
+    read: "Lus"
+    order: "Tri"
+    date: "Date"
+    exp: "Expéditeur"
+    receive: "Reçus"
+    send: "Envoyés"
+    titlebox: "Boîte de réception <small>(%count% non-lu)</small>|]1,+Inf]Boîte de réception <small>(%count% non-lus)</small>"
+    actions: "Actions"
+    reply: "Répondre"
+    forward: "Transférer"
+    markAsRead: "Marquer comme lu(s)"
+    markAsNotRead: "Marquer comme non-lu(s)"
+    delete: "Supprimer"
+    noMsg: "Aucun message"
+    readMsg: "Lire le message"
 
 friends:
     description: "Vos amis"
+    placeholder: "Rechercher"
+    go: "Go"
+    myfriends: "Mes amis"
+    nofriends: "Vous n'avez pas encore de relations"
+    nofriendsPending: "Vous n'avez pas de demandes en attente"
+    searchnew: "Recherchez dès à présents des utilisateurs"
+    see: "Voir le profil"
+    name: "Nom"
+    profil: "Profil"
+    next: "Suivants"
+    add: "Ajouter en tant qu'amis"
+    message_placeholer: "Votre message"
+    requestSended: "Demande envoyée"
+    title:
+        block1: "Recherche"
+        waiting: "Demandes en attentes"
 
 errors:
     update:
@@ -64,6 +113,12 @@ errors:
         unauthorized: "Accès non autorisé"
         save: "Erreur pendant la sauvegarde"
         avatar_empty: "Aucune image de profil sélectionnée"
+    search:
+        empty: "Recherche vide"
+    undefined: "Indefini"
+    addFriends: "Une erreur est survenue pendant la demande d'amis"
+    sendMessage: "Destinataire inconnu ou messsage vide"
+    sendMessageBdd: "Erreur pendant l'envoi de votre message"
 
 success:
     friends:
@@ -72,6 +127,12 @@ success:
         addRm: "Requête refusée"
     messages:
         markAsRead: "Le message est marqué comme lu"
+
+search:
+    profil: "Profil"
+
+messages:
+    addFriends: "Votre demande à été envoyée"
 
 sentences:
     common:
