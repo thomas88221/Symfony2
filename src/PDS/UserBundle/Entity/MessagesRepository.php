@@ -39,6 +39,56 @@ class MessagesRepository extends EntityRepository
         return $this->messages['receivedWithUser'];
     }
     
+    public function getMessagesJoinUsers($con, $idUser, $limit = 10, $offset = 0, $orderBy = 'date', $ordering = 'desc')
+    {
+        if(empty($this->messages['allWithUser'])){
+            $query = $con->query(
+                sprintf("
+                        SELECT *, m.date as date_message, m.id as message_id
+                        FROM Messages m
+                        INNER JOIN Users u ON u.id = m.from_user
+                        WHERE m.to_user = %d
+                        ORDER BY %s %s
+                        %s %s
+                    ",
+                    (integer) $idUser,
+                    $orderBy,
+                    $ordering,
+                    empty($limit) ? '' : 'LIMIT '.$limit,
+                    empty($offset) ? '' : 'OFFSET '.$offset
+                )
+            );
+            $this->messages['allWithUser'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        return $this->messages['allWithUser'];
+    }
+    
+    public function getAllMessagesJoinUsers($con, $idUser, $limit = 10, $offset = 0, $orderBy = 'date', $ordering = 'desc')
+    {
+        if(empty($this->messages['allWithUser'])){
+            $query = $con->query(
+                sprintf("
+                        SELECT *, m.date as date_message, m.id as message_id
+                        FROM Messages m
+                        INNER JOIN Users u ON u.id = m.from_user
+                        WHERE m.to_user = %d
+                        OR m.from_user = %d
+                        ORDER BY %s %s
+                        %s %s
+                    ",
+                    (integer) $idUser,
+                    (integer) $idUser,
+                    $orderBy,
+                    $ordering,
+                    empty($limit) ? '' : 'LIMIT '.$limit,
+                    empty($offset) ? '' : 'OFFSET '.$offset
+                )
+            );
+            $this->messages['allWithUser'] = $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        return $this->messages['allWithUser'];
+    }
+    
     public function getMessagesReveivedNotReadCount($con, $idUser)
     {
         $qb = $this->createQueryBuilder('m');
@@ -46,6 +96,18 @@ class MessagesRepository extends EntityRepository
            ->where('m.toUser = :id')
            ->andWhere('m.isRead = false')
            ->setParameter('id', $idUser);
+        
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+    
+    public function getAllMessagesCount($con, $idUser)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->select('COUNT(m)')
+           ->where('m.toUser = :id')
+             ->setParameter('id', $idUser)
+           ->orWhere('m.fromUser = :id')
+             ->setParameter('id', $idUser);
         
         return $qb->getQuery()->getSingleScalarResult();
     }

@@ -584,3 +584,82 @@ var Profil = function(params){
   
   return self.bind();
 };
+
+var Inbox = function(params){
+  var self = this;
+  self.currentTarget = 1;
+  self.tabBar = $('#inbox-tabs');
+  self.messageList = $('#message-list');
+  
+  self.bind = function(){
+    var self = this;
+    self.tabBar.find('li.tab').on('click', function(e){
+      if(self.currentTarget != $(this).data('target')){
+        self.currentTarget = $(this).data('target');
+        switch(self.currentTarget){
+          case 'inbox':
+            self.messageList.find('div.message-item').show(250);
+            break;
+          case 'receive':
+            self.messageList.find('div.message-item[data-type="1"]').show(250);
+            self.messageList.find('div.message-item[data-type="2"]').hide(250);
+            break;
+          case 'sent':
+            self.messageList.find('div.message-item[data-type="1"]').hide(250);
+            self.messageList.find('div.message-item[data-type="2"]').show(250);
+            break;
+        }
+        self.tabBar.find('li.active').removeClass('active');
+        $(this).addClass('active');
+      }
+      e.preventDefault();
+    });
+    
+    self.messageList.find('.read-message').on('click', function(e){
+      self.messageList.find('.message-inline-open').removeClass('message-inline-open');
+      var contentBloc = $(this).parents('.message-item:first').find('.message-content');
+      if(contentBloc.data('open') == false){
+        $(this).find('span').html('Masquer le message');
+        $(this).parents('.message-item:first').addClass('message-inline-open');
+        contentBloc.removeClass('hide').data('open', true);
+      }else{
+        $(this).find('span').html('Lire le message');
+        $(this).parents('.message-item:first').removeClass('message-inline-open');
+        contentBloc.addClass('hide').data('open', false);
+      }
+      e.preventDefault();
+    });
+    
+    self.messageList.find('.delete').on('click', function(e){
+      var id = $(this).data('id');
+      console.dir(id);
+        
+      e.preventDefault();
+    });
+    
+    self.messageList.find('.message-unread').on('click', function(e){
+      if($(this).data('read') == true) return false;
+      var selfHere = $(this);
+      $.ajax({
+        'url': '/ajax/update',
+        'type': 'POST',
+        'dataType': 'json',
+        'data': {
+          'id': $(this).data('id'),
+          'type': 1
+        },
+        'success': function(res){
+          selfHere.data('read', true).removeClass('message-unread');
+        },
+        'error': function(res){
+          document.showError(res.responseText);
+        }
+      });
+      e.preventDefault();
+    });
+    
+    return self;
+  };
+  
+  return self.bind();
+};

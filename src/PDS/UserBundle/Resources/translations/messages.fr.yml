@@ -1,5 +1,0 @@
-# validators.fr.yml
-login:
-    login:
-        not_blank: Le login ne peut pas être vide.
-        length: Le login que vous avez choisi est trop court.

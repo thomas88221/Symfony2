@@ -1,0 +1,283 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ 'inbox.title'|trans({'%count%': nbMessagesNotRead}) }}{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="tabbable">
+          <ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+            <li class="li-new-mail pull-right">
+              <a data-toggle="tab" href="#write" data-target="write" class="btn-new-mail">
+                <span class="btn btn-purple no-border">
+                  <i class="ace-icon fa fa-envelope bigger-130"></i>
+                  <span class="bigger-110">{{ 'inbox.new'|transchoice(1) }}</span>
+                </span>
+              </a>
+            </li><!-- /.li-new-mail -->
+            <li class="active tab" data-target="inbox">
+              <a href="#">
+                <i class="blue ace-icon fa fa-inbox bigger-130"></i>
+                <span class="bigger-110">{{ 'inbox.all'|trans }}</span>
+              </a>
+            </li>
+            <li class="tab" data-target="receive">
+              <a href="#">
+                <i class="green ace-icon fa fa-arrow-down bigger-130"></i>
+                <span class="bigger-110">{{ 'inbox.receive'|trans }}</span>
+              </a>
+            </li>
+            <li class="tab" data-target="sent">
+              <a href="#">
+                <i class="orange ace-icon fa fa-send bigger-130"></i>
+                <span class="bigger-110">{{ 'inbox.send'|trans }}</span>
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content no-border no-padding">
+            <div id="inbox" class="tab-pane in active">
+              <div class="message-container">
+                <div id="id-message-list-navbar" class="message-navbar clearfix">
+                  <div class="message-bar">
+                    <div class="message-infobar" id="id-message-infobar">
+                      <span class="blue bigger-150">
+                        {% autoescape false %}
+                          {{ 'inbox.titlebox'|transchoice(nbMessagesNotRead) }}
+                        {% endautoescape %}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="messagebar-item-left">
+                      <label class="inline middle">
+                        <input type="checkbox" id="id-toggle-all" class="ace">
+                        <span class="lbl"></span>
+                      </label>
+                      &nbsp;
+                      <div class="inline position-relative">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                          <i class="ace-icon fa fa-caret-down bigger-125 middle"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-lighter dropdown-100">
+                          <li>
+                            <a id="id-select-message-all" href="#">{{ 'inbox.all'|trans }}</a>
+                          </li>
+
+                          <li>
+                            <a id="id-select-message-none" href="#">{{ 'inbox.none'|trans }}</a>
+                          </li>
+
+                          <li class="divider"></li>
+
+                          <li>
+                            <a id="id-select-message-unread" href="#">{{ 'inbox.notRead'|trans }}</a>
+                          </li>
+
+                          <li>
+                            <a id="id-select-message-read" href="#">{{ 'inbox.read'|trans }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="messagebar-item-right">
+                      <div class="inline position-relative">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                          {{ 'inbox.order'|trans }} &nbsp;
+                          <i class="ace-icon fa fa-caret-down bigger-125"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-lighter dropdown-menu-right dropdown-100">
+                          <li>
+                            <a href="#">
+                              <i class="ace-icon fa fa-check green"></i>
+                              {{ 'inbox.date'|trans }}
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i class="ace-icon fa fa-check invisible"></i>
+                              {{ 'inbox.exp'|trans }}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="nav-search minimized">
+                      <form class="form-search" method="get" action="<?php url('home', 'inbox'); ?>">
+                        <span class="input-icon">
+                          <input type="text" name="recherche" autocomplete="off" class="input-small nav-search-input" placeholder="{{ 'layout.search'|trans }}">
+                          <i class="ace-icon fa fa-search nav-search-icon"></i>
+                        </span>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div id="id-message-item-navbar" class="hide message-navbar clearfix">
+                  <div class="message-bar">
+                    <div class="message-toolbar">
+                      <div class="message-toolbar">
+                        <div class="inline position-relative align-left">
+                          <button type="button" class="btn-white btn-primary btn btn-xs dropdown-toggle padding-left-20 padding-right-10" data-toggle="dropdown">
+                            <span class="bigger-150 padding-right-10">{{ 'inbox.actions'|trans }}</span>
+                            <i class="ace-icon fa fa-caret-down icon-on-right bigger-150"></i>
+                          </button>
+                          <ul class="dropdown-menu dropdown-lighter dropdown-caret dropdown-125">
+                            <li>
+                              <a href="#">
+                                <i class="ace-icon fa fa-mail-reply blue"></i>&nbsp; {{ 'inbox.reply'|trans }}
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <i class="ace-icon fa fa-mail-forward green"></i>&nbsp; {{ 'inbox.forward'|trans }}
+                              </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                              <a href="#">
+                                <i class="ace-icon fa fa-eye blue"></i>&nbsp; {{ 'inbox.markAsRead'|trans }}
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <i class="ace-icon fa fa-eye-slash green"></i>&nbsp; {{ 'inbox.markAsNotRead'|trans }}
+                              </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                              <a href="#">
+                                <i class="ace-icon fa fa-trash-o red bigger-110"></i>&nbsp; {{ 'inbox.delete'|trans }}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="message-list-container">
+                  <div class="message-list" id="message-list">
+                    {% if messages is empty %}
+                      <div class="message-item text-center">
+                        <h4 class="blue">
+                          {{ 'inbox.noMsg'|trans }}
+                        </h4>
+                      </div>
+                    {% else %}
+                      {% for message in messages %}
+                        {% set receive = message.to_user == app.user.id %}
+                        {% set isRead = message.is_read %}
+                        <div class="message-item {% if isRead == false %}message-unread{% endif %}" data-read="{% if isRead %}1{% else %}0{% endif %}" data-type="{% if receive %}1{% else %}2{% endif %}" data-id="{{ message.id }}">
+                          <label class="inline">
+                            <input type="checkbox" class="ace">
+                            <span class="lbl"></span>
+                          </label>
+                          {% if receive %}
+                            <i class="green fa fa-arrow-down" title="Reçu"></i>
+                            <a href="{{ path('pds_friends_profil', {'id': message.from_user, 'name': message.username}) }}" title="{{ message.username }}">
+                              <span class="sender">{{ message.username }}</span>
+                            </a>
+                          {% else %}
+                            <i class="orange fa fa-send" title="Envoyé"></i>
+                            <a href="{{ path('pds_friends_profil', {'id': message.to_user, 'name': message.username}) }}" title="{{ message.username }}">
+                              <span class="sender" title="{{ message.username }}">{{ message.username }}</span>
+                            </a>
+                          {% endif %}
+                          <span class="time width-150 text-right">
+                            {{ message.date|date('d/m/y H:i') }}
+                          </span>
+                          <span class="summary">
+                            <span class="text read-message" data-id="<?php echo $message['message_id']; ?>">
+                              <i class="fa fa-comments-o"></i>
+                              <span>{{ 'inbox.readMsg'|trans }}</span>
+                            </span>
+                          </span>
+                          <div class="hide message-content no-border" data-open="false">
+                            <div class="message-header clearfix">
+                              <div class="pull-left">
+                                <img class="middle avatar" alt="Avatar" src="/images/profils/<?php echo $receive ? $message['avatar_from'] : $message['avatar_to']; ?>" width="32">
+                                <a href="#" class="sender">
+                                  <?php echo $receive ? $message['pseudo_from'] : $message['pseudo_to']; ?>
+                                </a>
+                                <i class="ace-icon fa fa-clock-o bigger-110 orange middle"></i>
+                                <span class="time grey">
+                                  <?php
+                                    $d = new Dates();
+                                    $d->setFromString($message['date'], Dates::BD_DTFORMAT);
+                                    echo date('d/m/y H:i', $d->getTimestamp());
+                                  ?>
+                                </span>
+                              </div>
+                              <div class="pull-right action-buttons">
+                                <?php if($receive){ ?>
+                                  <a href="<?php url('home', 'sendMessageFor', array('id' => $message['user_id_from'])); ?>" class="reply" title="Répondre" data-id="<?php echo $message['message_id']; ?>">
+                                    <i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+                                  </a>
+                                  <a href="#" class="delete" title="Supprimer" data-id="<?php echo $message['message_id']; ?>">
+                                    <i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
+                                  </a>
+                                <?php } ?>
+                              </div>
+                            </div>
+                            <div class="hr hr-double"></div>
+                            <div class="message-body padding-bottom-20">
+                              <p>
+                                <?php echo $message['message']; ?>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="message-footer clearfix">
+                  <div class="pull-left"><?php echo $total; ?> message(s) </div>
+                  <div class="pull-right">
+                    <div class="inline middle"> page <?php echo $page." sur ".$nbPages; ?></div>
+                    &nbsp; &nbsp;
+                    <?php if($nbPages > 1){ ?>
+                      <ul class="pagination middle">
+                        <li class="disabled">
+                          <span>
+                            <i class="ace-icon fa fa-step-backward middle"></i>
+                          </span>
+                        </li>
+                        <li class="disabled">
+                          <span>
+                            <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            <input value="1" maxlength="3" type="text">
+                          </span>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <i class="ace-icon fa fa-step-forward middle"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script type="text/javascript">$(function(){new Inbox();});</script>
+{% endblock js %}
