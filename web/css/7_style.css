@@ -76,6 +76,7 @@
 .align-middle{vertical-align: middle;}
 .align-top{vertical-align: top;}
 .align-bottom{vertical-align: bottom;}
+.message-unread{background-color: #DCE3FA;}
 .btn-span{
   border: none!important;
   background: 0 0!important;
@@ -180,6 +181,8 @@
 .message-content{
   border-top: solid 1px #eee;
 }
+.message-item,
+.message-item:hover{border-color: #d3d3ff !important;}
 /** End Override **/
 
 /** Thumbs **/

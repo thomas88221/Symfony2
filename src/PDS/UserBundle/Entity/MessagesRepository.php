@@ -68,9 +68,28 @@ class MessagesRepository extends EntityRepository
         if(empty($this->messages['allWithUser'])){
             $query = $con->query(
                 sprintf("
-                        SELECT *, m.date as date_message, m.id as message_id
+                        SELECT
+                            m.id as m_id,
+                            m.from_user as m_from_user,
+                            m.to_user as m_to_user,
+                            m.message as m_message,
+                            m.is_read as m_is_read,
+                            m.date as m_date,
+                            u.id as from_id,
+                            u.username as from_username,
+                            u.username_canonical as from_username_canonical,
+                            u.email as from_email,
+                            u.email_canonical as from_email_canonical,
+                            u.avatar as from_avatar,
+                            u2.id as to_id,
+                            u2.username as to_username,
+                            u2.username_canonical as to_username_canonical,
+                            u2.email as to_email,
+                            u2.email_canonical as to_email_canonical,
+                            u2.avatar as to_avatar
                         FROM Messages m
                         INNER JOIN Users u ON u.id = m.from_user
+                        INNER JOIN Users u2 ON u2.id = m.to_user
                         WHERE m.to_user = %d
                         OR m.from_user = %d
                         ORDER BY %s %s

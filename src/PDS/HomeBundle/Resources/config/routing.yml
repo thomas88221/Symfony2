@@ -13,3 +13,9 @@ pds_home_inbox:
 pds_home_changeAvatar:
     path:     /changer-d-avatar
     defaults: { _controller: PDSHomeBundle:Default:changeAvatar }
+
+pds_home_sendMessageTo:
+    path:     /messages/{id}/nouveau
+    defaults: { _controller: PDSHomeBundle:Default:sendMessageTo }
+    requirements:
+        id:   \d
