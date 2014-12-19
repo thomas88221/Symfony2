@@ -212,7 +212,7 @@ $(function(){
               } else {
                 btns.removeAttr('disabled');
                 document.update({'type': 'count'}, function(res){
-                  setNotifCount('divers', res);
+                  document.setNotifCount('divers', res);
                   elements.divers.trigger('click');
                 });
               }
@@ -258,7 +258,7 @@ $(function(){
     });
   };
   
-  function setNotifCount(type, datas){
+  document.setNotifCount = function(type, datas){
     if(datas[type] == null) return;
     if(datas[type] == 0){
       elements[type].find('a.dropdown-toggle span.badge')
@@ -301,13 +301,13 @@ $(function(){
   
   var updateTimer = setInterval(function(){
     document.update({'type': 'count'}, function(res){
-      setNotifCount('messages', res);
-      setNotifCount('divers', res);
+      document.setNotifCount('messages', res);
+      document.setNotifCount('divers', res);
     });
   }, 60000);
   document.update({'type': 'count'}, function(res){
-    setNotifCount('messages', res);
-    setNotifCount('divers', res);
+    document.setNotifCount('messages', res);
+    document.setNotifCount('divers', res);
   });
 });
 
@@ -637,19 +637,26 @@ var Inbox = function(params){
       e.preventDefault();
     });
     
-    self.messageList.find('.message-unread').on('click', function(e){
+    self.messageList.find('.message-unread .summary').on('click', function(e){
       if($(this).data('read') == true) return false;
       var selfHere = $(this);
       $.ajax({
-        'url': '/ajax/update',
+        'url': '/ajax/m/update',
         'type': 'POST',
         'dataType': 'json',
         'data': {
-          'id': $(this).data('id'),
-          'type': 1
+          'id': selfHere.data('id'),
+          'type': 'markAsRead'
         },
         'success': function(res){
           selfHere.data('read', true).removeClass('message-unread');
+          document.update({'type': 'count'}, function(res){
+            document.setNotifCount('messages', res);
+            document.setNotifCount('divers', res);
+          });
+          var t = document.title;
+          var nb = parseInt(t.substring(t.indexOf('(')+1, t.indexOf(')')));
+          document.title = t.substring(0, t.indexOf('('))+'('+(nb-1)+')';
         },
         'error': function(res){
           document.showError(res.responseText);
