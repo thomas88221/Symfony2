@@ -303,6 +303,8 @@ $(function(){
     document.update({'type': 'count'}, function(res){
       document.setNotifCount('messages', res);
       document.setNotifCount('divers', res);
+      var t = document.title;
+      document.title = t.substring(0, t.indexOf('('))+'('+(res['messages'])+')';
     });
   }, 60000);
   document.update({'type': 'count'}, function(res){
@@ -590,6 +592,8 @@ var Inbox = function(params){
   self.currentTarget = 1;
   self.tabBar = $('#inbox-tabs');
   self.messageList = $('#message-list');
+  self.pagin = $('#pagin');
+  self.paginInput = self.pagin.find('#pagin-input');
   
   self.bind = function(){
     var self = this;
@@ -657,11 +661,18 @@ var Inbox = function(params){
           var t = document.title;
           var nb = parseInt(t.substring(t.indexOf('(')+1, t.indexOf(')')));
           document.title = t.substring(0, t.indexOf('('))+'('+(nb-1)+')';
+          selfHere.parents('.message-unread:first').removeClass('message-unread');
         },
         'error': function(res){
           document.showError(res.responseText);
         }
       });
+      e.preventDefault();
+    });
+    
+    self.paginInput.on('change', function(e){
+      var url = self.pagin.find('li a').get(0).href;
+      window.location.href = url.substring(0, url.lastIndexOf('/') + 1) + $(this).val();
       e.preventDefault();
     });
     
