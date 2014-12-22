@@ -43,7 +43,7 @@
                     <div class="message-infobar" id="id-message-infobar">
                       <span class="blue bigger-150">
                         {% autoescape false %}
-                          {{ 'inbox.titlebox'|transchoice(nbMessagesNotRead) }}
+                          {{ 'inbox.titlebox'|trans }}
                         {% endautoescape %}
                       </span>
                     </div>
@@ -187,8 +187,8 @@
                           <span class="time width-150 text-right">
                             {{ message.m_date|date('d/m/y H:i') }}
                           </span>
-                          <span class="summary">
-                            <span class="text read-message" data-id="{{ message.m_id }}">
+                          <span class="summary" data-id="{{ message.m_id }}">
+                            <span class="text read-message">
                               <i class="fa fa-comments-o"></i>
                               <span>{{ 'inbox.readMsg'|trans }}</span>
                             </span>
@@ -229,39 +229,64 @@
                   </div>
                 </div>
                 <div class="message-footer clearfix">
-                  <div class="pull-left"><?php echo $total; ?> message(s) </div>
+                  <div class="pull-left">{{ 'inbox.msgC'|transchoice(nbMessages) }}</div>
                   <div class="pull-right">
-                    <div class="inline middle"> page <?php echo $page." sur ".$nbPages; ?></div>
-                    &nbsp; &nbsp;
-                    <?php if($nbPages > 1){ ?>
-                      <ul class="pagination middle">
-                        <li class="disabled">
-                          <span>
-                            <i class="ace-icon fa fa-step-backward middle"></i>
-                          </span>
-                        </li>
-                        <li class="disabled">
-                          <span>
-                            <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
-                          </span>
-                        </li>
+                    <div class="inline middle">{{ 'inbox.pagin'|trans({'%current%': 1, '%total%': nbPages}) }}</div>
+                    {% if nbPages > 1 %}
+                      <ul class="pagination middle" id="pagin">
+                        {% if currentPage > 1 %}
+                          <li>
+                            <a href="{{ path('pds_home_inboxpage', {'page': currentPage - 1}) }}">
+                              <i class="ace-icon fa fa-step-backward middle"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="{{ path('pds_home_inboxpage', {'page': 1}) }}">
+                              <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                            </a>
+                          </li>
+                        {% else %}
+                          <li class="disabled">
+                            <span>
+                              <i class="ace-icon fa fa-step-backward middle"></i>
+                            </span>
+                          </li>
+                          <li class="disabled">
+                            <span>
+                              <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                            </span>
+                          </li>
+                        {% endif %}
                         <li>
                           <span>
-                            <input value="1" maxlength="3" type="text">
+                            <input maxlength="3" type="text" id="pagin-input" value="{{ currentPage }}">
                           </span>
                         </li>
-                        <li>
-                          <a href="#">
-                            <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i class="ace-icon fa fa-step-forward middle"></i>
-                          </a>
-                        </li>
+                        {% if currentPage < nbPages %}
+                          <li>
+                            <a href="{{ path('pds_home_inboxpage', {'page': currentPage + 1}) }}">
+                              <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="{{ path('pds_home_inboxpage', {'page': nbPages}) }}">
+                              <i class="ace-icon fa fa-step-forward middle"></i>
+                            </a>
+                          </li>
+                        {% else %}
+                          <li class="disabled">
+                            <span>
+                              <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                            </span>
+                          </li>
+                          <li class="disabled">
+                            <span>
+                              <i class="ace-icon fa fa-step-forward middle"></i>
+                            </span>
+                          </li>
+                        {% endif %}
                       </ul>
-                    <?php } ?>
+                    {% endif %}
                   </div>
                 </div>
               </div>

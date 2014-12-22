@@ -67,6 +67,7 @@ login:
 inbox:
     title: "Boîte de réception (%count%)"
     new: "Nouveau message|]1,+Inf]Nouveaux messages"
+    msgC: "%count% message|]1,+Inf]%count% messages"
     all: "Tous"
     none: "Aucun"
     notRead: "Non-lus"
@@ -76,7 +77,7 @@ inbox:
     exp: "Expéditeur"
     receive: "Reçus"
     send: "Envoyés"
-    titlebox: "Boîte de réception <small>(%count% non-lu)</small>|]1,+Inf]Boîte de réception <small>(%count% non-lus)</small>"
+    titlebox: "Boîte de réception"
     actions: "Actions"
     reply: "Répondre"
     forward: "Transférer"
@@ -85,6 +86,7 @@ inbox:
     delete: "Supprimer"
     noMsg: "Aucun message"
     readMsg: "Lire le message"
+    pagin: "page %current% sur %total%"
 
 friends:
     description: "Vos amis"
