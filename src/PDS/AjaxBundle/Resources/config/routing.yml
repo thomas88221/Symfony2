@@ -9,3 +9,7 @@ pds_ajax_friends_update:
 pds_ajax_messages_update:
     path:     /ajax/m/update
     defaults: { _controller: PDSAjaxBundle:Default:messagesUpdate }
+    
+pds_ajax_searchUser:
+    path:     /ajax/u/search
+    defaults: { _controller: PDSAjaxBundle:Default:searchUser }

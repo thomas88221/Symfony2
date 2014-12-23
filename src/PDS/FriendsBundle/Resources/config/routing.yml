@@ -2,10 +2,6 @@ pds_friends_homepage:
     path:     /amis
     defaults: { _controller: PDSFriendsBundle:Default:index }
     
-pds_friends_search:
-    path:     /friends/search
-    defaults: { _controller: PDSFriendsBundle:Default:search }
-    
 pds_friends_sendMessage:
     path:     /utilisateur/message/envoi
     defaults: { _controller: PDSFriendsBundle:Default:sendMessage }
@@ -14,10 +10,10 @@ pds_friends_profil:
     path:     /profil-{id}/{name}
     defaults: { _controller: PDSFriendsBundle:Default:profil }
     requirements:
-        id:   \d
+        id:   \d+
     
 pds_friends_sendRequest:
     path:     /ajouter-{id}
     defaults: { _controller: PDSFriendsBundle:Default:sendRequest }
     requirements:
-        id:   \d
+        id:   \d+

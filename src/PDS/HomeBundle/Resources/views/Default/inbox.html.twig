@@ -236,12 +236,12 @@
                       <ul class="pagination middle" id="pagin">
                         {% if currentPage > 1 %}
                           <li>
-                            <a href="{{ path('pds_home_inboxpage', {'page': currentPage - 1}) }}">
+                            <a href="{{ path('pds_home_inbox') }}">
                               <i class="ace-icon fa fa-step-backward middle"></i>
                             </a>
                           </li>
                           <li>
-                            <a href="{{ path('pds_home_inboxpage', {'page': 1}) }}">
+                            <a href="{{ path('pds_home_inboxpage', {'page': currentPage - 1}) }}">
                               <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
                             </a>
                           </li>

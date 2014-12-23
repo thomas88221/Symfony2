@@ -14,7 +14,7 @@ pds_home_inboxpage:
     path:     /messages/{page}
     defaults: { _controller: PDSHomeBundle:Default:inboxpage }
     requirements:
-        page:   \d
+        page:   \d+
 
 pds_home_changeAvatar:
     path:     /changer-d-avatar
@@ -24,4 +24,4 @@ pds_home_sendMessageTo:
     path:     /messages/{id}/nouveau
     defaults: { _controller: PDSHomeBundle:Default:sendMessageTo }
     requirements:
-        id:   \d
+        id:   \d+

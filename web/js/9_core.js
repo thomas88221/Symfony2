@@ -303,8 +303,10 @@ $(function(){
     document.update({'type': 'count'}, function(res){
       document.setNotifCount('messages', res);
       document.setNotifCount('divers', res);
-      var t = document.title;
-      document.title = t.substring(0, t.indexOf('('))+'('+(res['messages'])+')';
+      if (document.datasPhp['bundle'] == 'home' && document.datasPhp['action'] == 'inbox'){
+        var t = document.title;
+        document.title = t.substring(0, t.indexOf('('))+'('+(res['messages'])+')';
+      }
     });
   }, 60000);
   document.update({'type': 'count'}, function(res){
@@ -420,7 +422,7 @@ var Friends = function(params){
   this.offset = 0; 
   this.limit = 10; 
   this.urls = { 
-    'search': '/friends/search' 
+    'search': '/ajax/u/search' 
   }; 
   this.search = function(obj, next){
     var self = this; 
@@ -680,4 +682,66 @@ var Inbox = function(params){
   };
   
   return self.bind();
+};
+var SendMessage = function(params){
+  var self = this;
+  self.searchResults = $('#searchResults');
+  self.searchInput = $('#form-field-recipient');
+  self.searchHidden = $('#user_to_id');
+  self.searchIcon = $('#searchIcon');
+  self.tempo = null;
+  
+  self.bind = function(){
+    var self = this;
+    self.searchInput.on('keyup', function(e){
+      if($(this).val() == '') return;
+      clearTimeout(self.tempo);
+      self.tempo = setTimeout(function(){
+        self.searchIcon.removeClass('fa-user').addClass('fa-spinner fa-spin');
+        var val = self.searchInput.val();
+        $.ajax({
+          'url': '/ajax/u/search',
+          'type': 'POST',
+          'dataType': 'json',
+          'data': {
+            'val': val,
+            'limit': 10
+          },
+          'success': function(res){
+            if(res.length == 0){
+              self.searchResults.html('<li><a href="#" class="bold">Aucun résultat</a></li>');
+            } else {
+              self.searchResults.empty();
+              $.each(res, function(index, user){
+                self.searchResults.append('<li>'+
+                  '<a href="#" data-id="'+user['id']+'" data-user="'+user['username']+'" class="bold">'+
+                    user['username']+
+                  '</a>'+
+                '</li>');
+              });
+              self.searchResults.find('li a').on('click', function(e){
+                self.searchInput.val($(this).data('user'));
+                self.searchHidden.val($(this).data('id'));
+                self.searchResults.hide();
+              
+                e.preventDefault();
+              });
+            }
+            self.searchResults.show();
+            self.searchIcon.addClass('fa-user').removeClass('fa-spinner fa-spin');
+          },
+          'error': function(e){
+            document.showError(document.sentences['sentences.searchUsers.error']);
+            self.searchIcon.addClass('fa-user').removeClass('fa-spinner fa-spin');
+          }
+        });
+      }, 500);
+      
+      e.preventDefault();
+    });  
+
+    return self;
+  };
+
+  return this.bind();
 };
