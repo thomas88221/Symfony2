@@ -29,54 +29,14 @@ class DefaultController extends Controller
         );
     }
     
-    public function searchAction()
-    {
-        $request = $this->getRequest();
-        $translator = $this->get('translator');
-        if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
-            $datas = $request->request;
-            $query = $datas->get('val');
-            $limit = (integer) $datas->get('limit');
-            $offset = (integer) $datas->get('offset');
-            if (empty($query)) {
-                return new JsonResponse(
-                    $translator->trans('errors.search.empty'),
-                    400
-                );
-            }
-            $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
-            $req = $repository->searchContacts(
-                $this->get('database_connection'),
-                $query,
-                $this->getUser()->getId(),
-                $limit,
-                $offset
-            );
-            $users = array();
-            if (!empty($req)) {
-                foreach ($req as $res) {
-                    $users[$res['id']] = array(
-                        'id'       => $res['id'],
-                        'username' => $res['username'],
-                        'img'      => '/avatars/'.$res['avatar'],
-                        'th'       => '/avatars/'.substr($res['avatar'], 0, -strlen(strrchr($res['avatar'], '.'))).'_th.'.pathinfo($res['avatar'], PATHINFO_EXTENSION),
-                        'url'      => $this->generateUrl('pds_friends_profil', array('id' => $res['id'], 'name' => $res['username'])),
-                        'text'     => $translator->trans('search.profil')
-                    );
-                }
-            }
-            
-            return new JsonResponse($users);
-        } else {
-            throw $this->createNotFoundException($translator->trans('errors.update.unauthorized'));
-        }
-    }
-    
     public function profilAction($id, $name)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
         $user = $repository->find($id);
         $userCurrent = $this->getUser();
+        if (empty ($user)) {
+            throw $this->createNotFoundException();
+        }
         // Test url correct
         $urlOk = $this->generateUrl('pds_friends_profil', array('id' => $user->getId(), 'name' => $user->getUsername()));
         $urlCurrent = $this->generateUrl('pds_friends_profil', array('id' => $id, 'name' => $name));

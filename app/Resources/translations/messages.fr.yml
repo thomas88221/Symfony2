@@ -2,6 +2,7 @@ common:
     sendMsg: "Envoyer un message"
     cancel: "Annuler"
     send: "Envoyer"
+    back: "Retour"
 
 layout:
     title:        "Programme de sport"
@@ -68,6 +69,7 @@ inbox:
     title: "Boîte de réception (%count%)"
     new: "Nouveau message|]1,+Inf]Nouveaux messages"
     msgC: "%count% message|]1,+Inf]%count% messages"
+    msg: "Message|]1,+Inf]Messages"
     all: "Tous"
     none: "Aucun"
     notRead: "Non-lus"
@@ -75,6 +77,7 @@ inbox:
     order: "Tri"
     date: "Date"
     exp: "Expéditeur"
+    dest: "Destinataire"
     receive: "Reçus"
     send: "Envoyés"
     titlebox: "Boîte de réception"
@@ -87,6 +90,7 @@ inbox:
     noMsg: "Aucun message"
     readMsg: "Lire le message"
     pagin: "page %current% sur %total%"
+    sendMessageTo: "Envoyer un message à %name%"
 
 friends:
     description: "Vos amis"
@@ -135,12 +139,18 @@ search:
 
 messages:
     addFriends: "Votre demande à été envoyée"
+    msgEmpty: "Vous n'avez saisi aucun message"
+    msgSend: "Votre message à été envoyé"
+    msgNotSend: "Une erreur est surevnue pendant l'envoi du message"
+    noDest: "Destinataire introuvable"
 
 sentences:
     common:
         accept: "Accepter"
         refused: "Refuser"
         markAsRead: "Marquer comme lu"
+    searchUsers:
+        error: "La recherche est temporairement indisponible, veuillez nous excuser pour la gène occasionnée."
     messages:
         empty: "Aucun nouveau message"
     divers:

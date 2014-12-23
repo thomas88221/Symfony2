@@ -6,16 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Image;
+use PDS\UserBundle\Entity\Messages;
+use Assetic\Exception\Exception;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
+    public function indexAction() {
         return $this->render('PDSHomeBundle:Default:index.html.twig');
     }
     
-    public function updateAction()
-    {
+    public function updateAction() {
         $request = $this->getRequest();
         $translator = $this->get('translator');
         if($request->isXmlHttpRequest() && $request->getMethod() === 'POST') {
@@ -74,7 +74,7 @@ class DefaultController extends Controller
         }
     }
     
-    public function changeAvatarAction(){
+    public function changeAvatarAction() {
         $request = $this->getRequest();
         $translator = $this->get('translator');
         if($request->getMethod() !== 'POST'){
@@ -108,7 +108,7 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('pds_home_homepage'));
     }
     
-    public function inboxAction($page = 1){
+    public function inboxAction($page = 1) {
         $request = $this->getRequest();
         $translator = $this->get('translator');
         $user = $this->getUser();
@@ -120,6 +120,9 @@ class DefaultController extends Controller
         $nbMessages = $repo->getAllMessagesCount($con, $user->getId());
         $nbMessagesNotRead = $repo->getMessagesReveivedNotReadCount($con, $user->getId());
         $nbPages = ceil($nbMessages / $limit);
+        if ($page > $nbPages) {
+            return $this->redirect($this->generateUrl('pds_home_inboxpage', array('page' => $nbPages)));
+        }
         
         return $this->render(
             'PDSHomeBundle:Default:inbox.html.twig',
@@ -133,7 +136,79 @@ class DefaultController extends Controller
         );
     }
     
-    public function inboxpageAction($page){
+    public function inboxpageAction($page) {
+        if ($page < 2) {
+            return $this->redirect($this->generateUrl('pds_home_inbox'));
+        }
         return $this->inboxAction($page);
+    }
+    
+    public function sendMessageToAction($id){
+        $repo = $this->getDoctrine()->getManager()->getRepository('PDSUserBundle:Users');
+        $to = $repo->find($id);
+        $translator = $this->get('translator');
+        if (empty($to)) {
+            throw $this->createNotFoundException();
+        }
+        
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $submit = $request->request->get('submit');
+            $msg = $request->request->get('message');
+            $id = (int) $request->request->get('user_to_id');
+            
+            if (!empty($submit)) {
+                if (empty ($msg)) {
+                    $this->get('session')->getFlashBag()->add(
+                        'errors',
+                        $translator->trans('messages.msgEmpty')
+                    );
+                } else {
+                    if (empty($id)) {
+                        $this->get('session')->getFlashBag()->add(
+                            'errors',
+                            $translator->trans('messages.noDest')
+                        );
+                    } else {
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $to = $repo->find($id);
+                        if (empty($to)) {
+                            $this->get('session')->getFlashBag()->add(
+                                'errors',
+                                $translator->trans('messages.msgEmpty')
+                            );
+                        } else {
+                            try{
+                                $message = new Messages();
+                                $em->persist($message);
+                                $message->setFromUser($this->getUser()->getId());
+                                $message->setToUser($id);
+                                $message->setMessage($msg);
+                                $message->setIsRead(false);
+                                $message->setDate(new \DateTime());
+                                $em->flush();
+                                $this->get('session')->getFlashBag()->add(
+                                    'success',
+                                    $translator->trans('messages.msgSend')
+                                );
+                                return $this->redirect($this->generateUrl('pds_home_inbox'));
+                            } catch(Exception $e) {
+                                $this->get('session')->getFlashBag()->add(
+                                    'errors',
+                                    $translator->trans('messages.msgNotSend')
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $this->render(
+            'PDSHomeBundle:Default:sendMessageTo.html.twig',
+            array(
+                'to' => $to
+            )
+        );
     }
 }
