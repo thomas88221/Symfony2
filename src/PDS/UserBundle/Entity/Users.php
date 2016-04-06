@@ -473,7 +473,7 @@ class Users extends BaseUser
     }
     
     /**
-    /* Retourne la hauteur de l'avatar
+    * Retourne la hauteur de l'avatar
      * 
      * @return integer
      */
